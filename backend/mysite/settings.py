@@ -54,9 +54,12 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'dj_rest_auth.registration',
+    'flip',
 ]
 
 SITE_ID = 1
+
+AUTH_USER_MODEL = 'flip.Profile'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
