@@ -21,5 +21,6 @@ env = environ.Env()
 
 urlpatterns = [
     path('rest-auth/', include('dj_rest_auth.urls')),
+    path('rest-auth/registration/', include('dj_rest_auth.registration.urls')),
     path('%s/' % (env('ADMIN_URL')), admin.site.urls),
 ]
