@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django_countries.fields import CountryField
+from djmoney.models.fields import MoneyField
 
 
 class Profile(AbstractUser):
@@ -34,17 +35,18 @@ class Freelance(models.Model):
     category = models.CharField(max_length=100, choices=Category.choices, blank=False)
     company = models.CharField(max_length=100, choices=Company.choices, blank=False)
     date_of_reg = models.DateField(blank=False)
-    earned = models.IntegerField(default=0, blank=False)
+    earned = MoneyField(max_digits=14, decimal_places=2, default_currency='USD')
     no_of_gigs = models.IntegerField(default=0, blank=False)
+    country = CountryField()
     description = models.TextField(max_length=280)
-    price = models.IntegerField(default=0, blank=False)
+    price = MoneyField(max_digits=14, decimal_places=2, default_currency='USD')
     hide_price = models.BooleanField()
     offers = models.BooleanField()
-    country = CountryField()
     vpn_need = models.BooleanField()
     verification_needed = models.BooleanField()
     verified = models.BooleanField()
     original_email = models.BooleanField()
+    pub_date = models.DateField(blank=False)
 
     def __str__(self):
         return self.description

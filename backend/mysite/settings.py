@@ -55,6 +55,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'dj_rest_auth.registration',
     'flip',
+    'admin_totals',
+    'djmoney',
 ]
 
 SITE_ID = 1
