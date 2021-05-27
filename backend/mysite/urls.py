@@ -16,6 +16,7 @@ Including another URLconf
 import environ
 from django.contrib import admin
 from django.urls import path, include
+from flip.views import GoogleLogin
 
 env = environ.Env()
 
@@ -23,5 +24,6 @@ urlpatterns = [
     path('', include('flip.urls')),
     path('rest-auth/', include('dj_rest_auth.urls')),
     path('rest-auth/register/', include('dj_rest_auth.registration.urls')),
+    path('rest-auth/google/', GoogleLogin.as_view(), name='google_login'),
     path('%s/' % (env('ADMIN_URL')), admin.site.urls),
 ]
