@@ -1,11 +1,23 @@
+import Link from "next/link";
+import {useSession, signIn, signOut} from 'next-auth/client';
+
+String.prototype.capitalize = function () {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+}
+
 export default function Navbar() {
+    const [session, loading] = useSession()
+
     return (
         <nav className="navbar navbar-expand-lg navbar-dark" style={{}}>
             <div className="container">
                 <a className="navbar-brand" href="/" id="navbar-brand">FlipAccounts</a>
-                <a href="/" className="navbar-brand" id="inbox-mobile">
-                    <i className="bi bi-envelope-fill"></i> <sup className="sups">3</sup>
-                </a>
+                {session ?
+                    <a href="" className="navbar-brand" id="inbox-mobile">
+                        <i className="fs-4 bi bi-envelope-fill"></i> <sup className="sups">(0)</sup>
+                    </a>
+                    : null
+                }
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -28,32 +40,10 @@ export default function Navbar() {
                         <li className="nav-item">
                             <a className="nav-link" href="#"><i className="bi bi-search"></i> Search</a>
                         </li>
-                    </ul>
-                    <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li className="nav-item" id="inbox-pc">
-                            <a href="/" className="nav-link">
-                                <i className="bi bi-envelope-fill"></i> <sup className="sups">3</sup>
-                            </a>
-                        </li>
-                        <li className="nav-item">
-                            <a href="/" className="nav-link">
-                                Escrow <sup className="sups">1</sup>
-                            </a>
-                        </li>
-                        <li className="nav-item dropdown">
-                            <a className="nav-link dropdown-toggle" href="#" id="sellDropdown" role="button"
-                               data-bs-toggle="dropdown" aria-expanded="false">
-                                Sell
-                            </a>
-                            <ul className="dropdown-menu" aria-labelledby="sellDropdown">
-                                <li><a className="dropdown-item" href="#">Add new listing</a></li>
-                                <li><a className="dropdown-item" href="#">My listings</a></li>
-                            </ul>
-                        </li>
                         <li className="nav-item dropdown">
                             <a className="nav-link dropdown-toggle" href="#" id="moreDropdown" role="button"
                                data-bs-toggle="dropdown" aria-expanded="false">
-                                More
+                                <i className="bi bi-three-dots-vertical"></i> More
                             </a>
                             <ul className="dropdown-menu" aria-labelledby="moreDropdown">
                                 <li><a className="dropdown-item" href="#">How to buy</a></li>
@@ -62,17 +52,62 @@ export default function Navbar() {
                                 <li><a className="dropdown-item" href="#">Contact Support</a></li>
                             </ul>
                         </li>
-                        <li className="nav-item dropdown">
-                            <a className="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
-                               data-bs-toggle="dropdown" aria-expanded="false">
-                                Brian4
-                            </a>
-                            <ul className="dropdown-menu" aria-labelledby="profileDropdown">
-                                <li><a className="dropdown-item" href="#">Profile</a></li>
-                                <li><a className="dropdown-item" href="#">Wallet</a></li>
-                                <li><a className="dropdown-item" href="#">Logout</a></li>
-                            </ul>
+                    </ul>
+                    <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li className="nav-item">
+                            <a href="" className="nav-link" id="sell-nw">
+                                <i className="bi-file-plus-fill"></i> Sell</a>
                         </li>
+                        {session ? (<>
+                                <li className="nav-item" id="inbox-pc">
+                                    <a href="/" className="nav-link">
+                                        <i className="bi bi-envelope-fill"></i> <sup className="sups">(0)</sup>
+                                    </a>
+                                </li>
+                                <li className="nav-item">
+                                    <a href="/" className="nav-link">
+                                        <i className="bi bi-chevron-contract"></i> Escrow <sup
+                                        className="sups">(0)</sup>
+                                    </a>
+                                </li>
+                            </>
+                        ) : (<></>)}
+
+                        {session ?
+                            <li className="nav-item dropdown">
+                                <a className="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
+                                   data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i className="bi-person-fill"></i> {session.user.username.capitalize()}
+                                </a>
+                                <ul className="dropdown-menu" aria-labelledby="profileDropdown">
+                                    <li><a className="dropdown-item" href="#">Profile</a></li>
+                                    <li><a className="dropdown-item" href="#">Wallet</a></li>
+                                    <li><a className="dropdown-item" href="#">My Listings</a></li>
+                                    <Link href="#">
+                                        <li>
+                                            <a onClick={() => signOut()} className="dropdown-item" href="#">
+                                                Log out <i className="bi bi-box-arrow-in-right"></i></a>
+                                        </li>
+                                    </Link>
+                                </ul>
+                            </li> : (
+                                <>
+                                    <li className="nav-item">
+                                        <Link href="/register">
+                                            <a className="nav-link">
+                                                <i className="bi bi-check2-square"></i> Sign up</a>
+                                        </Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link href="#">
+                                            <a onClick={() => signIn()} className="nav-link">
+                                                <i className="bi bi-person-fill"></i> Login
+                                            </a>
+                                        </Link>
+                                    </li>
+                                </>
+                            )}
+
                     </ul>
                 </div>
             </div>
@@ -93,6 +128,11 @@ export default function Navbar() {
 
               .sups {
                 color: #e2a94e;
+                font-weight: bold;
+              }
+
+              #inbox-mobile {
+                color: #cccccc;
               }
 
               @media (min-width: 992px) {
