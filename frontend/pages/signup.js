@@ -5,24 +5,35 @@ import {useState, useEffect} from 'react'
 import {useRouter} from 'next/router'
 import {signIn, useSession} from 'next-auth/client'
 import Layout from "../components/layout";
+import {signUp} from "../lib/flip";
 
 
-export default function Login() {
+export default function Signup() {
     const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+    const [password1, setPassword1] = useState('')
+    const [password2, setPassword2] = useState('')
+    const [error, setError] = useState('$00')
     const router = useRouter()
     const [session, loading] = useSession()
 
-    const handleLogin = async (event) => {
+    const handleLogin = async event => {
         event.preventDefault()
-        await signIn('credentials', {
-                email,
-                password,
-                callbackUrl: 'http://localhost:3000'
-            }
-        )
-        await router.push('/')
+        const data = {email, password1, password2}
+        const res = await signUp(data)
+        if (res.status === 201) {
+            await signIn('credentials', {
+                    email: res.data.user.email,
+                    password: password1,
+                    callbackUrl: 'http://localhost:3000'
+                }
+            )
+        } else if (res.status === 400) {
+            setError(res)
+            console.log(res)
+        }
+        return res.data
     }
+
     return (
         <Layout>
             <Head>
@@ -30,6 +41,7 @@ export default function Login() {
             </Head>
             <div className="row">
                 <div className="col-sm-6">
+                    <h2>{error}</h2>
                     <div>
                         <a href="#" onClick={() => signIn('google')}>
                             <Image
@@ -41,7 +53,7 @@ export default function Login() {
                         </a>
                     </div>
                     <div className="separator">OR</div>
-                    <h4>Log in with Email</h4>
+                    <h4>Sign up with Email</h4>
                     <form onSubmit={handleLogin} method="post">
                         <div>
                             <div className="mb-3">
@@ -59,21 +71,32 @@ export default function Login() {
                             <div className="mb-3">
                                 <input
                                     type="password"
-                                    name="password"
+                                    name="password1"
                                     className="form-control"
-                                    id="password"
+                                    id="password1"
                                     placeholder="Password"
-                                    value={password}
-                                    onChange={e => setPassword(e.target.value)}
+                                    value={password1}
+                                    onChange={e => setPassword1(e.target.value)}
+                                    required
+                                />
+                            </div>
+                            <div className="mb-3">
+                                <input
+                                    type="password"
+                                    name="password2"
+                                    className="form-control"
+                                    id="password2"
+                                    placeholder="Confirm password"
+                                    value={password2}
+                                    onChange={e => setPassword2(e.target.value)}
                                     required
                                 />
                             </div>
                         </div>
-                        <button type="submit" className="btn btn-primary">Login</button>
+                        <button type="submit" className="btn btn-primary">Sign up</button>
                     </form>
                     <br/>
-                    <p>Don't have an account? <Link href="/signup"><a>Sign up.</a></Link></p>
-                    <p><Link href="/forgot"><a>Forgot Password?</a></Link></p>
+                    <p>Already have an account? <Link href="/login"><a>Login</a></Link></p>
                 </div>
             </div>
             <style jsx>{`

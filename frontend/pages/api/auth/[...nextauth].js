@@ -1,6 +1,6 @@
 import NextAuth from 'next-auth'
 import Providers from 'next-auth/providers'
-import {getHostAccessToken, loginWithGoogle} from "../../../lib/flip";
+import {getHostAccessToken, signInWithGoogle} from "../../../lib/flip";
 
 export default NextAuth({
     providers: [
@@ -51,7 +51,7 @@ export default NextAuth({
                 const {accessToken, idToken} = account;
                 const data = {access_token: accessToken, code: "", id_token: idToken}
                 try {
-                    const res = await loginWithGoogle(data)
+                    const res = await signInWithGoogle(data)
                     if (res) {
                         user.access_token = res.access_token
                         user.refresh_token = res.refresh_token

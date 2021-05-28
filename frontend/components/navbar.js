@@ -69,7 +69,7 @@ export default function Navbar() {
                                 </li>
                                 <li className="nav-item">
                                     <a href="/" className="nav-link">
-                                        <i className="bi bi-chevron-contract"></i> Escrow <sup
+                                        <i className="bi bi-arrow-down-up"></i> Escrow <sup
                                         className="sups">(0)</sup>
                                     </a>
                                 </li>
@@ -77,29 +77,34 @@ export default function Navbar() {
                         ) : (<></>)}
                         <li className="nav-item">
                             <a href="" className="nav-link" id="sell-nw">
-                                <i className="bi-file-plus-fill"></i> Sell</a>
+                                <i className="bi bi-file-plus-fill"></i> Sell</a>
                         </li>
                         {session ?
                             <li className="nav-item dropdown">
                                 <a className="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i className="bi-person-fill"></i> {session.user.username.capitalize()}
+                                    <i className="bi bi-person-fill"></i> {session.user.username.capitalize()}
                                 </a>
                                 <ul className="dropdown-menu" aria-labelledby="profileDropdown">
-                                    <li><a className="dropdown-item" href="#">Profile</a></li>
-                                    <li><a className="dropdown-item" href="#">Wallet</a></li>
-                                    <li><a className="dropdown-item" href="#">My Listings</a></li>
+                                    <li><a className="dropdown-item" href="#">
+                                            <i className="bi bi-person-circle"></i> Profile</a>
+                                    </li>
+                                    <li><a className="dropdown-item" href="#">
+                                        <i className=" bi bi-wallet"></i> Wallet
+                                    </a></li>
+                                    <li><a className="dropdown-item" href="#">
+                                        <i className="bi bi bi-list"></i> My Listings</a></li>
                                     <Link href="#">
                                         <li>
                                             <a onClick={handleLogout} className="dropdown-item" href="#">
-                                                Log out <i className="bi bi-box-arrow-in-right"></i></a>
+                                                <i className="bi bi-box-arrow-in-right"></i> Log out</a>
                                         </li>
                                     </Link>
                                 </ul>
                             </li> : (
                                 <>
                                     <li className="nav-item">
-                                        <Link href="/register">
+                                        <Link href="/signup">
                                             <a className="nav-link">
                                                 <i className="bi bi-check2-square"></i> Sign up</a>
                                         </Link>
@@ -139,6 +144,9 @@ export default function Navbar() {
 
               #inbox-mobile {
                 color: #cccccc;
+              }
+              .dropdown ul li a {
+                font-weight: 500;
               }
 
               @media (min-width: 992px) {
