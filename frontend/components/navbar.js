@@ -8,10 +8,17 @@ String.prototype.capitalize = function () {
 export default function Navbar() {
     const [session, loading] = useSession()
 
+    const handleLogout = async event => {
+        event.preventDefault()
+        await signOut()
+    }
+
     return (
         <nav className="navbar navbar-expand-lg navbar-dark" style={{}}>
             <div className="container">
-                <a className="navbar-brand" href="/" id="navbar-brand">FlipAccounts</a>
+                <Link href="/">
+                    <a className="navbar-brand" id="navbar-brand">FlipAccounts</a>
+                </Link>
                 {session ?
                     <a href="" className="navbar-brand" id="inbox-mobile">
                         <i className="fs-4 bi bi-envelope-fill"></i> <sup className="sups">(0)</sup>
@@ -54,10 +61,6 @@ export default function Navbar() {
                         </li>
                     </ul>
                     <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li className="nav-item">
-                            <a href="" className="nav-link" id="sell-nw">
-                                <i className="bi-file-plus-fill"></i> Sell</a>
-                        </li>
                         {session ? (<>
                                 <li className="nav-item" id="inbox-pc">
                                     <a href="/" className="nav-link">
@@ -72,7 +75,10 @@ export default function Navbar() {
                                 </li>
                             </>
                         ) : (<></>)}
-
+                        <li className="nav-item">
+                            <a href="" className="nav-link" id="sell-nw">
+                                <i className="bi-file-plus-fill"></i> Sell</a>
+                        </li>
                         {session ?
                             <li className="nav-item dropdown">
                                 <a className="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
@@ -85,7 +91,7 @@ export default function Navbar() {
                                     <li><a className="dropdown-item" href="#">My Listings</a></li>
                                     <Link href="#">
                                         <li>
-                                            <a onClick={() => signOut()} className="dropdown-item" href="#">
+                                            <a onClick={handleLogout} className="dropdown-item" href="#">
                                                 Log out <i className="bi bi-box-arrow-in-right"></i></a>
                                         </li>
                                     </Link>
@@ -99,8 +105,8 @@ export default function Navbar() {
                                         </Link>
                                     </li>
                                     <li className="nav-item">
-                                        <Link href="#">
-                                            <a onClick={() => signIn()} className="nav-link">
+                                        <Link href="/login">
+                                            <a className="nav-link">
                                                 <i className="bi bi-person-fill"></i> Login
                                             </a>
                                         </Link>

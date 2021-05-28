@@ -13,6 +13,11 @@ export default function Layout({children}) {
             <div className="container">
                 {children}
             </div>
+            <style jsx>{`
+                .container {
+                  margin-top: 50px;
+                }
+            `}</style>
         </>
     )
 }
