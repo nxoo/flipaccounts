@@ -8,30 +8,50 @@ import Layout from "../components/layout";
 import {signUp} from "../lib/flip";
 
 
+function Alert({message, type, error}) {
+    return (
+        <div className={`alert alert-${type} alert-dismissible fade show`} role="alert">
+            {message} <strong>!</strong>
+            <button onClick={event => error(false)} type="button" className="btn-close" data-bs-dismiss="alert"
+                    aria-label="Close"></button>
+        </div>
+    )
+}
+
+
 export default function Signup() {
     const [email, setEmail] = useState('')
     const [password1, setPassword1] = useState('')
     const [password2, setPassword2] = useState('')
-    const [error, setError] = useState('$00')
+    const [error, setError] = useState('')
+    const [showError, setshowError] = useState('')
     const router = useRouter()
     const [session, loading] = useSession()
 
     const handleLogin = async event => {
         event.preventDefault()
         const data = {email, password1, password2}
-        const res = await signUp(data)
-        if (res.status === 201) {
-            await signIn('credentials', {
-                    email: res.data.user.email,
-                    password: password1,
-                    callbackUrl: 'http://localhost:3000'
-                }
-            )
-        } else if (res.status === 400) {
-            setError(res)
-            console.log(res)
+        if (password1 !== password2) {
+            setshowError(true)
+            setError("Passwords didn't match")
+        } else if (password1 === password2 && password1.length < 8) {
+            setshowError(true)
+            setError("Password length can't be less than 8")
+        } else {
+            const res = await signUp(data)
+            if (res.status === 201) {
+                await signIn('credentials', {
+                        email: res.data.user.email,
+                        password: password1,
+                        callbackUrl: 'http://localhost:3000'
+                    }
+                )
+            } else if (res.status === 400) {
+                setError(res)
+                console.log(res)
+            }
+            return res.data
         }
-        return res.data
     }
 
     return (
@@ -41,7 +61,9 @@ export default function Signup() {
             </Head>
             <div className="row">
                 <div className="col-sm-6">
-                    <h2>{error}</h2>
+                    {showError ?
+                        <Alert message={error} type="warning" error={setshowError}/>
+                        : null}
                     <div>
                         <a href="#" onClick={() => signIn('google')}>
                             <Image
