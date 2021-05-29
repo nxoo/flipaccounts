@@ -34,7 +34,7 @@ export default function Home() {
                 <div className="search col-sm-8">
                     <form className="d-flex">
                         <input className="form-control me-2" type="search"
-                               placeholder="e.g. Instagram, TransribeMe" aria-label="Search"/>
+                               placeholder="e.g. Instagram, TranscribeMe" aria-label="Search"/>
                         <button className="btn btn-success" type="submit">Search</button>
                     </form>
                 </div>
@@ -53,7 +53,6 @@ export default function Home() {
                         <h6 className="card-subtitle mb-2" style={{color: "darkgreen"}}>Price: $500</h6>
                     </div>
                 </div>
-                <br/>
             </div>
             <style jsx>{`
               h2 {
