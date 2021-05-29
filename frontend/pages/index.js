@@ -30,7 +30,7 @@ export default function Home() {
             <div className="homepage">
                 <h2>A market to buy and sell</h2>
                 <h5 id="slider"><Link href="/"><a>{names[count]}</a></Link>{count < 3 ? " accounts": ""}</h5>
-                <p>Transact securely using our escrow service</p>
+                <p>Transact safely using our escrow service</p>
                 <div className="search col-sm-8">
                     <form className="d-flex">
                         <input className="form-control me-2" type="search"
