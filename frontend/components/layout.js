@@ -10,13 +10,25 @@ export default function Layout({children}) {
                 <title>FlipAccounts</title>
             </Head>
             <Navbar/>
-            <div className="container">
+            <div className="container layout">
                 {children}
             </div>
-            <style jsx>{`
-                .container {
-                  margin-top: 50px;
+            <style jsx global>{`
+              body {
+                padding-top: 56px;
+              }
+
+              @media (min-width: 992px) {
+                .layout {
+                  padding-top: 50px;
                 }
+              }
+
+              @media (max-width: 990px) {
+                .layout {
+                  padding-top: 20px;
+                }
+              }
             `}</style>
         </>
     )

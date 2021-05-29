@@ -14,7 +14,7 @@ export default function Navbar() {
     }
 
     return (
-        <nav className="navbar navbar-expand-lg navbar-dark" style={{}}>
+        <nav className="navbar fixed-top navbar-expand-lg navbar-dark" style={{}}>
             <div className="container">
                 <Link href="/">
                     <a className="navbar-brand" id="navbar-brand">FlipAccounts</a>
@@ -69,7 +69,7 @@ export default function Navbar() {
                                 </li>
                                 <li className="nav-item">
                                     <a href="/" className="nav-link">
-                                        <i className="bi bi-arrow-down-up"></i> Escrow <sup
+                                       <i className="bi bi-shuffle"></i> Escrow <sup
                                         className="sups">(0)</sup>
                                     </a>
                                 </li>
@@ -77,7 +77,7 @@ export default function Navbar() {
                         ) : (<></>)}
                         <li className="nav-item">
                             <a href="" className="nav-link" id="sell-nw">
-                                <i className="bi bi-file-plus-fill"></i> Sell</a>
+                               <i className="bi bi-bag-plus-fill"></i> Sell</a>
                         </li>
                         {session ?
                             <li className="nav-item dropdown">
@@ -148,7 +148,6 @@ export default function Navbar() {
               .dropdown ul li a {
                 font-weight: 500;
               }
-
               @media (min-width: 992px) {
                 #inbox-mobile {
                   display: none;
