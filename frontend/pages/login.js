@@ -30,16 +30,18 @@ export default function Login() {
             </Head>
             <div className="row">
                 <div className="col-sm-6">
-                    <div>
-                        <a href="#" onClick={() => signIn('google')}>
-                            <Image
-                                src="/images/google.png" // Route of the image file
-                                height={50} // Desired size with correct aspect ratio
-                                width={230} // Desired size with correct aspect ratio
-                                alt="Sign In with Google"
-                            />
-                        </a>
-                    </div>
+                    <a href="#" onClick={() => signIn('google')}>
+                        <div className="google-btn">
+                            <div className="google-icon-wrapper">
+                                <img
+                                    src="/images/google.svg" // Route of the image file
+                                    alt="Sign In with Google"
+                                    className="google-icon"
+                                />
+                            </div>
+                            <p className="btn-text"><b>Sign in with google</b></p>
+                        </div>
+                    </a>
                     <div className="separator">OR</div>
                     <h4>Log in with Email</h4>
                     <form onSubmit={handleLogin} method="post">
@@ -99,6 +101,7 @@ export default function Login() {
               .separator:not(:empty)::after {
                 margin-left: .25em;
               }
+
             `}</style>
         </Layout>
     )
