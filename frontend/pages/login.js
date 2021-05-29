@@ -1,10 +1,10 @@
 import Head from 'next/head'
-import Image from "next/image";
 import Link from "next/link";
-import {useState, useEffect} from 'react'
+import {useState} from 'react'
 import {useRouter} from 'next/router'
 import {signIn, useSession} from 'next-auth/client'
 import Layout from "../components/layout";
+import googleButton from '../styles/google.module.css'
 
 
 export default function Login() {
@@ -31,15 +31,15 @@ export default function Login() {
             <div className="row">
                 <div className="col-sm-6">
                     <a href="#" onClick={() => signIn('google')}>
-                        <div className="google-btn">
-                            <div className="google-icon-wrapper">
+                        <div className={googleButton.btn}>
+                            <div className={googleButton.wrapper}>
                                 <img
                                     src="/images/google.svg" // Route of the image file
                                     alt="Sign In with Google"
-                                    className="google-icon"
+                                    className={googleButton.icon}
                                 />
                             </div>
-                            <p className="btn-text"><b>Sign in with google</b></p>
+                            <p className={googleButton.text}><b>Sign in with google</b></p>
                         </div>
                     </a>
                     <div className="separator">OR</div>

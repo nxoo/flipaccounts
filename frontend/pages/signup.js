@@ -1,18 +1,18 @@
 import Head from 'next/head'
-import Image from "next/image";
 import Link from "next/link";
-import {useState, useEffect} from 'react'
+import {useState} from 'react'
 import {useRouter} from 'next/router'
 import {signIn, useSession} from 'next-auth/client'
 import Layout from "../components/layout";
 import {signUp} from "../lib/flip";
+import googleButton from "../styles/google.module.css";
 
 
 function Alert({message, type, error}) {
     return (
         <div className={`alert alert-${type} alert-dismissible fade show`} role="alert">
             {message} <strong>!</strong>
-            <button onClick={event => error(false)} type="button" className="btn-close" data-bs-dismiss="alert"
+            <button onClick={() => error(false)} type="button" className="btn-close" data-bs-dismiss="alert"
                     aria-label="Close"></button>
         </div>
     )
@@ -64,16 +64,18 @@ export default function Signup() {
                     {showError ?
                         <Alert message={error} type="warning" error={setshowError}/>
                         : null}
-                    <div>
-                        <a href="#" onClick={() => signIn('google')}>
-                            <Image
-                                src="/images/google.png" // Route of the image file
-                                height={50} // Desired size with correct aspect ratio
-                                width={230} // Desired size with correct aspect ratio
-                                alt="Sign In with Google"
-                            />
-                        </a>
-                    </div>
+                    <a href="#" onClick={() => signIn('google')}>
+                        <div className={googleButton.btn}>
+                            <div className={googleButton.wrapper}>
+                                <img
+                                    src="/images/google.svg" // Route of the image file
+                                    alt="Sign In with Google"
+                                    className={googleButton.icon}
+                                />
+                            </div>
+                            <p className={googleButton.text}><b>Sign in with google</b></p>
+                        </div>
+                    </a>
                     <div className="separator">OR</div>
                     <h4>Sign up with Email</h4>
                     <form onSubmit={handleLogin} method="post">
