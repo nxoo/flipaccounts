@@ -39,7 +39,7 @@ export default function Login() {
                                     className={googleButton.icon}
                                 />
                             </div>
-                            <p className={googleButton.text}><b>Sign in with google</b></p>
+                            <p className={googleButton.text}><b>Log in with Google</b></p>
                         </div>
                     </a>
                     <div className="separator">OR</div>

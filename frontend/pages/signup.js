@@ -73,7 +73,7 @@ export default function Signup() {
                                     className={googleButton.icon}
                                 />
                             </div>
-                            <p className={googleButton.text}><b>Sign in with google</b></p>
+                            <p className={googleButton.text}><b>Sign up with Google</b></p>
                         </div>
                     </a>
                     <div className="separator">OR</div>
