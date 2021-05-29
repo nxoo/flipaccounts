@@ -27,7 +27,7 @@ export default function Home() {
             <Head>
                 <title>FlipAccounts</title>
             </Head>
-            <div className="homepage">
+            <div>
                 <h2>A market to buy and sell</h2>
                 <h5 id="slider"><Link href="/"><a>{names[count]}</a></Link>{count < 3 ? " accounts": ""}</h5>
                 <p>Transact safely using our escrow service</p>
@@ -40,7 +40,8 @@ export default function Home() {
                 </div>
                 <br/>
                 <p>Read to sell? <Link href="/sell"><a id="read-to-sell">Sell Now</a></Link></p>
-                <p><b>Promoted</b> <span><i className="bi-arrow-up-right-square-fill"></i></span></p>
+                <br/>
+                <span><b>Promoted</b> <span><i className="bi-arrow-up-right-square-fill"></i></span></span>
                 <div className="card" style={{width: "18rem"}}>
                     <div className="card-body" style={{marginLeft: "20%"}}>
                         <h5 className="card-title"><a href="/">TranscribeMe</a></h5>
@@ -68,7 +69,6 @@ export default function Home() {
               }
 
               .homepage {
-                min-height: calc(100vh - 106px);
               }
 
               :global(body) {

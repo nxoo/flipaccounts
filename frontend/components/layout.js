@@ -12,6 +12,9 @@ export default function Layout({children}) {
             <Navbar/>
             <div className="container layout">
                 {children}
+            <footer className="pt-5 my-5 text-muted border-top">
+                FlipAccounts · © 2021
+            </footer>
             </div>
             <style jsx global>{`
               body {
