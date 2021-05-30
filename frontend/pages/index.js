@@ -28,8 +28,9 @@ export default function Home() {
                 <title>FlipAccounts</title>
             </Head>
             <div>
-                <h4 id="homepage-title">A marketplace to buy and sell</h4>
-                <h6 id="slider"><Link href="/"><a>{names[count]}</a></Link>{count < 3 ? " accounts" : ""}</h6>
+                <div id="homepage-title">A marketplace to buy and sell <br/>
+                    <span id="slider"><Link href="/"><a>{names[count]}</a></Link>{count < 3 ? " accounts" : ""}</span>
+                </div>
                 <br/>
                 <div className="search col-sm-8">
                     <form className="d-flex">
@@ -68,7 +69,7 @@ export default function Home() {
                 margin-top: 10px;
                 margin-bottom: 20px;
               }
-             
+
               #ready-to-sell a {
                 text-decoration: none !important;
               }
@@ -78,12 +79,22 @@ export default function Home() {
               }
 
               @media (max-width: 990px) {
-                homepage-title {
+                #homepage-title {
+                  font-size: large;
+                }
+
+                #slider {
+                  font-size: medium;
+                }
+              }
+
+              @media (min-width: 992px) {
+                #homepage-title {
                   font-size: x-large;
                 }
 
-                slider {
-                  font-size: medium;
+                #slider {
+                  font-size: large;
                 }
               }
             `}</style>
