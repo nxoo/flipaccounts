@@ -1,10 +1,17 @@
 from django.urls import path, include
 from rest_framework import routers
-from .views import UserViewSet, FreelanceViewSet
+from . import views
 
 router = routers.DefaultRouter()
-router.register(r'users', UserViewSet)
-router.register(r'freelance', FreelanceViewSet)
+router.register(r'users', views.UserViewSet)
+router.register(r'chat', views.ChatViewSet)
+router.register(r'message', views.MessageViewSet)
+router.register(r'notification', views.NotificationViewSet)
+router.register(r'transaction', views.TransactionViewSet)
+router.register(r'escrow', views.EscrowViewSet)
+router.register(r'offer', views.OfferViewSet)
+router.register(r'freelance', views.FreelanceViewSet)
+router.register(r'socialmedia', views.SocialMediaViewSet)
 
 
 urlpatterns = [

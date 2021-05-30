@@ -2,16 +2,16 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.db.models import Count, Sum
 from admin_totals.admin import ModelAdminTotals
-
-from .models import Profile, Freelance, Chat, Message, Notification, Offer, Transaction, Escrow, SocialMedia
+from genericadmin.admin import GenericAdminModelAdmin, TabularInlineWithGeneric
+from . import models
 from .forms import CustomUserChangeForm, CustomUserCreationForm
 
 
-@admin.register(Profile)
+@admin.register(models.Profile)
 class CustomUserAdmin(ModelAdminTotals):
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
-    model = Profile
+    model = models.Profile
     list_display = ['email', 'username', 'country', 'trust_score']
     list_filter = ['trust_score']
     list_totals = [('email', Count)]
@@ -21,36 +21,29 @@ class CustomUserAdmin(ModelAdminTotals):
     }))
 
 
-@admin.register(Freelance)
-class MyFreelance(ModelAdminTotals):
-    list_display = ['company', 'category', 'owner', 'price', 'earned', 'no_of_gigs', 'date_of_reg', 'country']
-    list_filter = ['category', 'company']
-    list_totals = [('company', Count)]
-    search_fields = ['category', 'company']
-
-
-@admin.register(Transaction)
+@admin.register(models.Transaction)
 class MyTransaction(ModelAdminTotals):
     list_display = ['reference', 'owner', '_type', 'gateway', 'amount', 'closing_balance']
     list_filter = ['_type', 'timestamp', 'gateway']
     list_totals = [('closing_balance', Sum)]
 
 
-class MediaObjectAdminInLine(admin.StackedInline):
-    model = Escrow
-    ct_field = "content_type"
-    ct_fk_field = "object_id"
-    extra = 0
+@admin.register(models.Escrow)
+class MyEscrow(GenericAdminModelAdmin, ModelAdminTotals):
+    list_display = ['seller', 'buyer', 'amount', 'content_type', 'object_id']
+    list_totals = [('seller', Count), ('amount', Sum)]
 
 
-class EscrowAdmin(admin.ModelAdmin):
-    list_display = ['buyer', 'seller', 'amount', 'fee', 'status', 'object_id']
-    list_filter = ['status']
+@admin.register(models.Freelance)
+class MyFreelance(ModelAdminTotals):
+    list_display = ['company', 'category', 'price', 'earned', 'no_of_gigs', 'date_of_reg', 'country', 'owner']
+    list_filter = ['category', 'company']
+    list_totals = [('company', Count)]
+    search_fields = ['category', 'company']
 
 
-admin.site.register(Chat)
-admin.site.register(Message)
-admin.site.register(Notification)
-admin.site.register(Offer)
-admin.site.register(Escrow, EscrowAdmin)
-admin.site.register(SocialMedia)
+@admin.register(models.SocialMedia)
+class MySocialMedia(ModelAdminTotals):
+    list_display = ['category', 'company', 'audience', 'price', 'owner']
+    list_filter = ['company', 'audience']
+    list_totals = [('company', Count)]

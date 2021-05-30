@@ -39,6 +39,16 @@ class Message(models.Model):
         return self.sent_at.__str__()
 
 
+class Notification(models.Model):
+    recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=False,
+                                  related_name="notification_recipient")
+    notification = models.TextField()
+    sent_at = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.notification
+
+
 class Transaction(models.Model):
     class Gateway(models.TextChoices):
         lipisha = '1', "lipisha"
@@ -50,7 +60,8 @@ class Transaction(models.Model):
         withdraw = '2', "withdraw"
         escrow1 = '3', "deposit to escrow"
         escrow2 = '4', "withdraw from escrow"
-        tax = '5', "tax"
+        fee = '5', "fee"
+        promote = '6', "promote"
 
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='transaction_owner',
                               blank=False)
@@ -59,7 +70,7 @@ class Transaction(models.Model):
     amount = MoneyField(max_digits=14, decimal_places=2, default_currency='USD', blank=False)
     closing_balance = MoneyField(max_digits=14, decimal_places=2, default_currency='USD', blank=False)
     timestamp = models.DateTimeField(auto_now_add=True, blank=False)
-    reference = models.CharField(max_length=200, blank=False)
+    reference = models.CharField(max_length=200, blank=False, unique=True)
 
     def __str__(self):
         return self.reference
@@ -93,7 +104,7 @@ class Offer(models.Model):
     class Status(models.TextChoices):
         accept = '1', 'accepted'
         reject = '2', 'rejected'
-        ignore = '3', 'ignored'
+        ignore = '3', 'waiting'
 
     sender = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=False,
                                related_name="offer_sender")
@@ -133,11 +144,12 @@ class Freelance(models.Model):
                               related_name="freelance_owner")
     category = models.CharField(max_length=100, choices=Category.choices, blank=False)
     company = models.CharField(max_length=100, choices=Company.choices, blank=False)
+    rating = models.IntegerField(default=0)
     date_of_reg = models.DateField(blank=False)
-    earned = MoneyField(max_digits=14, decimal_places=2, default_currency='USD')
+    earned = MoneyField(max_digits=14, decimal_places=2, default_currency='USD', default=0)
     no_of_gigs = models.IntegerField(default=0, blank=False)
     country = CountryField()
-    description = models.TextField(max_length=280)
+    description = models.TextField(max_length=280, blank=True)
     price = MoneyField(max_digits=14, decimal_places=2, default_currency='USD', blank=False)
     hide_price = models.BooleanField()
     offers = models.BooleanField()
@@ -145,7 +157,7 @@ class Freelance(models.Model):
     verification_needed = models.BooleanField()
     verified = models.BooleanField()
     original_email = models.BooleanField()
-    pub_date = models.DateField(blank=False)
+    pub_date = models.DateTimeField(blank=False, default=timezone.now)
     sold = models.BooleanField(default=False)
     offer_item = GenericRelation(Offer, content_type_field='content_type', object_id_field='object_id',
                                  related_query_name='freelance')
@@ -178,14 +190,14 @@ class SocialMedia(models.Model):
     price = MoneyField(max_digits=14, decimal_places=2, default_currency='USD', blank=False)
     hide_price = models.BooleanField()
     offers = models.BooleanField()
-    description = models.TextField(max_length=240)
+    description = models.TextField(max_length=240, blank=True)
     no_of_posts = models.IntegerField(default=0, blank=False)
     country = CountryField()
-    date_of_reg = models.DateField(blank=True)
+    date_of_reg = models.DateField(blank=True, null=True)
     original_email = models.BooleanField()
     audience_report = models.BooleanField()
     ownership_verified = models.BooleanField()
-    pub_date = models.DateField(default=timezone.now)
+    pub_date = models.DateTimeField(default=timezone.now)
     sold = models.BooleanField(default=False)
     offer_item = GenericRelation(Offer, content_type_field='content_type', object_id_field='object_id',
                                  related_query_name='social_media')
@@ -194,13 +206,3 @@ class SocialMedia(models.Model):
 
     def __str__(self):
         return self.description
-
-
-class Notification(models.Model):
-    recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=False,
-                                  related_name="notification_recipient")
-    notification = models.TextField()
-    sent_at = models.DateTimeField(default=timezone.now)
-
-    def __str__(self):
-        return self.notification
