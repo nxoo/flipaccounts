@@ -28,34 +28,33 @@ export default function Home() {
                 <title>FlipAccounts</title>
             </Head>
             <div>
-                <h2>A market to buy and sell</h2>
-                <h5 id="slider"><Link href="/"><a>{names[count]}</a></Link>{count < 3 ? " accounts": ""}</h5>
-                <p>Transact safely using our escrow service</p>
+                <div id="homepage-title">A marketplace to buy and sell <br/>
+                    <span id="slider"><Link href="/"><a>{names[count]}</a></Link>{count < 3 ? " accounts" : ""}</span>
+                </div>
+                <br/>
                 <div className="search col-sm-8">
                     <form className="d-flex">
                         <input className="form-control me-2" type="search"
-                               placeholder="e.g. Instagram, TranscribeMe" aria-label="Search"/>
+                               placeholder="e.g. Instagram, Verbit" aria-label="Search"/>
                         <button className="btn btn-success" type="submit">Search</button>
                     </form>
                 </div>
-                <br/>
-                <p>Read to sell? <Link href="/sell"><a id="read-to-sell">Sell Now</a></Link></p>
+                <p id="ready-to-sell">Read to sell? <Link href="/sell"><a id="">Sell Now</a></Link></p>
                 <br/>
                 <span><b>Promoted</b> <span><i className="bi-arrow-up-right-square-fill"></i></span></span>
-                <div className="card" style={{width: "18rem"}}>
-                    <div className="card-body" style={{marginLeft: "20%"}}>
-                        <h5 className="card-title"><a href="/">TranscribeMe</a></h5>
-                        <div style={{marginLeft: "5%"}}>
-                            <p className="card-subtitle mb-1 text-muted">Age: 6 weeks</p>
-                            <p className="card-subtitle mb-1 text-muted">Gigs: 4</p>
-                            <p className="card-subtitle mb-1 text-muted">Earned: $100</p>
+                <div className="row">
+                    <div className="col-sm-4">
+                        <div className="p-4 bg-light">
+                            <h4>Verbit British</h4>
+                            <span className="text-muted"><small>Rating: 8.9</small></span><br/>
+                            <p className="text-muted"><small>Age/Gigs/Earned - New/4/$150</small></p>
+                            <a href="#" className="btn btn-success">$150</a>
                         </div>
-                        <h6 className="card-subtitle mb-2" style={{color: "darkgreen"}}>Price: $500</h6>
                     </div>
                 </div>
             </div>
             <style jsx>{`
-              h2 {
+              #homepage-title {
                 font-weight: bold;
               }
 
@@ -64,14 +63,39 @@ export default function Home() {
               }
 
               div > p > a {
+              }
+
+              #ready-to-sell {
+                margin-top: 10px;
+                margin-bottom: 20px;
+              }
+
+              #ready-to-sell a {
                 text-decoration: none !important;
               }
 
-              .homepage {
+              .row .col-sm-4 {
+                margin-top: 10px;
               }
 
-              :global(body) {
-                background-color: #F6F5EF;
+              @media (max-width: 990px) {
+                #homepage-title {
+                  font-size: large;
+                }
+
+                #slider {
+                  font-size: medium;
+                }
+              }
+
+              @media (min-width: 992px) {
+                #homepage-title {
+                  font-size: x-large;
+                }
+
+                #slider {
+                  font-size: large;
+                }
               }
             `}</style>
         </Layout>
