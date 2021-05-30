@@ -61,9 +61,6 @@ export default function Signup() {
             </Head>
             <div className="row">
                 <div className="col-sm-6">
-                    {showError ?
-                        <Alert message={error} type="warning" error={setshowError}/>
-                        : null}
                     <a href="#" onClick={() => signIn('google')}>
                         <div className={googleButton.btn}>
                             <div className={googleButton.wrapper}>
@@ -78,6 +75,9 @@ export default function Signup() {
                     </a>
                     <div className="separator">OR</div>
                     <h4>Sign up with Email</h4>
+                    {showError ?
+                        <Alert message={error} type="warning" error={setshowError}/>
+                        : null}
                     <form onSubmit={handleLogin} method="post">
                         <div>
                             <div className="mb-3">
