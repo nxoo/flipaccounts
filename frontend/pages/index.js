@@ -39,7 +39,7 @@ export default function Home() {
                         <button className="btn btn-success" type="submit">Search</button>
                     </form>
                 </div>
-                <p id="ready-to-sell">Read to sell? <Link href="/sell"><a id="">Sell Now</a></Link></p>
+                <p id="ready-to-sell">Ready to sell? <Link href="/sell"><a id="">Sell Now</a></Link></p>
                 <br/>
                 <span><b>Promoted</b> <span><i className="bi-arrow-up-right-square-fill"></i></span></span>
                 <div className="row">

@@ -69,7 +69,7 @@ export default function Navbar() {
                                 </li>
                                 <li className="nav-item">
                                     <a href="/" className="nav-link">
-                                       <i className="bi bi-shuffle"></i> Escrow <sup
+                                        <i className="bi bi-shuffle"></i> Escrow <sup
                                         className="sups">(0)</sup>
                                     </a>
                                 </li>
@@ -77,7 +77,7 @@ export default function Navbar() {
                         ) : (<></>)}
                         <li className="nav-item">
                             <a href="" className="nav-link" id="sell-nw">
-                               <i className="bi bi-bag-plus-fill"></i> Sell</a>
+                                <i className="bi bi-bag-plus-fill"></i> Sell</a>
                         </li>
                         {session ?
                             <li className="nav-item dropdown">
@@ -87,7 +87,7 @@ export default function Navbar() {
                                 </a>
                                 <ul className="dropdown-menu" aria-labelledby="profileDropdown">
                                     <li><a className="dropdown-item" href="#">
-                                            <i className="bi bi-person-circle"></i> Profile</a>
+                                        <i className="bi bi-person-circle"></i> Profile</a>
                                     </li>
                                     <li><a className="dropdown-item" href="#">
                                         <i className=" bi bi-wallet"></i> Wallet
@@ -145,9 +145,18 @@ export default function Navbar() {
               #inbox-mobile {
                 color: #cccccc;
               }
+
               .dropdown ul li a {
                 font-weight: 500;
               }
+
+              .navbar-toggler:focus,
+              .navbar-toggler:active,
+              .navbar-toggler-icon:focus {
+                outline: none;
+                box-shadow: none;
+              }
+
               @media (min-width: 992px) {
                 #inbox-mobile {
                   display: none;
