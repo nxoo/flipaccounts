@@ -31,6 +31,7 @@ class MyTransaction(ModelAdminTotals):
 @admin.register(models.Escrow)
 class MyEscrow(GenericAdminModelAdmin, ModelAdminTotals):
     list_display = ['seller', 'buyer', 'amount', 'content_type', 'object_id']
+    list_filter = ['status']
     list_totals = [('seller', Count), ('amount', Sum)]
 
 
