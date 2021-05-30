@@ -1,29 +1,82 @@
+import environ
 from rest_framework import viewsets
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 from dj_rest_auth.registration.views import SocialLoginView
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
-from django.conf import settings
+from . import models
+from . import serializers
 
-from .models import Profile, Freelance
-from .serializers import UserSerializer, FreelanceSerializer
+env = environ.Env()
+
+
+class GoogleLogin(SocialLoginView):
+    authentication_classes = []  # disable authentication
+    adapter_class = GoogleOAuth2Adapter
+    callback_url = env('CLIENT_HOST')
+    client_class = OAuth2Client
 
 
 class UserViewSet(viewsets.ModelViewSet):
-    queryset = Profile.objects.all()
-    serializer_class = UserSerializer
+    queryset = models.Profile.objects.all()
+    serializer_class = serializers.UserSerializer
 
 
-class FreelanceViewSet(viewsets.ModelViewSet):
-    queryset = Freelance.objects.all()
-    serializer_class = FreelanceSerializer
+class ChatViewSet(viewsets.ModelViewSet):
+    queryset = models.Chat.objects.all()
+    serializer_class = serializers.ChatSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(user_a=self.request.user)
+
+
+class MessageViewSet(viewsets.ModelViewSet):
+    queryset = models.Message.objects.all()
+    serializer_class = serializers.MessageSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(sender=self.request.user)
+
+
+class NotificationViewSet(viewsets.ModelViewSet):
+    queryset = models.Notification.objects.all()
+    serializer_class = serializers.NotificationSerializer
+
+
+class TransactionViewSet(viewsets.ModelViewSet):
+    queryset = models.Transaction.objects.all()
+    serializer_class = serializers.TransactionSerializer
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
 
-class GoogleLogin(SocialLoginView):
-    authentication_classes = [] # disable authentication
-    adapter_class = GoogleOAuth2Adapter
-    callback_url = "http://localhost:3000"
-    client_class = OAuth2Client
+class EscrowViewSet(viewsets.ModelViewSet):
+    queryset = models.Escrow.objects.all()
+    serializer_class = serializers.EscrowSerializer
 
+    def perform_create(self, serializer):
+        serializer.save(buyer=self.request.user)
+
+
+class OfferViewSet(viewsets.ModelViewSet):
+    queryset = models.Offer.objects.all()
+    serializer_class = serializers.OfferSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(sender=self.request.user)
+
+
+class FreelanceViewSet(viewsets.ModelViewSet):
+    queryset = models.Freelance.objects.all()
+    serializer_class = serializers.FreelanceSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
+
+class SocialMediaViewSet(viewsets.ModelViewSet):
+    queryset = models.SocialMedia.objects.all()
+    serializer_class = serializers.SocialMediaSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)

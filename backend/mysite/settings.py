@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'flip',
     'admin_totals',
     'djmoney',
+    'genericadmin',
 ]
 
 SITE_ID = 1
