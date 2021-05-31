@@ -31,7 +31,6 @@ export default function Navbar() {
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                    <div id="collapse">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         <li className="nav-item dropdown">
                             <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -120,7 +119,6 @@ export default function Navbar() {
                                 </>
                             )}
                     </ul>
-        </div>
                 </div>
             </div>
             <style jsx>{`
