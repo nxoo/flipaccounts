@@ -12,10 +12,12 @@ django-allauth==0.44.0
 django-cors-headers==3.7.0
 django-countries==7.2.1
 django-environ==0.4.5
+django-genericadmin==0.7.0
 django-money==2.0
 djangorestframework==3.12.4
 djangorestframework-simplejwt==4.7.0
 idna==2.10
+lipisha==0.3.0
 oauthlib==3.1.0
 py-moneyed==1.2
 pycparser==2.20

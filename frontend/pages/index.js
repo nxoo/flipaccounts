@@ -35,13 +35,13 @@ export default function Home() {
                 <div className="search col-sm-8">
                     <form className="d-grid gap-2 d-md-flex">
                         <div className="col-auto">
-                        <select className="form-select" aria-label="Default select example" required>
-                            <option value="">Category</option>
-                            <option value="1">Freelance</option>
-                            <option value="2">Social Media</option>
-                            <option value="3">Gaming</option>
-                            <option value="4">Verification</option>
-                        </select>
+                            <select className="form-select" aria-label="Default select example" required>
+                                <option value="">Category</option>
+                                <option value="1">Freelance</option>
+                                <option value="2">Social Media</option>
+                                <option value="3">Gaming</option>
+                                <option value="4">Verification</option>
+                            </select>
                         </div>
                         <input className="form-control me-2" type="search"
                                placeholder="e.g. Instagram, Verbit" aria-label="Search" required/>
@@ -49,14 +49,16 @@ export default function Home() {
                     </form>
                 </div>
                 <p id="ready-to-sell">Ready to sell? <Link href="/sell"><a id="">Sell Now</a></Link></p>
-                <span><b>Promoted</b> <span><i className="bi-arrow-up-right-square-fill"></i></span></span>
-                <div className="row">
-                    <div className="col-sm-4">
-                        <div className="p-4 bg-light">
-                            <h4>Verbit British</h4>
-                            <span className="text-muted"><small>Rating: 8.9</small></span><br/>
-                            <p className="text-muted"><small>Age/Gigs/Earned - New/4/$150</small></p>
-                            <a href="#" className="btn btn-success">$150</a>
+                <div className="advert">
+                    <span><b>Promoted</b> <span><i className="bi-arrow-up-right-square-fill"></i></span></span>
+                    <div className="row">
+                        <div className="col-sm-4">
+                            <div className="p-4 bg-light">
+                                <h4>Verbit British</h4>
+                                <span className="text-muted"><small>Rating: 8.9</small></span><br/>
+                                <p className="text-muted"><small>Age/Gigs/Earned - New/4/$150</small></p>
+                                <a href="#" className="btn btn-success">$150</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -103,6 +105,10 @@ export default function Home() {
 
                 #slider {
                   font-size: large;
+                }
+
+                .advert {
+                  margin-top: 50px;
                 }
               }
             `}</style>
