@@ -31,6 +31,7 @@ export default function Navbar() {
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                    <div id="collapse">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         <li className="nav-item dropdown">
                             <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -60,7 +61,7 @@ export default function Navbar() {
                             </ul>
                         </li>
                     </ul>
-                    <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <ul className="navbar-nav ms-auto mb-2 mb-lg-0" id="navbar-nav2">
                         {session ? (<>
                                 <li className="nav-item" id="inbox-pc">
                                     <a href="/" className="nav-link">
@@ -118,8 +119,8 @@ export default function Navbar() {
                                     </li>
                                 </>
                             )}
-
                     </ul>
+        </div>
                 </div>
             </div>
             <style jsx>{`
@@ -170,7 +171,7 @@ export default function Navbar() {
                 #inbox-pc {
                   display: none;
                 }
-                .navbar .container {
+                #collapse {
                   margin-left: 10px;
                   margin-right: 10px;
                 }
