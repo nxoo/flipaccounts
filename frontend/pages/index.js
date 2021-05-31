@@ -34,8 +34,17 @@ export default function Home() {
                 <br/>
                 <div className="search col-sm-8">
                     <form className="d-grid gap-2 d-md-flex">
+                        <div className="col-auto">
+                        <select className="form-select" aria-label="Default select example" required>
+                            <option value="">Category</option>
+                            <option value="1">Freelance</option>
+                            <option value="2">Social Media</option>
+                            <option value="3">Gaming</option>
+                            <option value="4">Verification</option>
+                        </select>
+                        </div>
                         <input className="form-control me-2" type="search"
-                               placeholder="e.g. Instagram, Verbit" aria-label="Search"/>
+                               placeholder="e.g. Instagram, Verbit" aria-label="Search" required/>
                         <button className="btn btn-success" type="submit">Search</button>
                     </form>
                 </div>
@@ -74,7 +83,7 @@ export default function Home() {
               }
 
               .row .col-sm-4 {
-                margin-top: 10px;
+                margin-top: 5px;
               }
 
               @media (max-width: 990px) {
