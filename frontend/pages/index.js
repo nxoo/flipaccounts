@@ -33,14 +33,13 @@ export default function Home() {
                 </div>
                 <br/>
                 <div className="search col-sm-8">
-                    <form className="d-flex">
+                    <form className="d-grid gap-2 d-md-flex">
                         <input className="form-control me-2" type="search"
                                placeholder="e.g. Instagram, Verbit" aria-label="Search"/>
                         <button className="btn btn-success" type="submit">Search</button>
                     </form>
                 </div>
                 <p id="ready-to-sell">Ready to sell? <Link href="/sell"><a id="">Sell Now</a></Link></p>
-                <br/>
                 <span><b>Promoted</b> <span><i className="bi-arrow-up-right-square-fill"></i></span></span>
                 <div className="row">
                     <div className="col-sm-4">
@@ -80,7 +79,7 @@ export default function Home() {
 
               @media (max-width: 990px) {
                 #homepage-title {
-                  font-size: large;
+                  font-size: larger;
                 }
 
                 #slider {

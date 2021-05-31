@@ -21,7 +21,7 @@ export default function Navbar() {
                 </Link>
                 {session ?
                     <a href="" className="navbar-brand" id="inbox-mobile">
-                        <i className="fs-4 bi bi-envelope-fill"></i> <sup className="sups">(0)</sup>
+                        <i className="fs-5 bi bi-envelope-fill"></i> <sup className="sups">(0)</sup>
                     </a>
                     : null
                 }
