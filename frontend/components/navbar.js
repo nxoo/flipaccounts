@@ -19,7 +19,7 @@ export default function Navbar() {
                 <Link href="/">
                     <a className="navbar-brand" id="navbar-brand">FlipAccounts</a>
                 </Link>
-                {session ?
+                {!session ?
                     <a href="" className="navbar-brand" id="inbox-mobile">
                         <i className="fs-5 bi bi-envelope-fill"></i> <sup className="sups">(0)</sup>
                     </a>
@@ -50,7 +50,7 @@ export default function Navbar() {
                         <li className="nav-item dropdown">
                             <a className="nav-link dropdown-toggle" href="#" id="moreDropdown" role="button"
                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <i className="bi bi-three-dots-vertical"></i> More
+                                <i className="bi bi-three-dots"></i> More
                             </a>
                             <ul className="dropdown-menu" aria-labelledby="moreDropdown">
                                 <li><a className="dropdown-item" href="#">How to buy</a></li>
@@ -156,6 +156,9 @@ export default function Navbar() {
                 outline: none;
                 box-shadow: none;
               }
+              .navbar-toggler {
+                border: none;
+                }
 
               @media (min-width: 992px) {
                 #inbox-mobile {
@@ -166,6 +169,10 @@ export default function Navbar() {
               @media (max-width: 990px) {
                 #inbox-pc {
                   display: none;
+                }
+                .navbar .container {
+                  margin-left: 10px;
+                  margin-right: 10px;
                 }
               }
             `}</style>

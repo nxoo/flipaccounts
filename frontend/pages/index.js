@@ -108,7 +108,7 @@ export default function Home() {
                 }
 
                 .advert {
-                  margin-top: 50px;
+                  margin-top: 40px;
                 }
               }
             `}</style>
