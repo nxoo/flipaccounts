@@ -13,7 +13,7 @@ function Alert({message, type, error}) {
         <div className={`alert alert-${type} alert-dismissible fade show`} role="alert">
             {message} <strong>!</strong>
             <button onClick={() => error(false)} type="button" className="btn-close" data-bs-dismiss="alert"
-                    aria-label="Close"></button>
+                    aria-label="Close"/>
         </div>
     )
 }
@@ -24,7 +24,7 @@ export default function Signup() {
     const [password1, setPassword1] = useState('')
     const [password2, setPassword2] = useState('')
     const [error, setError] = useState('')
-    const [showError, setshowError] = useState('')
+    const [showError, setShowError] = useState('')
     const router = useRouter()
     const [session, loading] = useSession()
 
@@ -32,13 +32,14 @@ export default function Signup() {
         event.preventDefault()
         const data = {email, password1, password2}
         if (password1 !== password2) {
-            setshowError(true)
+            setShowError(true)
             setError("Passwords didn't match")
         } else if (password1 === password2 && password1.length < 8) {
-            setshowError(true)
+            setShowError(true)
             setError("Password length can't be less than 8")
         } else {
             const res = await signUp(data)
+            console.log(data)
             if (res.status === 201) {
                 await signIn('credentials', {
                         email: res.data.user.email,
@@ -57,7 +58,7 @@ export default function Signup() {
     return (
         <Layout>
             <Head>
-                <title>Login</title>
+                <title>Sign up</title>
             </Head>
             <div className="row">
                 <div className="col-sm-6">
@@ -76,7 +77,7 @@ export default function Signup() {
                     <div className="separator">OR</div>
                     <h4>Sign up with Email</h4>
                     {showError ?
-                        <Alert message={error} type="warning" error={setshowError}/>
+                        <Alert message={error} type="warning" error={setShowError}/>
                         : null}
                     <form onSubmit={handleLogin} method="post">
                         <div>

@@ -19,23 +19,23 @@ export default function Navbar() {
                 <Link href="/">
                     <a className="navbar-brand" id="navbar-brand">FlipAccounts</a>
                 </Link>
-                {!session ?
+                {session ?
                     <a href="" className="navbar-brand" id="inbox-mobile">
-                        <i className="fs-5 bi bi-envelope-fill"></i> <sup className="sups">(0)</sup>
+                        <i className="bi bi-chat-right-dots-fill"/> <sup className="sups">(0)</sup>
                     </a>
                     : null
                 }
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span>
+                    <span className="navbar-toggler-icon" />
                 </button>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         <li className="nav-item dropdown">
                             <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <i className="bi bi-layout-wtf"></i> Browse
+                                <i className="bi bi-grid-fill" /> Browse
                             </a>
                             <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a className="dropdown-item" href="#">Freelance</a></li>
@@ -45,12 +45,12 @@ export default function Navbar() {
                             </ul>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#"><i className="bi bi-search"></i> Search</a>
+                            <a className="nav-link" href="#"><i className="bi bi-search"/> Search</a>
                         </li>
                         <li className="nav-item dropdown">
                             <a className="nav-link dropdown-toggle" href="#" id="moreDropdown" role="button"
                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <i className="bi bi-three-dots"></i> More
+                                <i className="bi bi-three-dots" /> More
                             </a>
                             <ul className="dropdown-menu" aria-labelledby="moreDropdown">
                                 <li><a className="dropdown-item" href="#">How to buy</a></li>
@@ -64,12 +64,12 @@ export default function Navbar() {
                         {session ? (<>
                                 <li className="nav-item" id="inbox-pc">
                                     <a href="/" className="nav-link">
-                                        <i className="bi bi-envelope-fill"></i> <sup className="sups">(0)</sup>
+                                        <i className="bi bi-chat-right-dots-fill" /> <sup className="sups">(0)</sup>
                                     </a>
                                 </li>
                                 <li className="nav-item">
                                     <a href="/" className="nav-link">
-                                        <i className="bi bi-shuffle"></i> Escrow <sup
+                                        <i className="bi bi-shuffle" /> Escrow <sup
                                         className="sups">(0)</sup>
                                     </a>
                                 </li>
@@ -77,27 +77,27 @@ export default function Navbar() {
                         ) : (<></>)}
                         <li className="nav-item">
                             <a href="" className="nav-link" id="sell-nw">
-                                <i className="bi bi-bag-plus-fill"></i> Sell</a>
+                                <i className="bi bi-bag-plus-fill"/> Sell</a>
                         </li>
                         {session ?
                             <li className="nav-item dropdown">
                                 <a className="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i className="bi bi-person-fill"></i> {session.user.username.capitalize()}
+                                    <i className="bi bi-person-fill"/> {session.user.username.capitalize()}
                                 </a>
                                 <ul className="dropdown-menu" aria-labelledby="profileDropdown">
                                     <li><a className="dropdown-item" href="#">
-                                        <i className="bi bi-person-circle"></i> Profile</a>
+                                        <i className="bi bi-person-circle"/> Profile</a>
                                     </li>
                                     <li><a className="dropdown-item" href="#">
-                                        <i className=" bi bi-wallet"></i> Wallet
+                                        <i className=" bi bi-wallet2"/> Wallet
                                     </a></li>
                                     <li><a className="dropdown-item" href="#">
-                                        <i className="bi bi bi-list"></i> My Listings</a></li>
+                                        <i className="bi bi bi-list"/> My Listings</a></li>
                                     <Link href="#">
                                         <li>
                                             <a onClick={handleLogout} className="dropdown-item" href="#">
-                                                <i className="bi bi-box-arrow-in-right"></i> Log out</a>
+                                                <i className="bi bi-box-arrow-in-right"/> Log out</a>
                                         </li>
                                     </Link>
                                 </ul>
@@ -106,13 +106,13 @@ export default function Navbar() {
                                     <li className="nav-item">
                                         <Link href="/signup">
                                             <a className="nav-link">
-                                                <i className="bi bi-check2-square"></i> Sign up</a>
+                                                <i className="bi bi-check2-square"/> Sign up</a>
                                         </Link>
                                     </li>
                                     <li className="nav-item">
                                         <Link href="/login">
                                             <a className="nav-link">
-                                                <i className="bi bi-person-fill"></i> Login
+                                                <i className="bi bi-person-fill"/> Login
                                             </a>
                                         </Link>
                                     </li>
@@ -155,9 +155,10 @@ export default function Navbar() {
                 outline: none;
                 box-shadow: none;
               }
+
               .navbar-toggler {
                 border: none;
-                }
+              }
 
               @media (min-width: 992px) {
                 #inbox-mobile {
