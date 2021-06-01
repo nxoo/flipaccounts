@@ -60,7 +60,7 @@ export default function Navbar() {
                             </ul>
                         </li>
                     </ul>
-                    <ul className="navbar-nav ms-auto mb-2 mb-lg-0" id="navbar-nav2">
+                    <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                         {session ? (<>
                                 <li className="nav-item" id="inbox-pc">
                                     <a href="/" className="nav-link">
@@ -168,10 +168,6 @@ export default function Navbar() {
               @media (max-width: 990px) {
                 #inbox-pc {
                   display: none;
-                }
-                #collapse {
-                  margin-left: 10px;
-                  margin-right: 10px;
                 }
               }
             `}</style>
