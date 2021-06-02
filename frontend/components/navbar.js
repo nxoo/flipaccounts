@@ -21,7 +21,7 @@ export default function Navbar() {
                 </Link>
                 {session ?
                     <a href="" className="navbar-brand" id="inbox-mobile">
-                        <i className="bi bi-chat-right-dots-fill"/> <sup className="sups">(0)</sup>
+                        <i className="bi bi-envelope-fill"/> <sup className="sups">(0)</sup>
                     </a>
                     : null
                 }
@@ -64,7 +64,7 @@ export default function Navbar() {
                         {session ? (<>
                                 <li className="nav-item" id="inbox-pc">
                                     <a href="/" className="nav-link">
-                                        <i className="bi bi-chat-right-dots-fill" /> <sup className="sups">(0)</sup>
+                                        <i className="bi bi-envelope-fill" /> <sup className="sups">(0)</sup>
                                     </a>
                                 </li>
                                 <li className="nav-item">
@@ -154,6 +154,10 @@ export default function Navbar() {
               .navbar-toggler-icon:focus {
                 outline: none;
                 box-shadow: none;
+              }
+              
+              .navbar-toggler {
+                border: none;
               }
 
               @media (min-width: 992px) {
