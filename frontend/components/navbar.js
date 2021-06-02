@@ -156,10 +156,6 @@ export default function Navbar() {
                 box-shadow: none;
               }
 
-              .navbar-toggler {
-                border: none;
-              }
-
               @media (min-width: 992px) {
                 #inbox-mobile {
                   display: none;
