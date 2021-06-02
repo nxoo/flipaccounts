@@ -83,7 +83,7 @@ export default function Navbar() {
                             <li className="nav-item dropdown">
                                 <a className="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i className="bi bi-person-fill"/> {session.user.username.capitalize()}
+                                    <i className="bi bi-person-fill"/> {session.user.username}
                                 </a>
                                 <ul className="dropdown-menu" aria-labelledby="profileDropdown">
                                     <li><a className="dropdown-item" href="#">
