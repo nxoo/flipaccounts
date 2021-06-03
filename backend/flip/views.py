@@ -12,7 +12,7 @@ env = environ.Env()
 class GoogleLogin(SocialLoginView):
     authentication_classes = []  # disable authentication
     adapter_class = GoogleOAuth2Adapter
-    callback_url = env('CLIENT_HOST')
+    callback_url = "https://www.flipaccounts.com/api/auth/callback/google"
     client_class = OAuth2Client
 
 

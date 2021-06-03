@@ -204,7 +204,10 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
+    "https://www.flipaccounts.com",
     "https://flipaccounts.com",
+    "https://flipaccounts.pages.dev",
+    "http://localhost:3000",
     "http://192.168.42.123:3000",
 ]
+
