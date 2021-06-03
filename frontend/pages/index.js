@@ -72,9 +72,6 @@ export default function Home() {
                 text-decoration: none;
               }
 
-              div > p > a {
-              }
-
               #ready-to-sell {
                 margin-top: 10px;
                 margin-bottom: 20px;
