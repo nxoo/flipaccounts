@@ -34,7 +34,7 @@ export default function Login() {
                         <div className={googleButton.btn}>
                             <div className={googleButton.wrapper}>
                                 <img
-                                    src="/images/google.svg" // Route of the image file
+                                    src="/images/google.svg"
                                     alt="Sign In with Google"
                                     className={googleButton.icon}
                                 />
