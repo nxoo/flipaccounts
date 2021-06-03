@@ -8,11 +8,6 @@ String.prototype.capitalize = function () {
 export default function Navbar() {
     const [session, loading] = useSession()
 
-    const handleLogout = async event => {
-        event.preventDefault()
-        await signOut()
-    }
-
     return (
         <nav className="navbar fixed-top navbar-expand-lg navbar-dark" style={{}}>
             <div className="container">
@@ -96,7 +91,7 @@ export default function Navbar() {
                                         <i className="bi bi bi-list"/> My Listings</a></li>
                                     <Link href="#">
                                         <li>
-                                            <a onClick={handleLogout} className="dropdown-item" href="#">
+                                            <a onClick={() => signOut()} className="dropdown-item" href="#">
                                                 <i className="bi bi-box-arrow-in-right"/> Log out</a>
                                         </li>
                                     </Link>

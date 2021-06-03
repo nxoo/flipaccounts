@@ -6,6 +6,7 @@ import {signIn, useSession} from 'next-auth/client'
 import Layout from "../components/layout";
 import {signUp} from "../lib/flip";
 import googleButton from "../styles/google.module.css";
+import AccessDenied from '../components/access-denied'
 
 
 function Alert({message, type, error}) {
@@ -44,7 +45,7 @@ export default function Signup() {
                 await signIn('credentials', {
                         email: res.data.user.email,
                         password: password1,
-                        callbackUrl: 'http://localhost:3000'
+                        callbackUrl: process.env.NEXTAUTH_URL
                     }
                 )
             } else if (res.status === 400) {
@@ -54,6 +55,12 @@ export default function Signup() {
             return res.data
         }
     }
+
+    // When rendering client side don't display anything until loading is complete
+  if (typeof window !== 'undefined' && loading) return null
+
+  // If no session exists, display access denied message
+  if (!session) { return  <Layout><AccessDenied/></Layout> }
 
     return (
         <Layout>

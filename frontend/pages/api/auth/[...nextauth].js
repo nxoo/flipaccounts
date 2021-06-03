@@ -35,14 +35,15 @@ export default NextAuth({
         maxAge: 30 * 24 * 60 * 60, // 30 days
     },
     jwt: {
-        signingKey: process.env.NEXT_PUBLIC_JWT_SECRET,
-        secret: process.env.NEXT_PUBLIC_JWT_SECRET,
         encryption: true,
+        secret: process.env.JWT_SECRET,
+        signingKey: process.env.JWT_SIGNING_KEY,
+        encryptionKey: process.env.JWT_ENCRYPTION_KEY,
     },
     pages: {
         // signIn: '/auth/signin',  // Displays signin buttons
         // signOut: '/auth/signout', // Displays form with sign out button
-        // error: '/auth/error', // Error code passed in query string as ?error=
+        error: '/login', // Error code passed in query string as ?error=
         // verifyRequest: '/auth/verify-request', // Used for check email page
         // newUser: null // If set, new users will be directed here on first sign in
     },
@@ -92,3 +93,4 @@ export default NextAuth({
     // Enable debug messages in the console if you are having problems
     debug: false,
 })
+
