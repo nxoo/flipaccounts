@@ -28,6 +28,7 @@ export default function Signup() {
     const [showError, setShowError] = useState('')
     const router = useRouter()
     const [session, loading] = useSession()
+
     useEffect(() => {
         if(session) {
             router.push('/')
@@ -62,10 +63,10 @@ export default function Signup() {
     }
 
     // When rendering client side don't display anything until loading is complete
-  if (typeof window !== 'undefined' && loading) return null
+    //if (typeof window !== 'undefined' && loading) return null
 
-  // If no session exists, display access denied message
-  if (!session) { return  <Layout><AccessDenied/></Layout> }
+    // If no session exists, display access denied message
+    if (!session) { return  <Layout><AccessDenied/></Layout> }
 
     return (
         <Layout>
