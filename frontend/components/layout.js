@@ -1,16 +1,9 @@
 import Head from "next/head";
-import { useSession } from 'next-auth/client'
 import Navbar from "./navbar";
 
 
 
 export default function Layout({children}) {
-    const [ loading ] = useSession()
-
-    // When rendering client side don't display anything until loading is complete
-    if (typeof window !== 'undefined' && loading) return null
-
-
     return (
         <>
             <Head>

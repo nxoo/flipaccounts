@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import Link from "next/link";
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import {useRouter} from 'next/router'
 import {signIn, useSession} from 'next-auth/client'
 import Layout from "../components/layout";
@@ -28,6 +28,11 @@ export default function Signup() {
     const [showError, setShowError] = useState('')
     const router = useRouter()
     const [session, loading] = useSession()
+    useEffect(() => {
+        if(session) {
+            router.push('/')
+        }
+    })
 
     const handleLogin = async event => {
         event.preventDefault()
