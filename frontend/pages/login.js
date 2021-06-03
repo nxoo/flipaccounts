@@ -31,6 +31,9 @@ export default function Login() {
             setErrorMessage(error)
             setShowError(true)
         }
+        if(session) {
+            router.push('/')
+        }
     })
 
     const handleLogin = async (event) => {

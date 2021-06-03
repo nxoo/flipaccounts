@@ -36,7 +36,8 @@ DEBUG = env('DEBUG')
 # Raises django's ImproperlyConfigured exception if SECRET_KEY not in os.environ
 SECRET_KEY = env('SECRET_KEY')
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split(",")
+ALLOWED_HOSTS = [] if not any(ALLOWED_HOSTS) else ALLOWED_HOSTS
 
 # Application definition
 
@@ -204,7 +205,10 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
+    "https://www.flipaccounts.com",
     "https://flipaccounts.com",
+    "https://flipaccounts.pages.dev",
+    "http://localhost:3000",
     "http://192.168.42.123:3000",
 ]
+
