@@ -28,10 +28,9 @@ export default function Home() {
                 <title>FlipAccounts</title>
             </Head>
             <div>
-                <div id="homepage-title">A marketplace to buy and sell <br/>
+                <h2 id="homepage-title">A marketplace to buy and sell<br/>
                     <span id="slider"><Link href="/"><a>{names[count]}</a></Link>{count < 3 ? " accounts" : ""}</span>
-                </div>
-                <br/>
+                </h2>
                 <div className="search col-sm-8">
                     <form className="d-grid gap-2 d-md-flex">
                         <div className="col-auto">
@@ -66,6 +65,7 @@ export default function Home() {
             <style jsx>{`
               #homepage-title {
                 font-weight: bold;
+                margin-bottom: 20px;
               }
 
               #slider > a {
@@ -87,21 +87,21 @@ export default function Home() {
 
               @media (max-width: 990px) {
                 #homepage-title {
-                  font-size: larger;
+                    font-size: 22px;
                 }
 
                 #slider {
-                  font-size: medium;
+                  font-size: 18px;
                 }
               }
 
               @media (min-width: 992px) {
                 #homepage-title {
-                  font-size: x-large;
+                  font-size: ;
                 }
 
                 #slider {
-                  font-size: large;
+                  font-size: x-large;
                 }
 
                 .advert {
