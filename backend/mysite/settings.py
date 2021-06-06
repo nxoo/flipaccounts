@@ -107,7 +107,7 @@ DATABASES = {
     # read os.environ['DATABASE_URL'] and raises ImproperlyConfigured exception if not found
     'default': env.db(),
     # read os.environ['SQLITE_URL']
-    # 'extra': env.db('SQLITE_URL', default='sqlite:////tmp/my-tmp-sqlite.db')
+    'extra': env.db('SQLITE_URL', default='sqlite:////tmp/flipaccounts.db')
 }
 
 # Password validation
@@ -205,15 +205,8 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-CORS_ALLOWED_ORIGINS = [
-    "https://www.flipaccounts.com",
-    "http://www.flipaccounts.com",
-    "https://flipaccounts.com",
-    "http://flipaccounts.com",
-    "https://flipaccounts.pages.dev",
-    "http://localhost:3000",
-    "http://192.168.42.123:3000",
-]
+CORS_ALLOWED_ORIGINS = os.environ.get("CORS_ALLOWED_ORIGINS", "").split(",")
+CORS_ALLOWED_ORIGINS= [] if not any(CORS_ALLOWED_ORIGINS) else CORS_ALLOWED_ORIGINS
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
