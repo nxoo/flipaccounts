@@ -64,7 +64,7 @@ INSTALLED_APPS = [
     'genericadmin',
 ]
 
-SITE_ID = 1
+SITE_ID = 2
 
 AUTH_USER_MODEL = 'flip.Profile'
 
@@ -207,9 +207,14 @@ SOCIALACCOUNT_PROVIDERS = {
 
 CORS_ALLOWED_ORIGINS = [
     "https://www.flipaccounts.com",
+    "http://www.flipaccounts.com",
     "https://flipaccounts.com",
+    "http://flipaccounts.com",
     "https://flipaccounts.pages.dev",
     "http://localhost:3000",
     "http://192.168.42.123:3000",
 ]
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
