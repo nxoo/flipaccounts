@@ -9,7 +9,7 @@ export default NextAuth({
             clientSecret: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET,
         }),
         Providers.Credentials({
-            name: 'Email',
+            name: 'credentials',
             credentials: {
                 email: {label: "Email", type: "email", placeholder: "email@example.com"},
                 password: {label: "Password", type: "password", placeholder: "password"}
@@ -36,9 +36,9 @@ export default NextAuth({
     },
     jwt: {
         encryption: true,
-        secret: process.env.JWT_SECRET,
-        signingKey: process.env.JWT_SIGNING_KEY,
-        encryptionKey: process.env.JWT_ENCRYPTION_KEY,
+        secret: process.env.NEXT_PUBLIC_JWT_SECRET,
+        signingKey: process.env.NEXT_PUBLIC_JWT_SIGNING_KEY,
+        encryptionKey: process.env.NEXT_PUBLIC_JWT_ENCRYPTION_KEY,
     },
     pages: {
         // signIn: '/auth/signin',  // Displays signin buttons

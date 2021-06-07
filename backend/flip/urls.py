@@ -15,5 +15,5 @@ router.register(r'socialmedia', views.SocialMediaViewSet)
 
 
 urlpatterns = [
-    path('api/', include(router.urls)),
+    path('', include(router.urls)),
 ]

@@ -51,7 +51,7 @@ export default function Signup() {
                 await signIn('credentials', {
                         email: res.data.user.email,
                         password: password1,
-                        callbackUrl: process.env.NEXTAUTH_URL
+                        callbackUrl: `${process.env.NEXTAUTH_URL}/signup` 
                     }
                 )
             } else if (res.status === 400) {

@@ -89,12 +89,12 @@ export default function Navbar() {
                                     </a></li>
                                     <li><a className="dropdown-item" href="#">
                                         <i className="bi bi bi-list"/> My Listings</a></li>
-                                    <Link href="#">
-                                        <li>
+                                    <li>
+                                        <Link href="#">
                                             <a onClick={() => signOut()} className="dropdown-item" href="#">
                                                 <i className="bi bi-box-arrow-in-right"/> Log out</a>
-                                        </li>
-                                    </Link>
+                                        </Link>
+                                    </li>
                                 </ul>
                             </li> : (
                                 <>

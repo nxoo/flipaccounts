@@ -39,6 +39,7 @@ export default function Login() {
     const handleLogin = async (event) => {
         event.preventDefault()
         const res = await signIn('credentials', {email, password, callbackUrl: `${process.env.NEXTAUTH_URL}/login`})
+        console.log(res.res)
         if(res) {
             await router.push('/')
         }

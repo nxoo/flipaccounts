@@ -21,7 +21,7 @@ from flip.views import GoogleLogin
 env = environ.Env()
 
 urlpatterns = [
-    path('', include('flip.urls')),
+    path('api/', include('flip.urls')),
     path('rest-auth/', include('dj_rest_auth.urls')),
     path('rest-auth/register/', include('dj_rest_auth.registration.urls')),
     path('rest-auth/google/', GoogleLogin.as_view(), name='google_login'),
