@@ -92,11 +92,11 @@ export default function Home() {
 
               @media (max-width: 990px) {
                 #homepage-title {
-                  font-size: 22px;
+                  font-size: 18px;
                 }
 
                 #slider {
-                  font-size: 18px;
+                  font-size: 17px;
                 }
               }
 
