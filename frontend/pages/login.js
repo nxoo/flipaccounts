@@ -64,7 +64,7 @@ export default function Login() {
                     <h4>Log in with Email</h4>
                     <form onSubmit={handleLogin} method="post">
                         <div>
-                            <div className="mb-3">
+                            <div className="mb-2">
                                 <input
                                     type="email"
                                     name="email"
@@ -76,7 +76,7 @@ export default function Login() {
                                     required
                                 />
                             </div>
-                            <div className="mb-3">
+                            <div className="mb-2">
                                 <input
                                     type="password"
                                     name="password"
@@ -124,5 +124,4 @@ export default function Login() {
         </Layout>
     )
 }
-
 

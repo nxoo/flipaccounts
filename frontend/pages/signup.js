@@ -94,7 +94,7 @@ export default function Signup() {
                         : null}
                     <form onSubmit={handleLogin} method="post">
                         <div>
-                            <div className="mb-3">
+                            <div className="mb-2">
                                 <input
                                     type="email"
                                     name="email"
@@ -106,7 +106,7 @@ export default function Signup() {
                                     required
                                 />
                             </div>
-                            <div className="mb-3">
+                            <div className="mb-2">
                                 <input
                                     type="password"
                                     name="password1"
@@ -118,7 +118,7 @@ export default function Signup() {
                                     required
                                 />
                             </div>
-                            <div className="mb-3">
+                            <div className="mb-2">
                                 <input
                                     type="password"
                                     name="password2"
