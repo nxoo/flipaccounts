@@ -10,8 +10,8 @@ export async function getHostAccessToken(data) {
             data: data,
         })
         return res.data
-    } catch (error) {
-        return null
+    } catch (res) {
+        return res.data
     }
 }
 

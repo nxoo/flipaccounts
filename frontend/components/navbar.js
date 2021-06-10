@@ -9,7 +9,7 @@ export default function Navbar() {
     const [session, loading] = useSession()
 
     return (
-        <nav className="navbar fixed-top navbar-expand-lg navbar-dark" style={{}}>
+        <nav className="navbar fixed-top navbar-expand-lg navbar-dark">
             <div className="container">
                 <Link href="/">
                     <a className="navbar-brand" id="navbar-brand">FlipAccounts</a>
@@ -119,11 +119,15 @@ export default function Navbar() {
             <style jsx>{`
               .nav-item .nav-link {
                 font-weight: bold;
-                color: #cccccc;
+                color: #bbb;
+              }
+
+              .nav-item .nav-link:hover {
+                color: #eee;
               }
 
               #navbar-brand {
-                color: #e2a94e;
+                color: #d8a045;
                 font-weight: bold;
               }
 

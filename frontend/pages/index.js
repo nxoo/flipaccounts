@@ -52,12 +52,16 @@ export default function Home() {
                     <span><b>Promoted</b> <span><i className="bi-arrow-up-right-square-fill"></i></span></span>
                     <div className="row">
                         <div className="col-sm-4">
-                            <div className="p-4 bg-light">
-                                <h4>Verbit British</h4>
-                                <span className="text-muted"><small>Rating: 8.9</small></span><br/>
-                                <p className="text-muted"><small>Age/Gigs/Earned - New/4/$150</small></p>
-                                <a href="#" className="btn btn-success">$150</a>
-                            </div>
+                            <Link href="/link"><a style={{textDecoration: "none", color: "inherit"}}>
+                                <div className="p-4 bg-light">
+                                    <h5>Verbit British</h5>
+                                    <span className="text-muted"><small>
+                                        Rating: 3.9/6.0<br/>
+                                        Age/Gigs/Earned - 3 months/6/$400<br/>
+                                        <strong>$150</strong>, 6 bids
+                                    </small></span>
+                                </div>
+                            </a></Link>
                         </div>
                     </div>
                 </div>
@@ -87,7 +91,7 @@ export default function Home() {
 
               @media (max-width: 990px) {
                 #homepage-title {
-                    font-size: 22px;
+                  font-size: 22px;
                 }
 
                 #slider {
