@@ -49,7 +49,7 @@ export default function Home() {
                 </div>
                 <p id="ready-to-sell">Ready to sell? <Link href="/sell"><a id="">Sell Now</a></Link></p>
                 <div className="advert">
-                    <span><b>Promoted</b> <span><i className="bi-arrow-up-right-square-fill"></i></span></span>
+                    <small><i className="bi-arrow-up-right-square-fill"></i> Promoted</small>
                     <div className="row">
                         <div className="col-sm-4">
                             <Link href="/link"><a style={{textDecoration: "none", color: "inherit"}}>
@@ -65,6 +65,7 @@ export default function Home() {
                         </div>
                     </div>
                 </div>
+                <br/>
             </div>
             <style jsx>{`
               #homepage-title {
@@ -101,7 +102,6 @@ export default function Home() {
 
               @media (min-width: 992px) {
                 #homepage-title {
-                  font-size: ;
                 }
 
                 #slider {
