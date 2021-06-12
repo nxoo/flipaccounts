@@ -29,7 +29,7 @@ export default function Home() {
             </Head>
             <div>
                 <h2 id="homepage-title">A marketplace to buy and sell<br/>
-                    <span id="slider">{names[count]}{count < 3 ? " accounts" : ""}</span>
+                    <span id="slider"><Link href="#"><a>{names[count]}</a></Link>{count < 3 ? " accounts" : ""}</span>
                 </h2>
                 <div className="search col-sm-8">
                     <form className="d-grid gap-2 d-md-flex">

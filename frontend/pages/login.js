@@ -30,7 +30,7 @@ export default function Login() {
     useEffect(async () => {
         if (error) {
             if (error === "CredentialsSignin") {
-                setErrorMessage("Entered wrong Email or Password")
+                setErrorMessage("Incorrect Email or Password")
                 setShowError(true)
             } else {
                 setErrorMessage(error)
@@ -38,13 +38,16 @@ export default function Login() {
             }
         }
         if (session) {
-            await router.push('/')
+            await router.push({
+                pathname: '/',
+            })
         }
     })
 
     const handleLogin = async (event) => {
         event.preventDefault()
-        await signIn('credentials', {email, password, callbackUrl: `${process.env.NEXTAUTH_URL}/login`})
+        await signIn('credentials', {email, password, callbackUrl: `${process.env.NEXTAUTH_URL}/login`,
+        redirect: false})
     }
     return (
         <Layout>
