@@ -7,11 +7,11 @@ import Layout from "../components/layout";
 import googleButton from '../styles/google.module.css'
 
 
-function Alert({message, type}) {
+function Alert({message, errorType, setShowError}) {
     return (
-        <div className={`alert alert-${type} alert-dismissible fade show`} role="alert">
-            {`Wrong! ${message}`}
-            <button onClick={()=>{null}} type="button" className="btn-close" data-bs-dismiss="alert"
+        <div className={`alert alert-${errorType} alert-dismissible fade show`} role="alert">
+            {message}
+            <button onClick={() => setShowError(false)} type="button" className="btn-close" data-bs-dismiss="alert"
                     aria-label="Close"/>
         </div>
     )
@@ -21,18 +21,24 @@ export default function Login() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [errorMessage, setErrorMessage] = useState('')
+    const [errorType, setErrorType] = useState('warning')
     const [showError, setShowError] = useState('')
     const [session, loading] = useSession()
     const router = useRouter()
     const {error} = router.query
 
-    useEffect(() => {
-        if(error){
-            setErrorMessage(error)
-            setShowError(true)
+    useEffect(async () => {
+        if (error) {
+            if (error === "CredentialsSignin") {
+                setErrorMessage("Entered wrong Email or Password")
+                setShowError(true)
+            } else {
+                setErrorMessage(error)
+                setShowError(true)
+            }
         }
-        if(session) {
-            router.push('/')
+        if (session) {
+            await router.push('/')
         }
     })
 
@@ -60,7 +66,9 @@ export default function Login() {
                         </div>
                     </a>
                     <div className="separator">OR</div>
-                    {showError ? <Alert message={errorMessage} type={'warning'}/> : null}
+                    {showError && errorMessage !== "" ?
+                        <Alert message={errorMessage} errorType={errorType} setShowError={setShowError}/>
+                        : null}
                     <h4>Log in with Email</h4>
                     <form onSubmit={handleLogin} method="post">
                         <div>
@@ -70,7 +78,7 @@ export default function Login() {
                                     name="email"
                                     className="form-control"
                                     id="email"
-                                    placeholder="username or email"
+                                    placeholder="Email"
                                     value={email}
                                     onChange={e => setEmail(e.target.value)}
                                     required
@@ -82,7 +90,7 @@ export default function Login() {
                                     name="password"
                                     className="form-control"
                                     id="password"
-                                    placeholder="password"
+                                    placeholder="Password"
                                     value={password}
                                     onChange={e => setPassword(e.target.value)}
                                     autoComplete="true"

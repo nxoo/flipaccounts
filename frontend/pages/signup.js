@@ -57,7 +57,7 @@ export default function Signup() {
                 if (res.status === 201) {
                     setShowError(true)
                     setErrorType("success")
-                    setError(`Sign up successfull. Confirm your email address by clicking on the link sent to `)
+                    setError(`Sign up successful. Confirm your email address by clicking on the link sent to `)
                     setErrorBold(res.data.user.email)
                     setEmail('')
                     setPassword1('')
@@ -121,7 +121,7 @@ export default function Signup() {
                                     name="email"
                                     className="form-control"
                                     id="email"
-                                    placeholder="email"
+                                    placeholder="Email"
                                     value={email}
                                     onChange={e => setEmail(e.target.value)}
                                     required
@@ -134,7 +134,7 @@ export default function Signup() {
                                     name="password1"
                                     className="form-control"
                                     id="password1"
-                                    placeholder="password"
+                                    placeholder="Password"
                                     value={password1}
                                     onChange={e => setPassword1(e.target.value)}
                                     autoComplete="true"
@@ -147,7 +147,7 @@ export default function Signup() {
                                     name="password2"
                                     className="form-control"
                                     id="password2"
-                                    placeholder="confirm password"
+                                    placeholder="Confirm password"
                                     value={password2}
                                     onChange={e => setPassword2(e.target.value)}
                                     autoComplete="true"

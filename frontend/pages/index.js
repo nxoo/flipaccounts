@@ -4,7 +4,7 @@ import {useCallback, useState} from "react";
 import {useEffect} from "react";
 import Layout from "../components/layout";
 
-const names = ['Freelance', 'Social media', 'Gaming', 'Verification services']
+const names = ['freelance', 'social media', 'gaming', 'verification services']
 
 export default function Home() {
     const [count, setCount] = useState(0);
