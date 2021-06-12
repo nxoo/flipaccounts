@@ -6,14 +6,13 @@ import {signIn, useSession} from 'next-auth/client'
 import Layout from "../components/layout";
 import {signUp} from "../lib/flip";
 import googleButton from "../styles/google.module.css";
-import AccessDenied from '../components/access-denied'
 
 
-function Alert({message, type, error}) {
+function Alert({message, messageBold, errorType, setShowError}) {
     return (
-        <div className={`alert alert-${type} alert-dismissible fade show`} role="alert">
-            {message} <strong>!</strong>
-            <button onClick={() => error(false)} type="button" className="btn-close" data-bs-dismiss="alert"
+        <div className={`alert alert-${errorType} alert-dismissible fade show`} role="alert">
+            {message}<strong>{messageBold}</strong>
+            <button onClick={() => setShowError(false)} type="button" className="btn-close" data-bs-dismiss="alert"
                     aria-label="Close"/>
         </div>
     )
@@ -25,40 +24,61 @@ export default function Signup() {
     const [password1, setPassword1] = useState('')
     const [password2, setPassword2] = useState('')
     const [error, setError] = useState('')
+    const [errorBold, setErrorBold] = useState('')
+    const [errorType, setErrorType] = useState('')
     const [showError, setShowError] = useState('')
+
     const router = useRouter()
     const [session, loading] = useSession()
 
-    useEffect(() => {
-        if(session) {
-            router.push('/')
+    useEffect(async () => {
+        if (session) {
+            await router.push('/')
         }
     })
 
-    const handleLogin = async event => {
+    const handleSignup = async event => {
         event.preventDefault()
         const data = {email, password1, password2}
         if (password1 !== password2) {
             setShowError(true)
-            setError("Passwords didn't match")
-        } else if (password1 === password2 && password1.length < 8) {
+            setErrorType("warning")
+            setError("Passwords do not match")
+            setErrorBold('')
+        } else if (password1.length < 8 || password2.length < 8) {
             setShowError(true)
-            setError("Password length can't be less than 8")
+            setErrorType("warning")
+            setError("Password can't be less 8 characters")
+            setErrorBold('')
         } else {
             const res = await signUp(data)
-            console.log(data)
-            if (res.status === 201) {
-                await signIn('credentials', {
-                        email: res.data.user.email,
-                        password: password1,
-                        callbackUrl: `${process.env.NEXTAUTH_URL}/signup` 
-                    }
-                )
-            } else if (res.status === 400) {
-                setError(res)
+            if (res) {
                 console.log(res)
+                if (res.status === 201) {
+                    setShowError(true)
+                    setErrorType("success")
+                    setError(`Sign up successfull. Confirm your email address by clicking on the link sent to `)
+                    setErrorBold(res.data.user.email)
+                    setEmail('')
+                    setPassword1('')
+                    setPassword2('')
+                } else if (res.status === 400) {
+                    setShowError(true)
+                    setErrorType("warning")
+                    setError(Object.values(res.data)[0])
+                    setErrorBold('')
+                } else {
+                    setShowError(true)
+                    setErrorType("warning")
+                    setError("Sign up failed. Try again later")
+                    setErrorBold('')
+                }
+            } else {
+                setShowError(true)
+                setErrorType("warning")
+                setError("Sign up failed. Try again later")
+                setErrorBold('')
             }
-            return res.data
         }
     }
 
@@ -90,9 +110,10 @@ export default function Signup() {
                     <div className="separator">OR</div>
                     <h4>Sign up with Email</h4>
                     {showError ?
-                        <Alert message={error} type="warning" error={setShowError}/>
+                        <Alert message={error} messageBold={errorBold} errorType={errorType}
+                               setShowError={setShowError}/>
                         : null}
-                    <form onSubmit={handleLogin} method="post">
+                    <form onSubmit={handleSignup} method="post">
                         <div>
                             <div className="mb-2">
                                 <input
@@ -100,21 +121,23 @@ export default function Signup() {
                                     name="email"
                                     className="form-control"
                                     id="email"
-                                    placeholder="Email"
+                                    placeholder="email"
                                     value={email}
                                     onChange={e => setEmail(e.target.value)}
                                     required
                                 />
                             </div>
+
                             <div className="mb-2">
                                 <input
                                     type="password"
                                     name="password1"
                                     className="form-control"
                                     id="password1"
-                                    placeholder="Password"
+                                    placeholder="password"
                                     value={password1}
                                     onChange={e => setPassword1(e.target.value)}
+                                    autoComplete="true"
                                     required
                                 />
                             </div>
@@ -124,9 +147,10 @@ export default function Signup() {
                                     name="password2"
                                     className="form-control"
                                     id="password2"
-                                    placeholder="Confirm password"
+                                    placeholder="confirm password"
                                     value={password2}
                                     onChange={e => setPassword2(e.target.value)}
+                                    autoComplete="true"
                                     required
                                 />
                             </div>

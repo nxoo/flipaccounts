@@ -64,7 +64,7 @@ INSTALLED_APPS = [
     'genericadmin',
 ]
 
-SITE_ID = 2
+SITE_ID = int(env('SITE_ID'))
 
 AUTH_USER_MODEL = 'flip.Profile'
 
@@ -186,7 +186,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # AUTHENTICATION_METHOD = 'EMAIL'
 # ACCOUNT_EMAIL_VERIFICATION = 'optional'
 
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
 

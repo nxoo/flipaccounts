@@ -35,9 +35,14 @@ export async function signUp(data) {
             url: `${process.env.NEXT_PUBLIC_HOST}/rest-auth/register/`,
             data: data,
         })
+        //console.log(res)
         return res
-        console.log(res)
-    } catch (error){
-        return error
+    } catch (error) {
+        if (error.response) {
+            //console.log(error.response.data)
+            //console.log(error.response.status)
+            //console.log(error.response.headers)
+        }
+        return error.response
     }
 }

@@ -70,7 +70,7 @@ export default function Login() {
                                     name="email"
                                     className="form-control"
                                     id="email"
-                                    placeholder="Email"
+                                    placeholder="username or email"
                                     value={email}
                                     onChange={e => setEmail(e.target.value)}
                                     required
@@ -82,9 +82,10 @@ export default function Login() {
                                     name="password"
                                     className="form-control"
                                     id="password"
-                                    placeholder="Password"
+                                    placeholder="password"
                                     value={password}
                                     onChange={e => setPassword(e.target.value)}
+                                    autoComplete="true"
                                     required
                                 />
                             </div>
