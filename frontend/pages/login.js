@@ -28,6 +28,7 @@ export default function Login() {
     const {error} = router.query
 
     useEffect(async () => {
+        /*
         if (error) {
             if (error === "CredentialsSignin") {
                 setErrorMessage("Incorrect Email or Password")
@@ -42,12 +43,29 @@ export default function Login() {
                 pathname: '/',
             })
         }
+         */
     })
 
     const handleLogin = async (event) => {
         event.preventDefault()
-        await signIn('credentials', {email, password, callbackUrl: `${process.env.NEXTAUTH_URL}/login`,
-        redirect: false})
+        try {
+            const res = await signIn('credentials',
+                {email, password, callbackUrl: `${process.env.NEXTAUTH_URL}/login`, redirect: false})
+            console.log(res)
+            if (res.status === 401) {
+                setErrorMessage("Incorrect email or password")
+                setErrorType("warning")
+                setShowError(true)
+            } else if (res.status === 200) {
+                setErrorMessage("Login successful")
+                setErrorType("success")
+                setShowError(true)
+                setEmail('')
+                setPassword('')
+            }
+        } catch (error) {
+            console.log('fuck! an error', error)
+        }
     }
     return (
         <Layout>

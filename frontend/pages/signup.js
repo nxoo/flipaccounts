@@ -76,7 +76,7 @@ export default function Signup() {
             } else {
                 setShowError(true)
                 setErrorType("warning")
-                setError("Sign up failed. Try again later")
+                setError("Something went wrong. Try again later")
                 setErrorBold('')
             }
         }
