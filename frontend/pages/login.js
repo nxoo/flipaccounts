@@ -62,6 +62,7 @@ export default function Login() {
         const res = await signIn('credentials',
             {email, password, callbackUrl: `${process.env.NEXTAUTH_URL}/login`, redirect: false})
         if (res) {
+            console.log(res)
             if (res.status === 401) {
                 setErrorMessage("Incorrect email or password")
                 setErrorType("warning")
@@ -72,9 +73,15 @@ export default function Login() {
                 setShowError(true)
                 setEmail('')
                 setPassword('')
+            } else {
+                setErrorMessage("Login Failed, Try again later")
+                setErrorType("warning")
+                setShowError(true)
             }
         } else {
-            return new Error()
+            setErrorMessage("Something went wrong, Try again later")
+            setErrorType("warning")
+            setShowError(true)
         }
     }
     return (

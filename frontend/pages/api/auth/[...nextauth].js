@@ -1,4 +1,5 @@
 import NextAuth from 'next-auth'
+import {GetUserError} from "next-auth/errors";
 import Providers from 'next-auth/providers'
 import {getHostAccessToken, signInWithGoogle} from "../../../lib/flip";
 
@@ -19,16 +20,12 @@ export default NextAuth({
                 const res = await getHostAccessToken(data)
                 if (res) {
                     if (res.status === 200) {
-                        return Promise.resolve(res.data)
+                        return res.data
                     } else if (res.status === 400) {
-                        //new Error(Object.values(res.data)[0])
-                        console.log(Object.values(res.data)[0][0])
-                        return new Error(Object.values(res.data)[0][0])
+                        return null
                     }
                 } else {
-                    console.log('login err', res.data);
-                    //return Promise.reject(new Error(Object.values(error.response.data)[0]));
-                    return res.data
+                    return null
                 }
             }
         })

@@ -78,7 +78,7 @@ export default function Home() {
                         <div className="col-sm-4">
                             <Link href="/link"><a style={{textDecoration: "none", color: "inherit"}}>
                                 <div className="p-4 bg-light">
-                                    <h5>Verbit British</h5>
+                                    <h5>TranscribeMe</h5>
                                     <span className="text-muted"><small>
                                         Rating: 3.9/6.0<br/>
                                         Age/Gigs/Earned - 3 months/6/$400<br/>
@@ -112,7 +112,7 @@ export default function Home() {
               }
 
               .row .col-sm-4 {
-                margin-top: 5px;
+                margin-top: 10px;
               }
 
               @media (max-width: 990px) {
