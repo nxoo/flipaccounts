@@ -1,5 +1,5 @@
 .btn {
-    width: 200px;
+    width: 220px;
     height: 42px;
     background-color: #4285f4;
     border-radius: 2px;
@@ -9,7 +9,7 @@
     position: absolute;
     margin-top: 1px;
     margin-left: 1px;
-    width: 40px;
+    width: 60px;
     height: 40px;
     border-radius: 2px;
     background-color: #fff;
@@ -17,10 +17,9 @@
 
 .icon {
     position: absolute;
-    margin-top: 11px;
-    margin-left: 11px;
-    width: 18px;
-    height: 18px;
+    padding: 4px !important;
+    margin-top: 1px;
+    margin-left: 1px;
 }
 
 .text {

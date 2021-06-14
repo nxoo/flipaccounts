@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Image from "next/image";
 import Link from "next/link";
 import {useState, useEffect} from 'react';
 import {useRouter} from 'next/router';
@@ -63,16 +64,20 @@ export default function Login() {
             {email, password, callbackUrl: `${process.env.NEXTAUTH_URL}/login`, redirect: false})
         if (res) {
             console.log(res)
-            if (res.status === 401) {
+            if (res.error === "400") {
                 setErrorMessage("Incorrect email or password")
                 setErrorType("warning")
                 setShowError(true)
-            } else if (res.status === 200) {
+            } else if (res.status === 200 && res.error !== '504') {
                 setErrorMessage("Login successful")
                 setErrorType("success")
                 setShowError(true)
                 setEmail('')
                 setPassword('')
+            } else if (res.error === "504") {
+                setErrorMessage("Server is offline, Try again later")
+                setErrorType("warning")
+                setShowError(true)
             } else {
                 setErrorMessage("Login Failed, Try again later")
                 setErrorType("warning")
@@ -84,6 +89,22 @@ export default function Login() {
             setShowError(true)
         }
     }
+
+    const loginGoogle = async (event) => {
+        event.preventDefault()
+        try {
+            const res = await signIn('google', {callbackUrl: '/?a=b'})
+            console.log(res)
+        } catch (error) {
+            console.log(error.response)
+            return error
+        } finally {
+            if (session) {
+                console.log("google login success")
+            }
+        }
+    }
+
     return (
         <Layout>
             <Head>
@@ -91,13 +112,14 @@ export default function Login() {
             </Head>
             <div className="row">
                 <div className="col-sm-6">
-                    <a href="#" onClick={() => signIn('google')}>
+                    <a href="#" onClick={loginGoogle}>
                         <div className={googleButton.btn}>
                             <div className={googleButton.wrapper}>
-                                <img
+                                <Image
                                     src="/images/google.svg"
                                     alt="Sign In with Google"
                                     className={googleButton.icon}
+                                    layout="fill"
                                 />
                             </div>
                             <p className={googleButton.text}><b>Log in with Google</b></p>

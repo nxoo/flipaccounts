@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Image from "next/image";
 import Link from "next/link";
 import {useState, useEffect} from 'react'
 import {useRouter} from 'next/router'
@@ -98,10 +99,11 @@ export default function Signup() {
                     <a href="#" onClick={() => signIn('google')}>
                         <div className={googleButton.btn}>
                             <div className={googleButton.wrapper}>
-                                <img
+                                <Image
                                     src="/images/google.svg" // Route of the image file
                                     alt="Sign In with Google"
                                     className={googleButton.icon}
+                                    layout="fill"
                                 />
                             </div>
                             <p className={googleButton.text}><b>Sign up with Google</b></p>

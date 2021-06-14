@@ -1,7 +1,7 @@
 import NextAuth from 'next-auth'
 import {GetUserError} from "next-auth/errors";
 import Providers from 'next-auth/providers'
-import {getHostAccessToken, signInWithGoogle} from "../../../lib/flip";
+import {getHostJWT, signInWithGoogle} from "../../../lib/flip";
 
 export default NextAuth({
     providers: [
@@ -17,15 +17,15 @@ export default NextAuth({
             },
             async authorize(credentials, req) {
                 const data = {email: credentials.email, password: credentials.password}
-                const res = await getHostAccessToken(data)
+                const res = await getHostJWT(data)
                 if (res) {
                     if (res.status === 200) {
-                        return res.data
-                    } else if (res.status === 400) {
-                        return null
+                        return Promise.resolve(res.data)
+                    } else {
+                        return Promise.reject(new Error(res.status))
                     }
                 } else {
-                    return null
+                    return Promise.reject(new Error("504"))
                 }
             }
         })
@@ -60,14 +60,13 @@ export default NextAuth({
                         user.access_token = res.data.access_token
                         user.refresh_token = res.data.refresh_token
                         user.user = res.data.user
-                        console.log(user)
                         return Promise.resolve(user);
+                    } else {
+                        return Promise.reject(new Error('Sign in with Google failed'));
                     }
-                    return true
                 } catch (error) {
                     if (error.response) {
-                        console.log('errrrr', error.response);
-                        return Promise.reject(new Error('Invalid Username  and Password combination'));
+                        return Promise.reject(new Error('Sign in with Google failed'));
                     }
                 }
             }

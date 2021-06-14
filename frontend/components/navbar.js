@@ -1,5 +1,5 @@
 import Link from "next/link";
-import {useSession, signIn, signOut} from 'next-auth/client';
+import {useSession, signOut} from 'next-auth/client';
 
 String.prototype.capitalize = function () {
     return this.charAt(0).toUpperCase() + this.slice(1);
@@ -10,7 +10,7 @@ export default function Navbar() {
 
     const handleLogout = async (event) => {
         event.preventDefault()
-        const res = await signOut()
+        const res = await signOut({callbackUrl: '/login'})
         console.log(res)
     }
 
@@ -20,7 +20,7 @@ export default function Navbar() {
                 <Link href="/">
                     <a className="navbar-brand" id="navbar-brand">Flipaccounts</a>
                 </Link>
-                {session ?
+                {session && !loading ?
                     <Link href="/inbox">
                         <a className="navbar-brand" id="inbox-mobile">
                             <i className="bi bi-envelope-fill"/> <sup className="sups">(0)</sup>
@@ -64,7 +64,7 @@ export default function Navbar() {
                         </li>
                     </ul>
                     <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-                        {session ? (<>
+                        {session && !loading ? (<>
                                 <li className="nav-item" id="inbox-pc">
                                     <a href="/" className="nav-link">
                                         <i className="bi bi-envelope-fill"/> <sup className="sups">(0)</sup>
@@ -81,7 +81,7 @@ export default function Navbar() {
                             <a href="" className="nav-link" id="sell-nw">
                                 <i className="bi bi-bag-plus-fill"/> Sell</a>
                         </li>
-                        {session ?
+                        {session && !loading ?
                             <li className="nav-item dropdown">
                                 <a className="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
                                    data-bs-toggle="dropdown" aria-expanded="false">

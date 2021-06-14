@@ -28,7 +28,7 @@ export default function Home() {
                 <h2 id="homepage-title">A marketplace to buy and sell<br/>
                     <span id="slider"><Link href="#"><a>{names[count]}</a></Link>{count < 3 ? " accounts" : ""}</span>
                 </h2>
-                <div className="search col-sm-8">
+                <div className="search col-sm-7">
                     <form className="d-grid gap-2 d-md-flex">
                         <div className="col-auto">
                             <select className="form-select" aria-label="Default select example" required>
@@ -39,7 +39,7 @@ export default function Home() {
                                 <option value="4">Verification</option>
                             </select>
                         </div>
-                        <input className="form-control me-2" type="search"
+                        <input className="form-control me-1" type="search"
                                placeholder="e.g. Instagram, Verbit" aria-label="Search" required/>
                         <button className="btn btn-success" type="submit">Search</button>
                     </form>
@@ -49,7 +49,7 @@ export default function Home() {
                     <small><i className="bi-arrow-up-right-square-fill"/> Promoted</small>
                     <div className="row">
                         <div className="col-sm-4">
-                            <Link href="/link"><a style={{textDecoration: "none", color: "inherit"}}>
+                            <Link href={`/l/${1}`}><a style={{textDecoration: "none", color: "inherit"}}>
                                 <div className="p-4 bg-light">
                                     <div className="row">
                                         <div className="col-auto">
@@ -63,27 +63,29 @@ export default function Home() {
                                         </div>
                                         <div className="col-auto">
                                             <h5><small><i className="bi bi-instagram"/></small> Instagram</h5>
-                                            <small>
-                                        <span className="text-muted">
-                                        Followers: 100k<br/>
-                                        Category: Memes<br/>
-                                        <strong>$350</strong>, 4 offers
-                                        </span>
-                                            </small>
+                                            <span className="text-muted">
+                                                <small>
+                                                    Followers: 100k<br/>
+                                                    Category: Memes<br/>
+                                                    <strong>$350</strong>, 4 offers
+                                                </small>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
                             </a></Link>
                         </div>
                         <div className="col-sm-4">
-                            <Link href="/link"><a style={{textDecoration: "none", color: "inherit"}}>
+                            <Link href={`/l/${2}`}><a style={{textDecoration: "none", color: "inherit"}}>
                                 <div className="p-4 bg-light">
                                     <h5>TranscribeMe</h5>
-                                    <span className="text-muted"><small>
-                                        Rating: 3.9/6.0<br/>
-                                        Age/Gigs/Earned - 3 months/6/$400<br/>
-                                        <strong>$120</strong>, 13 bids
-                                    </small></span>
+                                    <span className="text-muted">
+                                        <small>
+                                            Rating: 3.9/6.0<br/>
+                                            Age/Gigs/Earned - 3 months/6/$400<br/>
+                                            <strong>$120</strong>, 13 bids
+                                        </small>
+                                    </span>
                                 </div>
                             </a></Link>
                         </div>

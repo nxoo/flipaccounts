@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-export async function getHostAccessToken(data) {
+export async function getHostJWT(data) {
     try {
         const res = await axios({
             method: "post",
