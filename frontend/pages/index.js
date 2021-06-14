@@ -1,4 +1,4 @@
-import Head from 'next/head'
+import Image from "next/image";
 import Link from "next/link";
 import {useCallback, useState} from "react";
 import {useEffect} from "react";
@@ -46,8 +46,35 @@ export default function Home() {
                 </div>
                 <p id="ready-to-sell">Ready to sell? <Link href="/sell"><a id="">Sell Now</a></Link></p>
                 <div className="advert">
-                    <small><i className="bi-arrow-up-right-square-fill" /> Promoted</small>
+                    <small><i className="bi-arrow-up-right-square-fill"/> Promoted</small>
                     <div className="row">
+                        <div className="col-sm-4">
+                            <Link href="/link"><a style={{textDecoration: "none", color: "inherit"}}>
+                                <div className="p-4 bg-light">
+                                    <div className="row">
+                                        <div className="col-auto">
+                                            <Image
+                                                src="/images/profile.jpg"
+                                                alt="profile picture"
+                                                width={70}
+                                                height={70}
+                                                className="rounded-circle float-start"
+                                            />
+                                        </div>
+                                        <div className="col-auto">
+                                            <h5><small><i className="bi bi-instagram"/></small> Instagram</h5>
+                                            <small>
+                                        <span className="text-muted">
+                                        Followers: 100k<br/>
+                                        Category: Memes<br/>
+                                        <strong>$350</strong>, 4 offers
+                                        </span>
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a></Link>
+                        </div>
                         <div className="col-sm-4">
                             <Link href="/link"><a style={{textDecoration: "none", color: "inherit"}}>
                                 <div className="p-4 bg-light">
@@ -55,11 +82,12 @@ export default function Home() {
                                     <span className="text-muted"><small>
                                         Rating: 3.9/6.0<br/>
                                         Age/Gigs/Earned - 3 months/6/$400<br/>
-                                        <strong>$150</strong>, 6 bids
+                                        <strong>$120</strong>, 13 bids
                                     </small></span>
                                 </div>
                             </a></Link>
                         </div>
+
                     </div>
                 </div>
                 <br/>
@@ -106,7 +134,7 @@ export default function Home() {
                 }
 
                 .advert {
-                  margin-top: 40px;
+                  margin-top: 60px;
                 }
               }
             `}</style>
