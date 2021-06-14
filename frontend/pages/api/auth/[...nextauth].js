@@ -16,14 +16,19 @@ export default NextAuth({
             },
             async authorize(credentials, req) {
                 const data = {email: credentials.email, password: credentials.password}
-                try {
-                    const user = await getHostAccessToken(data)
-                    if (user) {
-                        return user
+                const res = await getHostAccessToken(data)
+                if (res) {
+                    if (res.status === 200) {
+                        return Promise.resolve(res.data)
+                    } else if (res.status === 400) {
+                        //new Error(Object.values(res.data)[0])
+                        console.log(Object.values(res.data)[0][0])
+                        return new Error(Object.values(res.data)[0][0])
                     }
-                } catch (error) {
-                    console.log(error)
-                    return null
+                } else {
+                    console.log('login err', res.data);
+                    //return Promise.reject(new Error(Object.values(error.response.data)[0]));
+                    return res.data
                 }
             }
         })
@@ -55,13 +60,18 @@ export default NextAuth({
                 try {
                     const res = await signInWithGoogle(data)
                     if (res) {
-                        user.access_token = res.access_token
-                        user.refresh_token = res.refresh_token
-                        user.user = res.user
+                        user.access_token = res.data.access_token
+                        user.refresh_token = res.data.refresh_token
+                        user.user = res.data.user
+                        console.log(user)
+                        return Promise.resolve(user);
                     }
                     return true
                 } catch (error) {
-                    return null
+                    if (error.response) {
+                        console.log('errrrr', error.response);
+                        return Promise.reject(new Error('Invalid Username  and Password combination'));
+                    }
                 }
             }
         },

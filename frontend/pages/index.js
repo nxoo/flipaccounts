@@ -24,9 +24,6 @@ export default function Home() {
 
     return (
         <Layout>
-            <Head>
-                <title>FlipAccounts</title>
-            </Head>
             <div>
                 <h2 id="homepage-title">A marketplace to buy and sell<br/>
                     <span id="slider"><Link href="#"><a>{names[count]}</a></Link>{count < 3 ? " accounts" : ""}</span>
@@ -49,7 +46,7 @@ export default function Home() {
                 </div>
                 <p id="ready-to-sell">Ready to sell? <Link href="/sell"><a id="">Sell Now</a></Link></p>
                 <div className="advert">
-                    <small><i className="bi-arrow-up-right-square-fill"></i> Promoted</small>
+                    <small><i className="bi-arrow-up-right-square-fill" /> Promoted</small>
                     <div className="row">
                         <div className="col-sm-4">
                             <Link href="/link"><a style={{textDecoration: "none", color: "inherit"}}>

@@ -1,11 +1,22 @@
-import Head from 'next/head'
+import Head from 'next/head';
 import Link from "next/link";
-import {useState, useEffect} from 'react'
-import {useRouter} from 'next/router'
-import {signIn, useSession} from 'next-auth/client'
+import {useState, useEffect} from 'react';
+import {useRouter} from 'next/router';
+import {signIn, useSession} from 'next-auth/client';
+import swal from '@sweetalert/with-react';
 import Layout from "../components/layout";
-import googleButton from '../styles/google.module.css'
+import googleButton from '../styles/google.module.css';
+import Error from "next/error";
 
+function Alert2() {
+    return (
+        swal(
+            <div>
+                <h1>Login success!</h1>
+            </div>
+        )
+    )
+}
 
 function Alert({message, errorType, setShowError}) {
     return (
@@ -48,10 +59,9 @@ export default function Login() {
 
     const handleLogin = async (event) => {
         event.preventDefault()
-        try {
-            const res = await signIn('credentials',
-                {email, password, callbackUrl: `${process.env.NEXTAUTH_URL}/login`, redirect: false})
-            console.log(res)
+        const res = await signIn('credentials',
+            {email, password, callbackUrl: `${process.env.NEXTAUTH_URL}/login`, redirect: false})
+        if (res) {
             if (res.status === 401) {
                 setErrorMessage("Incorrect email or password")
                 setErrorType("warning")
@@ -63,8 +73,8 @@ export default function Login() {
                 setEmail('')
                 setPassword('')
             }
-        } catch (error) {
-            console.log('fuck! an error', error)
+        } else {
+            return new Error()
         }
     }
     return (
@@ -87,7 +97,7 @@ export default function Login() {
                         </div>
                     </a>
                     <div className="separator">OR</div>
-                    {showError && errorMessage !== "" ?
+                    {showError && errorMessage !== "" ? //<Alert2 />
                         <Alert message={errorMessage} errorType={errorType} setShowError={setShowError}/>
                         : null}
                     <h4>Log in with Email</h4>

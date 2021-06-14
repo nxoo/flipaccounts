@@ -1,5 +1,4 @@
 import axios from "axios";
-import {ca} from "date-fns/locale";
 
 
 export async function getHostAccessToken(data) {
@@ -9,9 +8,9 @@ export async function getHostAccessToken(data) {
             url: `${process.env.NEXT_PUBLIC_HOST}/rest-auth/login/`,
             data: data,
         })
-        return res.data
-    } catch (res) {
-        return res.data
+        return await res
+    } catch (error) {
+        return error.response
     }
 }
 
@@ -22,9 +21,9 @@ export async function signInWithGoogle(data) {
             url: `${process.env.NEXT_PUBLIC_HOST}/rest-auth/google/`,
             data: data,
         })
-        return res.data
+        return await res
     } catch (error) {
-        return null
+        return error.response
     }
 }
 
@@ -35,14 +34,8 @@ export async function signUp(data) {
             url: `${process.env.NEXT_PUBLIC_HOST}/rest-auth/register/`,
             data: data,
         })
-        //console.log(res)
-        return res
+        return await res
     } catch (error) {
-        if (error.response) {
-            //console.log(error.response.data)
-            //console.log(error.response.status)
-            //console.log(error.response.headers)
-        }
         return error.response
     }
 }

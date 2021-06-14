@@ -18,7 +18,7 @@ export default function Navbar() {
         <nav className="navbar fixed-top navbar-expand-lg navbar-dark">
             <div className="container">
                 <Link href="/">
-                    <a className="navbar-brand" id="navbar-brand">FlipAccounts</a>
+                    <a className="navbar-brand" id="navbar-brand">Flipaccounts</a>
                 </Link>
                 {session ?
                     <Link href="/inbox">
@@ -38,7 +38,7 @@ export default function Navbar() {
                         <li className="nav-item dropdown">
                             <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <i className="bi bi-grid-fill"/> Browse
+                                <small><i className="bi bi-grid-fill"/></small> Browse
                             </a>
                             <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a className="dropdown-item" href="#">Freelance</a></li>
@@ -48,12 +48,12 @@ export default function Navbar() {
                             </ul>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#"><i className="bi bi-search"/> Search</a>
+                            <a className="nav-link" href="#"><small><i className="bi bi-search"/></small> Search</a>
                         </li>
                         <li className="nav-item dropdown">
                             <a className="nav-link dropdown-toggle" href="#" id="moreDropdown" role="button"
                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <i className="bi bi-three-dots"/> More
+                                {/*<i className="bi bi-three-dots"/>*/}More
                             </a>
                             <ul className="dropdown-menu" aria-labelledby="moreDropdown">
                                 <li><a className="dropdown-item" href="#">How to buy</a></li>
@@ -72,8 +72,7 @@ export default function Navbar() {
                                 </li>
                                 <li className="nav-item">
                                     <a href="/" className="nav-link">
-                                        <i className="bi bi-shuffle"/> Escrow <sup
-                                        className="sups">(0)</sup>
+                                        {/*<i className="bi bi-shuffle"/>*/}Escrow <sup className="sups">(0)</sup>
                                     </a>
                                 </li>
                             </>
@@ -96,7 +95,7 @@ export default function Navbar() {
                                         <i className=" bi bi-wallet2"/> Wallet
                                     </a></li>
                                     <li><a className="dropdown-item" href="#">
-                                        <i className="bi bi bi-list"/> My Listings</a></li>
+                                        <i className="bi bi-list-nested"/> My Listings</a></li>
                                     <li>
                                         <Link href="#">
                                             <a onClick={handleLogout} className="dropdown-item" href="#">
@@ -108,15 +107,12 @@ export default function Navbar() {
                                 <>
                                     <li className="nav-item">
                                         <Link href="/signup">
-                                            <a className="nav-link">
-                                                <i className="bi bi-check2-square"/> Sign up</a>
+                                            <a className="nav-link"><i className="bi bi-check2-square"/> Sign up</a>
                                         </Link>
                                     </li>
                                     <li className="nav-item">
                                         <Link href="/login">
-                                            <a className="nav-link">
-                                                <i className="bi bi-person-fill"/> Login
-                                            </a>
+                                            <a className="nav-link"><i className="bi bi-person-fill"/> Login</a>
                                         </Link>
                                     </li>
                                 </>
