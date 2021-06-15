@@ -33,8 +33,16 @@ export default function Signup() {
     const [session, loading] = useSession()
 
     useEffect(async () => {
-        if (session) {
-            await router.push('/')
+        if (error) {
+            if (error === "google") {
+                setError("Sign up with Google failed. Try again later")
+                setErrorType("warning")
+                setShowError(true)
+            } else {
+                setError(error)
+                setErrorType("warning")
+                setShowError(true)
+            }
         }
     })
 
@@ -96,7 +104,7 @@ export default function Signup() {
             </Head>
             <div className="row">
                 <div className="col-sm-6">
-                    <a href="#" onClick={() => signIn('google')}>
+                    <a href="#" onClick={() => signIn('google', {callbackUrl: '/'})}>
                         <div className={googleButton.btn}>
                             <div className={googleButton.wrapper}>
                                 <Image

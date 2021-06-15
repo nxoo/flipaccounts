@@ -10,7 +10,7 @@ export default function Navbar() {
 
     const handleLogout = async (event) => {
         event.preventDefault()
-        const res = await signOut({callbackUrl: '/login'})
+        const res = await signOut({callbackUrl: '/'})
         console.log(res)
     }
 

@@ -40,22 +40,17 @@ export default function Login() {
     const {error} = router.query
 
     useEffect(async () => {
-        /*
         if (error) {
-            if (error === "CredentialsSignin") {
-                setErrorMessage("Incorrect Email or Password")
+            if (error === "google") {
+                setErrorMessage("Sign in with Google failed. Try again later")
+                setErrorType("warning")
                 setShowError(true)
             } else {
                 setErrorMessage(error)
+                setErrorType("warning")
                 setShowError(true)
             }
         }
-        if (session) {
-            await router.push({
-                pathname: '/',
-            })
-        }
-         */
     })
 
     const handleLogin = async (event) => {
@@ -92,15 +87,13 @@ export default function Login() {
 
     const loginGoogle = async (event) => {
         event.preventDefault()
-        try {
-            const res = await signIn('google', {callbackUrl: '/?a=b'})
-            console.log(res)
-        } catch (error) {
-            console.log(error.response)
-            return error
-        } finally {
-            if (session) {
-                console.log("google login success")
+        const res = await signIn('google', {callbackUrl: '/?message=success'})
+        console.log(res)
+        if (res) {
+            if (res.error === 'google failed') {
+                setErrorMessage("Something went wrong, Try again later")
+                setErrorType("warning")
+                setShowError(true)
             }
         }
     }
@@ -112,7 +105,7 @@ export default function Login() {
             </Head>
             <div className="row">
                 <div className="col-sm-6">
-                    <a href="#" onClick={loginGoogle}>
+                    <a href="#" onClick={() => signIn('google', {callbackUrl: '/'})}>
                         <div className={googleButton.btn}>
                             <div className={googleButton.wrapper}>
                                 <Image

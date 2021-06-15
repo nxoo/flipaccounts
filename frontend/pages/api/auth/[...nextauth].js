@@ -62,11 +62,11 @@ export default NextAuth({
                         user.user = res.data.user
                         return Promise.resolve(user);
                     } else {
-                        return Promise.reject(new Error('Sign in with Google failed'));
+                        return Promise.reject(new Error('google'));
                     }
                 } catch (error) {
                     if (error.response) {
-                        return Promise.reject(new Error('Sign in with Google failed'));
+                        return Promise.reject(new Error('google'));
                     }
                 }
             }

@@ -114,7 +114,8 @@ export default function Home() {
               }
 
               .row .col-sm-4 {
-                margin-top: 10px;
+                margin-top: 5px;
+                margin-bottom: 5px;
               }
 
               @media (max-width: 990px) {
