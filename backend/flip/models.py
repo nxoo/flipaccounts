@@ -125,7 +125,7 @@ class Offer(models.Model):
 
 
 class Freelance(models.Model):
-    class Category(models.TextChoices):
+    class Type(models.TextChoices):
         transcription = '1', 'transcription'
         academic_w = '2', 'academic writing'
         article_w = '3', 'article writing'
@@ -142,22 +142,26 @@ class Freelance(models.Model):
 
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=False,
                               related_name="freelance_owner")
-    category = models.CharField(max_length=100, choices=Category.choices, blank=False)
+    type = models.CharField(max_length=100, choices=Type.choices, blank=False)
     company = models.CharField(max_length=100, choices=Company.choices, blank=False)
+    category = models.CharField(max_length=100, blank=True)
     rating = models.IntegerField(default=0)
     date_of_reg = models.DateField(blank=False)
-    earned = MoneyField(max_digits=14, decimal_places=2, default_currency='USD', default=0)
     no_of_gigs = models.IntegerField(default=0, blank=False)
-    country = CountryField()
-    description = models.TextField(max_length=280, blank=True)
+    earned = MoneyField(max_digits=14, decimal_places=2, default_currency='USD', default=0)
     price = MoneyField(max_digits=14, decimal_places=2, default_currency='USD', blank=False)
     hide_price = models.BooleanField()
     offers = models.BooleanField()
-    vpn_need = models.BooleanField()
+    auction = models.BooleanField()
+    auction_increment = models.IntegerField(default=0)
     verification_needed = models.BooleanField()
     verified = models.BooleanField()
+    country = CountryField()
+    vpn_need = models.BooleanField()
     original_email = models.BooleanField()
+    description = models.TextField(max_length=280, blank=True)
     pub_date = models.DateTimeField(blank=False, default=timezone.now)
+    on_escrow = models.BooleanField()
     sold = models.BooleanField(default=False)
     offer_item = GenericRelation(Offer, content_type_field='content_type', object_id_field='object_id',
                                  related_query_name='freelance')
