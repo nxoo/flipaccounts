@@ -1,5 +1,5 @@
 import Link from "next/link";
-import {useSession, signOut} from 'next-auth/client';
+import { useSession, signOut } from 'next-auth/client';
 
 String.prototype.capitalize = function () {
     return this.charAt(0).toUpperCase() + this.slice(1);
@@ -10,7 +10,7 @@ export default function Navbar() {
 
     const handleLogout = async (event) => {
         event.preventDefault()
-        const res = await signOut({callbackUrl: '/'})
+        const res = await signOut({ callbackUrl: '/' })
         console.log(res)
     }
 
@@ -21,86 +21,111 @@ export default function Navbar() {
                     <a className="navbar-brand" id="navbar-brand">FlipAccounts</a>
                 </Link>
                 {session && !loading ?
-                    <Link href="/inbox">
+                    <Link href="/u/inbox">
                         <a className="navbar-brand" id="inbox-mobile">
-                            <i className="bi bi-envelope-fill"/> <sup className="sups">(0)</sup>
+                            <i className="bi bi-envelope-fill" /> <sup className="sups">(0)</sup>
                         </a>
                     </Link>
                     : null
                 }
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"/>
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span className="navbar-toggler-icon" />
                 </button>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         <li className="nav-item dropdown">
                             <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                               data-bs-toggle="dropdown" aria-expanded="false">
-                                <small><i className="bi bi-grid-fill"/></small> Browse
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <small><i className="bi bi-grid-fill" /></small> Browse
                             </a>
                             <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a className="dropdown-item" href="#">Freelance</a></li>
-                                <li><a className="dropdown-item" href="#">Social Media</a></li>
-                                <li><a className="dropdown-item" href="#">Gaming</a></li>
-                                <li><a className="dropdown-item" href="#">Verification Services</a></li>
+                                <li><Link href="/freelance">
+                                    <a className="dropdown-item">Freelance</a>
+                                </Link></li>
+                                <li><Link href="/social-media">
+                                    <a className="dropdown-item">Social Media</a>
+                                </Link></li>
+                                <li><Link href="/gaming">
+                                    <a className="dropdown-item">Gaming</a>
+                                </Link></li>
+                                <li><Link href="/verification">
+                                    <a className="dropdown-item">Verification Services</a>
+                                </Link></li>
                             </ul>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#"><small><i className="bi bi-search"/></small> Search</a>
+                            <Link href="/search">
+                                <a className="nav-link"><small><i className="bi bi-search" /></small> Search</a>
+                            </Link>
                         </li>
                         <li className="nav-item dropdown">
                             <a className="nav-link dropdown-toggle" href="#" id="moreDropdown" role="button"
-                               data-bs-toggle="dropdown" aria-expanded="false">
-                                {/*<i className="bi bi-three-dots"/>*/}More
-                            </a>
+                                data-bs-toggle="dropdown" aria-expanded="false">More</a>
                             <ul className="dropdown-menu" aria-labelledby="moreDropdown">
-                                <li><a className="dropdown-item" href="#">How to buy</a></li>
-                                <li><a className="dropdown-item" href="#">How to sell</a></li>
-                                <li><a className="dropdown-item" href="#">FAQs</a></li>
-                                <li><a className="dropdown-item" href="#">Contact Support</a></li>
+                                <li><Link href="/how-to-buy"><a className="dropdown-item">How to buy</a></Link></li>
+                                <li><Link href="/how-to-sell"><a className="dropdown-item">
+                                    How to sell</a></Link></li>
+                                <li><Link href="/faqs"><a className="dropdown-item">FAQs</a></Link></li>
+                                <li><Link href="/contact-support"><a className="dropdown-item">
+                                    Contact Support</a></Link></li>
                             </ul>
                         </li>
                     </ul>
                     <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                         {session && !loading ? (<>
-                                <li className="nav-item" id="inbox-pc">
-                                    <a href="/" className="nav-link">
-                                        <i className="bi bi-envelope-fill"/> <sup className="sups">(0)</sup>
+                            <li className="nav-item" id="inbox-pc">
+                                <Link href="/u/inbox">
+                                    <a className="nav-link">
+                                        <i className="bi bi-envelope-fill" /> <sup className="sups">(0)</sup>
                                     </a>
-                                </li>
-                                <li className="nav-item">
-                                    <a href="/" className="nav-link">
-                                        {/*<i className="bi bi-shuffle"/>*/} Escrow <sup className="sups">(0)</sup>
+                                </Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link href="/u/escrow">
+                                    <a className="nav-link">
+                                        Escrow <sup className="sups">(0)</sup>
                                     </a>
-                                </li>
-                            </>
+                                </Link>
+                            </li>
+                        </>
                         ) : null}
                         <li className="nav-item">
                             <Link href="/sell">
-                                <a className="nav-link"><i className="bi bi-bag-plus-fill"/> Sell</a>
+                                <a className="nav-link"><i className="bi bi-bag-plus-fill" /> Sell</a>
                             </Link>
                         </li>
                         {session && !loading ?
                             <li className="nav-item dropdown">
                                 <a className="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
-                                   data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i className="bi bi-person-fill"/> Profile
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i className="bi bi-person-fill" /> Profile
                                 </a>
                                 <ul className="dropdown-menu" aria-labelledby="profileDropdown">
-                                    <li><a className="dropdown-item" href="#">
-                                        <i className="bi bi-person-circle"/> {session.user.username}</a>
+                                    <li>
+                                        <Link href={`/u/${session.user.username}`}>
+                                            <a className="dropdown-item">
+                                                <i className="bi bi-person-circle" /> {session.user.username}</a>
+                                        </Link>
                                     </li>
-                                    <li><a className="dropdown-item" href="#">
-                                        <i className=" bi bi-wallet2"/> Wallet
-                                    </a></li>
-                                    <li><a className="dropdown-item" href="#">
-                                        <i className="bi bi-list-nested"/> My Listings</a></li>
+                                    <li>
+                                        <Link href="/u/wallet">
+                                            <a className="dropdown-item">
+                                                <i className=" bi bi-wallet2" /> Wallet
+                                        </a>
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link href="/u/listings">
+                                            <a className="dropdown-item">
+                                                <i className="bi bi-list" /> My Listings</a>
+                                        </Link>
+                                    </li>
                                     <li>
                                         <Link href="#">
                                             <a onClick={handleLogout} className="dropdown-item" href="#">
-                                                <i className="bi bi-box-arrow-in-right"/> Log out</a>
+                                                <i className="bi bi-box-arrow-in-right" /> Log out</a>
                                         </Link>
                                     </li>
                                 </ul>
@@ -108,12 +133,12 @@ export default function Navbar() {
                                 <>
                                     <li className="nav-item">
                                         <Link href="/signup">
-                                            <a className="nav-link"><i className="bi bi-check2-square"/> Sign up</a>
+                                            <a className="nav-link"><i className="bi bi-check2-square" /> Sign up</a>
                                         </Link>
                                     </li>
                                     <li className="nav-item">
                                         <Link href="/login">
-                                            <a className="nav-link"><i className="bi bi-person-fill"/> Login</a>
+                                            <a className="nav-link"><i className="bi bi-person-fill" /> Login</a>
                                         </Link>
                                     </li>
                                 </>

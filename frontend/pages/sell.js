@@ -37,11 +37,11 @@ export default function Sell() {
                                     Freelance</span>
                             </a>
                             <a href="#" className="list-group-item list-group-item-action d-flex">
-                                Social media Accounts <span className="btn btn-secondary btn-sm ms-auto">
-                                    Social Media</span>
+                                Social media Account <span className="btn btn-secondary btn-sm ms-auto">
+                                    Social media</span>
                             </a>
                             <a href="#" className="list-group-item list-group-item-action d-flex">
-                                Gaming Accounts <span className="btn btn-secondary btn-sm ms-auto">Gaming</span>
+                                Gaming Account <span className="btn btn-secondary btn-sm ms-auto">Gaming</span>
                             </a>
                             <a href="#" className="list-group-item list-group-item-action d-flex">
                                 Verification services
