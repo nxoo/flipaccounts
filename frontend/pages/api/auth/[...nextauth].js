@@ -52,6 +52,7 @@ export default NextAuth({
     callbacks: {
         async signIn(user, account, profile) {
             if (account.provider === "google") {
+                console.log(account)
                 const {accessToken, idToken} = account;
                 const data = {access_token: accessToken, code: "", id_token: idToken}
                 try {

@@ -85,7 +85,7 @@ export default function Signup() {
             } else {
                 setShowError(true)
                 setErrorType("warning")
-                setError("Something went wrong. Try again later")
+                setError("Server is offline. Try again later")
                 setErrorBold('')
             }
         }

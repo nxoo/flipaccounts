@@ -23,7 +23,7 @@ export default function Layout({children}) {
 
               @media (min-width: 992px) {
                 .layout {
-                  padding-top: 50px;
+                  padding-top: 30px;
                 }
               }
 

@@ -89,10 +89,8 @@ export default function Home() {
                                 </div>
                             </a></Link>
                         </div>
-
                     </div>
                 </div>
-                <br/>
             </div>
             <style jsx>{`
               #homepage-title {
@@ -129,9 +127,6 @@ export default function Home() {
               }
 
               @media (min-width: 992px) {
-                #homepage-title {
-                }
-
                 #slider {
                   font-size: x-large;
                 }

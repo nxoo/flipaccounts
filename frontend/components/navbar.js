@@ -18,7 +18,7 @@ export default function Navbar() {
         <nav className="navbar fixed-top navbar-expand-lg navbar-dark">
             <div className="container">
                 <Link href="/">
-                    <a className="navbar-brand" id="navbar-brand">Flipaccounts</a>
+                    <a className="navbar-brand" id="navbar-brand">FlipAccounts</a>
                 </Link>
                 {session && !loading ?
                     <Link href="/inbox">
@@ -72,24 +72,25 @@ export default function Navbar() {
                                 </li>
                                 <li className="nav-item">
                                     <a href="/" className="nav-link">
-                                        {/*<i className="bi bi-shuffle"/>*/}Escrow <sup className="sups">(0)</sup>
+                                        {/*<i className="bi bi-shuffle"/>*/} Escrow <sup className="sups">(0)</sup>
                                     </a>
                                 </li>
                             </>
-                        ) : (<></>)}
+                        ) : null}
                         <li className="nav-item">
-                            <a href="" className="nav-link" id="sell-nw">
-                                <i className="bi bi-bag-plus-fill"/> Sell</a>
+                            <Link href="/sell">
+                                <a className="nav-link"><i className="bi bi-bag-plus-fill"/> Sell</a>
+                            </Link>
                         </li>
                         {session && !loading ?
                             <li className="nav-item dropdown">
                                 <a className="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i className="bi bi-person-fill"/> {session.user.username}
+                                    <i className="bi bi-person-fill"/> Profile
                                 </a>
                                 <ul className="dropdown-menu" aria-labelledby="profileDropdown">
                                     <li><a className="dropdown-item" href="#">
-                                        <i className="bi bi-person-circle"/> Profile</a>
+                                        <i className="bi bi-person-circle"/> {session.user.username}</a>
                                     </li>
                                     <li><a className="dropdown-item" href="#">
                                         <i className=" bi bi-wallet2"/> Wallet
