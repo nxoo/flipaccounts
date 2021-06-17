@@ -11,7 +11,7 @@ export default function Sell() {
                     <small>Select Category</small>
                     <div className="col-sm-6">
                         <div className="list-group">
-                            <Link href="/sell/freelance">
+                            <Link href="/sell/add-freelance">
                                 <a className="list-group-item list-group-item-action d-flex">
                                     Freelance Account <span className="btn btn-secondary btn-sm ms-auto">
                                         Freelance</span>

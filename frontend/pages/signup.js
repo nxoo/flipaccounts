@@ -6,7 +6,6 @@ import {useRouter} from 'next/router'
 import {signIn, useSession} from 'next-auth/client'
 import Layout from "../components/layout";
 import {signUp} from "../lib/flip";
-import googleButton from "../styles/google.module.css";
 
 
 function Alert({message, messageBold, errorType, setShowError}) {
@@ -105,16 +104,18 @@ export default function Signup() {
             <div className="row">
                 <div className="col-sm-6">
                     <a href="#" onClick={() => signIn('google', {callbackUrl: '/'})}>
-                        <div className={googleButton.btn}>
-                            <div className={googleButton.wrapper}>
+                        <div className="google-btn">
+                            <div className="google-wrapper">
                                 <Image
                                     src="/images/google.svg" // Route of the image file
                                     alt="Sign In with Google"
-                                    className={googleButton.icon}
-                                    layout="fill"
+                                    className="google-icon"
+                                    layout="fixed"
+                                    width={30}
+                                    height={30}
                                 />
                             </div>
-                            <p className={googleButton.text}><b>Sign up with Google</b></p>
+                            <p className='google-text'><b>Sign up with Google</b></p>
                         </div>
                     </a>
                     <div className="separator">OR</div>
@@ -193,6 +194,44 @@ export default function Signup() {
 
               .separator:not(:empty)::after {
                 margin-left: .25em;
+              }
+              .google-btn {
+                width: 220px;
+                height: 42px;
+                background-color: #4285f4;
+                border-radius: 2px;
+              }
+
+              .google-wrapper {
+                position: absolute;
+                margin-top: 1px;
+                margin-left: 1px;
+                width: 60px;
+                height: 40px;
+                border-radius: 2px;
+                background-color: #fff;
+                padding-left: 15px;
+                padding-top: 5px
+              }
+
+              .google-icon {
+                position: absolute;
+              }
+
+              .google-text {
+                float: right;
+                margin: 11px 11px 0 0;
+                color: #ffffff;
+                font-size: 14px;
+                letter-spacing: 0.2px;
+              }
+
+              .google-btn:hover {
+                box-shadow: 0 0 6px #4285f4;
+              }
+
+              .google-btn:active {
+                background: #1669F2;
               }
             `}</style>
         </Layout>
