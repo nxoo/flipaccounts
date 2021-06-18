@@ -24,7 +24,7 @@ export default function addFreelance() {
     return (
         <Layout>
             <div>
-                <a className="btn btn-secondary btn-sm"><b>Add A Freelance Account</b></a>
+                <a className="btn btn-secondary"><b>Add A Freelance Account</b></a>
             </div>
             <br />
             <form>
@@ -32,7 +32,7 @@ export default function addFreelance() {
                     <div className="col-sm-6">
                         <div className="col-auto mb-2">
                             <div className="input-group">
-                                <div className="col-auto me-2">
+                                <div className="col-auto me-2 mb-2">
                                     <select className="form-select" aria-label="Default select example" required>
                                         <option value="">Category</option>
                                         <option value="1">Transcription</option>
@@ -65,7 +65,7 @@ export default function addFreelance() {
                             <div className="col-sm-8 mb-2">
                                 <div className="input-group">
                                     <input type="number" className="form-control" placeholder="No of Gigs done" />
-                                    <input type="number" className="form-control" placeholder="Earned" />
+                                    <input type="number" className="form-control" placeholder="Earned in USD" />
                                 </div>
                             </div>
                             <div className="col-sm-6 mb-2">
@@ -74,6 +74,7 @@ export default function addFreelance() {
                                 <input type="date" className="form-control" id="age" />
                             </div>
                         </div>
+                        <div className="row">
                         <div className="col-sm-6 mb-2">
                             <div className="input-group">
                                 <span className="input-group-text" id="basic-addon1">Price in USD </span>
@@ -87,6 +88,7 @@ export default function addFreelance() {
                                     Hide price
                                 </label>
                             </div>
+                        </div>
                         </div>
                         <div className="col-auto mb-2">
                             <div className="form-check">
@@ -124,40 +126,44 @@ export default function addFreelance() {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-auto mb-2">
-                            <div className="form-check">
-                                <input className="form-check-input" type="checkbox" value="" id="vpn" />
-                                <label className="form-check-label" htmlFor="vpn">
-                                    VPN needed
-                           </label>
-                            </div>
-                        </div>
-                        <div className="col-auto mb-3">
-                            <textarea className="form-control" placeholder="Description" id="" rows="3"></textarea>
-                        </div>
-                        <div className="col-sm-6 mb-3">
-                            <label className="form-check-label" htmlFor="vpn">
+                        <div className="row">
+                            <label className="form-check-label" htmlFor="country">
                                 <small>Country account was registered in</small>
-                                </label>
-                            <select className="form-select" aria-label="Default select example" required>
-                                <option value="">Country</option>
-                                <option value="1">Kenya</option>
-                                <option value="2">United States</option>
-                                <option value="3">United Kingdom</option>
-                                <option value="4">Uganda</option>
-                                <option value="5">South Africa</option>
-                            </select>
+                            </label>
+                            <div className="col-sm-6 mb-2">
+                                <select className="form-select" aria-label="Default select example" id="country" required>
+                                    <option value="">Country</option>
+                                    <option value="1">Kenya</option>
+                                    <option value="2">United States</option>
+                                    <option value="3">United Kingdom</option>
+                                    <option value="4">Uganda</option>
+                                    <option value="5">South Africa</option>
+                                </select>
+                            </div>
+                            <div className="col-auto mb-2">
+                                <div className="form-check">
+                                    <input className="form-check-input" type="checkbox" value="" id="vpn" />
+                                    <label className="form-check-label" htmlFor="vpn">
+                                        VPN needed
+                           </label>
+                                </div>
+                            </div>
                         </div>
                         <div className="mb-2">
                             <label htmlFor="formFileMultiple" className="form-label">
                                 <small>Select multiple images then upload</small></label>
-                            <input className="form-control form-control-sm" type="file" id="formFileMultiple"
-                            placeholder="one" multiple />
+                            <input className="form-control" type="file" id="formFileMultiple"
+                                placeholder="one" multiple />
+                        </div>
+                        <div className="col-auto mb-3">
+                            <textarea className="form-control" placeholder="Description" id="" rows="3"></textarea>
                         </div>
                         <input className="btn btn-success" type="submit" value="Add Freelance" />
                     </div>
                 </div>
             </form >
+            <style jsx>{`
+            `}</style>
         </Layout >
     )
 }

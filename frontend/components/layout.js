@@ -20,6 +20,13 @@ export default function Layout({children}) {
               body {
                 padding-top: 56px;
               }
+                .form-select:focus,
+                 .form-check-input:focus,
+                 .form-control:focus {
+                   outline: none;
+                   box-shadow: none;
+                 }
+
 
               @media (min-width: 992px) {
                 .layout {
