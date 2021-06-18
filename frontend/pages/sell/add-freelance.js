@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {useState} from 'react';
 import Layout from "../../components/layout";
 
 
@@ -24,106 +24,54 @@ export default function addFreelance() {
     return (
         <Layout>
             <div>
-                <a className="btn btn-secondary"><b>Add A Freelance Account</b></a>
+                <a href="#" className="btn btn-secondary btn-sm">Add A Freelance Account</a>
             </div>
-            <br />
+            <br/>
             <form>
                 <div className="row">
                     <div className="col-sm-6">
-                        <div className="col-auto mb-2">
-                            <div className="input-group">
-                                <div className="col-auto me-2 mb-2">
-                                    <select className="form-select" aria-label="Default select example" required>
-                                        <option value="">Category</option>
-                                        <option value="1">Transcription</option>
-                                        <option value="2">Article writing</option>
-                                        <option value="3">Essay writing</option>
-                                        <option value="4">Captioning</option>
-                                        <option value="5">Web Development</option>
-                                    </select>
-                                </div>
-                                <div className="col-auto">
-                                    <select className="form-select" aria-label="Default select example" required>
-                                        <option value="">Company</option>
-                                        <option value="1">Verbit</option>
-                                        <option value="2">Werkit</option>
-                                        <option value="3">Verbit British</option>
-                                        <option value="4">TranscribeME</option>
-                                        <option value="5">Rev</option>
-                                    </select>
-                                </div>
+                        <div className="input-group">
+                            <div className="col-auto me-2 mb-2">
+                                <select className="form-select" aria-label="Default select example" required>
+                                    <option value="">Category</option>
+                                    <option value="1">Transcription</option>
+                                    <option value="2">Captioning</option>
+                                    <option value="3">Article writing</option>
+                                    <option value="4">Essay writing</option>
+                                    <option value="5">Web Development</option>
+                                </select>
+                            </div>
+                            <div className="col-auto mb-2">
+                                <select className="form-select" aria-label="Default select example" required>
+                                    <option value="">Company</option>
+                                    <option value="1">Verbit</option>
+                                    <option value="2">Werkit</option>
+                                    <option value="3">Verbit British</option>
+                                    <option value="4">TranscribeME</option>
+                                    <option value="5">Rev</option>
+                                </select>
                             </div>
                         </div>
                         <div className="col-sm-8 mb-2">
                             <div className="input-group">
                                 <span className="input-group-text" id="basic-addon1">Rating</span>
-                                <input type="number" className="form-control" placeholder="value" />
-                                <input type="number" className="form-control" placeholder="Out of" />
+                                <input type="number" step="any" className="form-control" placeholder="rating"/>
+                                <input type="number" step="any" className="form-control" placeholder="Out of"/>
                             </div>
                         </div>
                         <div className="col-auto">
                             <div className="col-sm-8 mb-2">
                                 <div className="input-group">
-                                    <input type="number" className="form-control" placeholder="No of Gigs done" />
-                                    <input type="number" className="form-control" placeholder="Earned in USD" />
+                                    <input type="number" step="any" className="form-control"
+                                           placeholder="No of Gigs done"/>
+                                    <input type="number" step="any" className="form-control"
+                                           placeholder="Earned in USD"/>
                                 </div>
                             </div>
                             <div className="col-sm-6 mb-2">
                                 <label htmlFor='age' className="form-label">
                                     <small>Account registration date</small></label>
-                                <input type="date" className="form-control" id="age" />
-                            </div>
-                        </div>
-                        <div className="row">
-                        <div className="col-sm-6 mb-2">
-                            <div className="input-group">
-                                <span className="input-group-text" id="basic-addon1">Price in USD </span>
-                                <input type="number" className="form-control" placeholder="Eg. 100" />
-                            </div>
-                        </div>
-                        <div className="col-auto mb-2">
-                            <div className="form-check">
-                                <input className="form-check-input" type="checkbox" value="" id="hidePrice" />
-                                <label className="form-check-label" htmlFor="hidePrice">
-                                    Hide price
-                                </label>
-                            </div>
-                        </div>
-                        </div>
-                        <div className="col-auto mb-2">
-                            <div className="form-check">
-                                <input className="form-check-input" type="checkbox" value="" id="offers" />
-                                <label className="form-check-label" htmlFor="offers">
-                                    Accept Offers
-                           </label>
-                            </div>
-                        </div>
-                        <div className="col-auto mb-2">
-                            <div className="form-check">
-                                <input className="form-check-input" type="checkbox" value="" id="auction" />
-                                <label className="form-check-label" htmlFor="auction">
-                                    Sell through an Auction
-                           </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-sm-6">
-                        <div className="row">
-                            <div className="col-auto mb-2">
-                                <div className="form-check">
-                                    <input className="form-check-input" type="checkbox" value="" id="verification" />
-                                    <label className="form-check-label" htmlFor="verification">
-                                        Verification needed
-                           </label>
-                                </div>
-                            </div>
-                            <div className="col-auto mb-2">
-                                <div className="form-check">
-                                    <input className="form-check-input" type="checkbox" value="" id="verified" />
-                                    <label className="form-check-label" htmlFor="verified">
-                                        Verified
-                           </label>
-                                </div>
+                                <input type="date" className="form-control" id="age"/>
                             </div>
                         </div>
                         <div className="row">
@@ -131,7 +79,8 @@ export default function addFreelance() {
                                 <small>Country account was registered in</small>
                             </label>
                             <div className="col-sm-6 mb-2">
-                                <select className="form-select" aria-label="Default select example" id="country" required>
+                                <select className="form-select" aria-label="Default select example" id="country"
+                                        placeholder="mm/dd/yyyy" required>
                                     <option value="">Country</option>
                                     <option value="1">Kenya</option>
                                     <option value="2">United States</option>
@@ -142,28 +91,82 @@ export default function addFreelance() {
                             </div>
                             <div className="col-auto mb-2">
                                 <div className="form-check">
-                                    <input className="form-check-input" type="checkbox" value="" id="vpn" />
+                                    <input className="form-check-input" type="checkbox" value="" id="vpn"/>
                                     <label className="form-check-label" htmlFor="vpn">
                                         VPN needed
-                           </label>
+                                    </label>
                                 </div>
                             </div>
                         </div>
+                        <div className="row">
+                            <div className="col-auto mb-2">
+                                <div className="form-check">
+                                    <input className="form-check-input" type="checkbox" value="" id="verification"/>
+                                    <label className="form-check-label" htmlFor="verification">
+                                        Verification needed
+                                    </label>
+                                </div>
+                            </div>
+                            <div className="col-auto mb-2">
+                                <div className="form-check">
+                                    <input className="form-check-input" type="checkbox" value="" id="verified"/>
+                                    <label className="form-check-label" htmlFor="verified">
+                                        Verified
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-sm-6">
+
+
                         <div className="mb-2">
                             <label htmlFor="formFileMultiple" className="form-label">
                                 <small>Select multiple images then upload</small></label>
                             <input className="form-control" type="file" id="formFileMultiple"
-                                placeholder="one" multiple />
+                                   placeholder="one" multiple/>
                         </div>
                         <div className="col-auto mb-3">
                             <textarea className="form-control" placeholder="Description" id="" rows="3"></textarea>
                         </div>
-                        <input className="btn btn-success" type="submit" value="Add Freelance" />
+                        <div className="row">
+                            <div className="col-sm-6 mb-2">
+                                <div className="input-group">
+                                    <span className="input-group-text" id="basic-addon1">Price in USD </span>
+                                    <input type="number" className="form-control" placeholder="Eg. 100"/>
+                                </div>
+                            </div>
+                            <div className="col-auto mb-2">
+                                <div className="form-check">
+                                    <input className="form-check-input" type="checkbox" value="" id="hidePrice"/>
+                                    <label className="form-check-label" htmlFor="hidePrice">
+                                        Hide price
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-auto mb-2">
+                            <div className="form-check">
+                                <input className="form-check-input" type="checkbox" value="" id="offers"/>
+                                <label className="form-check-label" htmlFor="offers">
+                                    Accept Offers
+                                </label>
+                            </div>
+                        </div>
+                        <div className="col-auto mb-3">
+                            <div className="form-check">
+                                <input className="form-check-input" type="checkbox" value="" id="auction"/>
+                                <label className="form-check-label" htmlFor="auction">
+                                    Sell through an Auction
+                                </label>
+                            </div>
+                        </div>
+                        <input className="btn btn-success" type="submit" value="Add Freelance"/>
                     </div>
                 </div>
-            </form >
+            </form>
             <style jsx>{`
             `}</style>
-        </Layout >
+        </Layout>
     )
 }
