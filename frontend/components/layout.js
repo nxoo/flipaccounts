@@ -12,20 +12,25 @@ export default function Layout({children}) {
             <Navbar/>
             <div className="container layout">
                 {children}
-            <footer className="pt-5 my-5 text-muted border-top">
-                Flipaccounts · © 2021
-            </footer>
+                <footer className="pt-5 my-5 text-muted border-top">
+                    Flipaccounts · © 2021
+                </footer>
             </div>
             <style jsx global>{`
               body {
                 padding-top: 56px;
               }
-                .form-select:focus,
-                 .form-check-input:focus,
-                 .form-control:focus {
-                   outline: none;
-                   box-shadow: none;
-                 }
+
+              html {
+                overflow-y: auto;
+              }
+
+              .form-select:focus,
+              .form-check-input:focus,
+              .form-control:focus {
+                outline: none;
+                box-shadow: none;
+              }
 
 
               @media (min-width: 992px) {

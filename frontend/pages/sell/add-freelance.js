@@ -24,9 +24,8 @@ export default function addFreelance() {
     return (
         <Layout>
             <div>
-                <a href="#" className="btn btn-secondary btn-sm">Add A Freelance Account</a>
+                <a href="#" className="btn btn-secondary mb-4">Add A Freelance Account</a>
             </div>
-            <br/>
             <form>
                 <div className="row">
                     <div className="col-sm-6">
