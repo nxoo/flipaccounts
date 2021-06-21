@@ -30,8 +30,9 @@ export default function Home() {
                         <Link href={`/${names[count]}`}><a>{names[count]}</a></Link>{count < 3 ? " accounts" : ""}
                     </span>
                 </h2>
+
                 <div className="search col-sm-7">
-                    <form className="d-grid gap-2 d-md-flex">
+                    <form className="d-grid gap-2 d-md-flex mb-2">
                         <div className="col-auto">
                             <select className="form-select" aria-label="Default select example" required>
                                 <option value="">Category</option>
@@ -41,12 +42,17 @@ export default function Home() {
                                 <option value="4">Verification</option>
                             </select>
                         </div>
+
                         <input className="form-control me-1" type="search"
                             placeholder="e.g. Instagram, Verbit" aria-label="Search" required />
+
                         <button className="btn btn-success" type="submit">Search</button>
+
                     </form>
                 </div>
+
                 <p id="ready-to-sell">Ready to sell? <Link href="/sell"><a id="">Sell Now</a></Link></p>
+
                 <div className="advert">
                     <small><i className="bi-arrow-up-right-square-fill" /> Promoted</small>
                     <div className="row">
@@ -105,13 +111,8 @@ export default function Home() {
                 text-decoration: none;
               }
 
-              #ready-to-sell {
-                margin-top: 10px;
-                margin-bottom: 20px;
-              }
-
               #ready-to-sell a {
-                text-decoration: none !important;
+                text-decoration: none;
               }
 
               .row .col-sm-4 {
@@ -135,7 +136,7 @@ export default function Home() {
                 }
 
                 .advert {
-                  margin-top: 60px;
+                  margin-top: 20px;
                 }
               }
             `}</style>

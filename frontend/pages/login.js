@@ -123,7 +123,7 @@ export default function Login() {
                     {showError && errorMessage !== "" ? //<Alert2 />
                         <Alert message={errorMessage} errorType={errorType} setShowError={setShowError}/>
                         : null}
-                    <h4>Log in with Email</h4>
+                    <h5>Log in with Email</h5>
                     <form onSubmit={handleLogin} method="post">
                         <div>
                             <div className="mb-2">
@@ -152,9 +152,8 @@ export default function Login() {
                                 />
                             </div>
                         </div>
-                        <button type="submit" className="btn btn-primary">Login</button>
+                        <button type="submit" className="btn btn-primary mb-2">Login</button>
                     </form>
-                    <br/>
                     <p>Don't have an account? <Link href="/signup"><a>Sign up</a></Link><br/>
                         <Link href="/forgot"><a>Forgot Password?</a></Link></p>
                 </div>

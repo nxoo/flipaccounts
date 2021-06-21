@@ -119,7 +119,7 @@ export default function Signup() {
                         </div>
                     </a>
                     <div className="separator">OR</div>
-                    <h4>Sign up with Email</h4>
+                    <h5>Sign up with Email</h5>
                     {showError ?
                         <Alert message={error} messageBold={errorBold} errorType={errorType}
                                setShowError={setShowError}/>
@@ -166,10 +166,9 @@ export default function Signup() {
                                 />
                             </div>
                         </div>
-                        <button type="submit" className="btn btn-primary">Sign up</button>
+                        <button type="submit" className="btn btn-primary mb-2">Sign up</button>
                     </form>
-                    <br/>
-                    <p>Already have an account? <Link href="/login"><a>Login</a></Link></p>
+                    <span>Already have an account? <Link href="/login"><a>Login</a></Link></span>
                 </div>
             </div>
             <style jsx>{`

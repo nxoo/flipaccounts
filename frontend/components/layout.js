@@ -21,10 +21,6 @@ export default function Layout({children}) {
                 padding-top: 56px;
               }
 
-              html {
-                overflow-y: auto;
-              }
-
               .form-select:focus,
               .form-check-input:focus,
               .form-control:focus {
