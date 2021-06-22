@@ -125,7 +125,7 @@ class Offer(models.Model):
 
 
 class Freelance(models.Model):
-    class Type(models.TextChoices):
+    class Category(models.TextChoices):
         transcription = '1', 'transcription'
         academic_w = '2', 'academic writing'
         article_w = '3', 'article writing'
@@ -142,24 +142,22 @@ class Freelance(models.Model):
 
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=False,
                               related_name="freelance_owner")
-    type = models.CharField(max_length=100, choices=Type.choices, blank=False)
-    company = models.CharField(max_length=100, choices=Company.choices, blank=False)
     category = models.CharField(max_length=100, blank=True)
+    company = models.CharField(max_length=100, choices=Company.choices, blank=False)
     rating = models.IntegerField(default=0)
-    date_of_reg = models.DateField(blank=False)
-    no_of_gigs = models.IntegerField(default=0, blank=False)
+    out_of = models.IntegerField(default=0)
+    gigs = models.IntegerField(default=0, blank=False)
     earned = MoneyField(max_digits=14, decimal_places=2, default_currency='USD', default=0)
+    date_of_reg = models.DateField(blank=False)
+    country = CountryField()
+    vpn_need = models.BooleanField()
+    verification_needed = models.BooleanField()
+    verified = models.BooleanField()
+    description = models.TextField(max_length=280, blank=True)
     price = MoneyField(max_digits=14, decimal_places=2, default_currency='USD', blank=False)
     hide_price = models.BooleanField()
     offers = models.BooleanField()
     auction = models.BooleanField()
-    auction_increment = models.IntegerField(default=0)
-    verification_needed = models.BooleanField()
-    verified = models.BooleanField()
-    country = CountryField()
-    vpn_need = models.BooleanField()
-    original_email = models.BooleanField()
-    description = models.TextField(max_length=280, blank=True)
     pub_date = models.DateTimeField(blank=False, default=timezone.now)
     on_escrow = models.BooleanField()
     sold = models.BooleanField(default=False)
