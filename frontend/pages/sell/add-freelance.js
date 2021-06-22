@@ -186,7 +186,7 @@ export default function addFreelance() {
                             <label htmlFor="formFileMultiple" className="form-label">
                                 <small>Select upto 4 images, then click upload</small>
                             </label>
-                            <input className="form-control form-control-sm" type="file" id="formFileMultiple"
+                            <input className="form-control" type="file" id="formFileMultiple"
                                    placeholder="one" multiple/>
                         </div>
 

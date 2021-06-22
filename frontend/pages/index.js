@@ -25,14 +25,19 @@ export default function Home() {
     return (
         <Layout>
             <div>
-                <h2 id="homepage-title">A marketplace to buy and sell<br />
-                    <span id="slider">
+                <p>
+                    <span id="index-title">Buy & Sell Freelance Accounts</span><br/>
+                    <span id="index-title2">Transact safely using our escrow service</span>
+                </p>
+                {/*
+                    <span id="slider" style={{display:'None'}}>
                         <Link href={`/${names[count]}`}><a>{names[count]}</a></Link>{count < 3 ? " accounts" : ""}
                     </span>
                 </h2>
+                    */}
 
                 <div className="search col-sm-7">
-                    <form className="d-grid gap-2 d-md-flex mb-2">
+                    <form className="d-grid gap-2 d-md-flex mb-3">
                         <div className="col-auto">
                             <select className="form-select" aria-label="Default select example" required>
                                 <option value="">Category</option>
@@ -121,22 +126,26 @@ export default function Home() {
               }
 
               @media (max-width: 990px) {
-                #homepage-title {
-                  font-size: 18px;
+                #index-title {
+                  font-size: large;
+                  font-weight: bold;
                 }
 
-                #slider {
-                  font-size: 17px;
+                #index-title2 {
+                  font-size: 15px;
                 }
               }
 
               @media (min-width: 992px) {
-                #slider {
-                  font-size: x-large;
+                #index-title {
+                  font-size: 32px;
+                  font-weight: bold;
                 }
-
+                #index-title2 {
+                  font-weight: ;
+                }
                 .advert {
-                  margin-top: 20px;
+                  margin-top: 60px;
                 }
               }
             `}</style>
