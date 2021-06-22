@@ -2,54 +2,6 @@ import {useState} from 'react';
 import Layout from "../../components/layout";
 
 
-function Datalist({category, value}) {
-    const transcription = ['Verbit', 'TransribeMe', 'Rev', 'Verbit British', 'Werkit']
-    const essayWriting = ['Essay Shark', 'Essay writers', 'upwork']
-    const articleWring = ['iWriters', 'TurtlezNerd']
-
-    if (category === '1') {
-        return (
-            <datalist id="datalist">
-                {transcription.map(x => (
-                    <option value={x}/>
-                ))}
-            </datalist>
-        )
-    } else if (category === '2') {
-        return (
-            <datalist id="datalist">
-                {articleWring.map(x => (
-                    <option value={x}/>
-                ))}
-            </datalist>
-        )
-    } else if (category === '3') {
-        return (
-            <datalist id="datalist">
-                {essayWriting.map(x => (
-                    <option value={x}/>
-                ))}
-            </datalist>
-        )
-    } else if (value.length > 1) {
-        return (
-            <datalist id="datalist">
-                {transcription.map((x, y) => (
-                    <>
-                        <option value={x}/>
-                        <option value={essayWriting[y]}/>
-                        <option value={articleWring[y]}/>
-                    </>
-                ))}
-
-            </datalist>
-        )
-    } else {
-        return null
-    }
-}
-
-
 export default function addFreelance() {
     const [category, setCategory] = useState('');
     const [company, setCompany] = useState('');
@@ -69,6 +21,27 @@ export default function addFreelance() {
     const [offers, setOffers] = useState('');
     const [auction, setAuction] = useState('');
 
+
+    const transcription = ['Verbit', 'TransribeMe', 'Rev', 'Verbit British', 'Werkit']
+    const essayWriting = ['EssayShark', 'EssayPro']
+    const academicWriting = ['iWriters', 'NerdyTurtlez', 'WritersLabs']
+    let options;
+
+    if (category === '1') {
+        options = transcription.map(x => <option value={x} />)
+    } else if (category === '2') {
+        options = academicWriting.map(x => <option value={x} />)
+    } else if (category === '3') {
+        options = essayWriting.map(x => <option value={x} />)
+    } else {
+        const companiesOptions = [...transcription, ...academicWriting, ...essayWriting];
+        if (company.length > 1) {
+            options = companiesOptions.map(x => <option value={x} />)
+        } else {
+            options = null
+        }
+    }
+
     return (
         <Layout>
             <form>
@@ -85,7 +58,7 @@ export default function addFreelance() {
                                     required>
                                     <option value="">Category</option>
                                     <option value="1">Transcription</option>
-                                    <option value="2">Article writing</option>
+                                    <option value="2">Academic writing</option>
                                     <option value="3">Essay writing</option>
                                     <option value="4">Captioning</option>
                                     <option value="5">Translation</option>
@@ -102,8 +75,11 @@ export default function addFreelance() {
                                     className="form-control"
                                     list="datalist"
                                     placeholder="company"
-                                    required/>
-                                <Datalist category={category} value={company}/>
+                                    required
+                                />
+                                <datalist id="datalist">
+                                    {options}
+                                </datalist>
                             </div>
                         </div>
 
