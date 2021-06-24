@@ -12,6 +12,8 @@ router.register(r'escrow', views.EscrowViewSet)
 router.register(r'offer', views.OfferViewSet)
 router.register(r'freelance', views.FreelanceViewSet)
 router.register(r'socialmedia', views.SocialMediaViewSet)
+router.register(r'fcategory', views.FreelanceCategoryViewSet)
+router.register(r'fcompany', views.FreelanceCompanyViewSet)
 
 
 urlpatterns = [

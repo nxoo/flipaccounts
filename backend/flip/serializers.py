@@ -69,3 +69,15 @@ class SocialMediaSerializer(CountryFieldMixin, serializers.ModelSerializer):
     class Meta:
         model = models.SocialMedia
         fields = '__all__'
+
+
+class FreelanceCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.FreelanceCategory
+        fields = '__all__'
+
+
+class FreelanceCompanySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.FreelanceCompany
+        fields = '__all__'

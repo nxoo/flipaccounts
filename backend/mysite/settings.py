@@ -206,8 +206,10 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 CORS_ALLOWED_ORIGINS = os.environ.get("CORS_ALLOWED_ORIGINS", "").split(",")
-CORS_ALLOWED_ORIGINS= [] if not any(CORS_ALLOWED_ORIGINS) else CORS_ALLOWED_ORIGINS
+CORS_ALLOWED_ORIGINS = [] if not any(CORS_ALLOWED_ORIGINS) else CORS_ALLOWED_ORIGINS
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'

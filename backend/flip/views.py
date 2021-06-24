@@ -1,12 +1,9 @@
-import environ
 from rest_framework import viewsets
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 from dj_rest_auth.registration.views import SocialLoginView
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 from . import models
 from . import serializers
-
-env = environ.Env()
 
 
 class GoogleLogin(SocialLoginView):
@@ -80,3 +77,13 @@ class SocialMediaViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+
+class FreelanceCategoryViewSet(viewsets.ModelViewSet):
+    queryset = models.FreelanceCategory.objects.all()
+    serializer_class = serializers.FreelanceCategorySerializer
+
+
+class FreelanceCompanyViewSet(viewsets.ModelViewSet):
+    queryset = models.FreelanceCompany.objects.all()
+    serializer_class = serializers.FreelanceCompanySerializer
