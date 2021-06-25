@@ -1,4 +1,5 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
+import {useSession} from "next-auth/client";
 import Layout from "../../components/layout";
 
 
@@ -20,6 +21,12 @@ export default function addFreelance() {
     const [hidePrice, setHidePrice] = useState('');
     const [offers, setOffers] = useState('');
     const [auction, setAuction] = useState('');
+    const [disabled, setDisabled] = useState('');
+
+    const [disableForms, setDisableForms] = useState(true);
+    const [session, loading] = useSession();
+
+    const df = !session;
 
 
     const transcription = ['Verbit', 'TransribeMe', 'Rev', 'Verbit British', 'Werkit']
@@ -44,6 +51,11 @@ export default function addFreelance() {
 
     return (
         <Layout>
+            <div className='alert alert-warning alert-dismissible fade show' role="alert">
+                You need to Login
+                <button type="button" className="btn-close" data-bs-dismiss="alert"
+                        aria-label="Close"/>
+            </div>
             <form>
                 <div className="row">
                     <div className="col-sm-6">
@@ -51,11 +63,13 @@ export default function addFreelance() {
                         <div className="input-group">
                             <div className="col-auto me-2 mb-2">
                                 <select
-                                    onChange={e => setCategory(e.target.value)}
-                                    value={category}
                                     className="form-select"
                                     aria-label="Default select example"
-                                    required>
+                                    required
+                                    value={category}
+                                    onChange={e => setCategory(e.target.value)}
+                                    disabled={df}
+                                >
                                     <option value="">Category</option>
                                     <option value="1">Transcription</option>
                                     <option value="2">Academic writing</option>
@@ -70,12 +84,13 @@ export default function addFreelance() {
                             </div>
                             <div className="col-auto mb-2">
                                 <input
-                                    onChange={e => setCompany(e.target.value)}
-                                    value={company}
                                     className="form-control"
                                     list="datalist"
                                     placeholder="company"
                                     required
+                                    value={company}
+                                    onChange={e => setCompany(e.target.value)}
+                                    disabled={df}
                                 />
                                 <datalist id="datalist">
                                     {options}
@@ -88,8 +103,24 @@ export default function addFreelance() {
                         </label>
                         <div className="col-6 mb-2">
                             <div className="input-group">
-                                <input type="number" step="any" className="form-control" placeholder="Rating"/>
-                                <input type="number" step="any" className="form-control" placeholder="Out of"/>
+                                <input
+                                    type="number"
+                                    step="any"
+                                    className="form-control"
+                                    placeholder="Rating"
+                                    required
+                                    value={rating}
+                                    onChange={e => setRating(e.target.value)}
+                                />
+                                <input
+                                    type="number"
+                                    step="any"
+                                    className="form-control"
+                                    placeholder="Out of"
+                                    required
+                                    value={outOf}
+                                    onChange={e => setOutOf(e.target.value)}
+                                />
                             </div>
                         </div>
 
