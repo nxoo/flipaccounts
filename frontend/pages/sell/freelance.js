@@ -3,7 +3,7 @@ import {useSession} from "next-auth/client";
 import Layout from "../../components/layout";
 
 
-export default function addFreelance() {
+export default function Freelance() {
     const [category, setCategory] = useState('');
     const [company, setCompany] = useState('');
     const [rating, setRating] = useState('');
@@ -18,6 +18,7 @@ export default function addFreelance() {
     const [images, setImages] = useState('')
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
+    const [includeFees, setIncludeFees] = useState('');
     const [hidePrice, setHidePrice] = useState('');
     const [offers, setOffers] = useState('');
     const [auction, setAuction] = useState('');
@@ -111,6 +112,7 @@ export default function addFreelance() {
                                     required
                                     value={rating}
                                     onChange={e => setRating(e.target.value)}
+                                    disabled={df}
                                 />
                                 <input
                                     type="number"
@@ -120,6 +122,7 @@ export default function addFreelance() {
                                     required
                                     value={outOf}
                                     onChange={e => setOutOf(e.target.value)}
+                                    disabled={df}
                                 />
                             </div>
                         </div>
@@ -129,17 +132,40 @@ export default function addFreelance() {
                         </label>
                         <div className="col-7">
                             <div className="input-group mb-2">
-                                <input type="number" step="any" className="form-control"
-                                       placeholder="Gigs" id="gigs"/>
-                                <input type="number" step="any" className="form-control"
-                                       placeholder="Earned"/>
+                                <input
+                                    type="number"
+                                    step="any"
+                                    className="form-control"
+                                    placeholder="Gigs"
+                                    id="gigs"
+                                    value={gigs}
+                                    onChange={e => setGigs(e.target.value)}
+                                    disabled={df}
+                                />
+                                <input
+                                    type="number"
+                                    step="any"
+                                    className="form-control"
+                                    placeholder="Earned"
+                                    value={earned}
+                                    onChange={e => setEarned(e.target.value)}
+                                    disabled={df}
+                                />
                             </div>
                         </div>
 
                         <div className="col-sm-6 mb-2">
                             <label htmlFor='age' className="form-label">
                                 <small>Date account was approved</small></label>
-                            <input type="date" className="form-control" id="age"/>
+                            <input
+                                type="date"
+                                className="form-control"
+                                id="age"
+                                placeholder="mm/dd/yyyy"
+                                value={age}
+                                onChange={e => setAge(e.target.value)}
+                                disabled={df}
+                            />
                         </div>
 
                         <div className="row">
@@ -147,8 +173,15 @@ export default function addFreelance() {
                                 <small>Country account was registered in</small>
                             </label>
                             <div className="col-auto mb-2">
-                                <select className="form-select" aria-label="Default select example" id="country"
-                                        placeholder="mm/dd/yyyy" required>
+                                <select
+                                    className="form-select"
+                                    aria-label="Default select example"
+                                    id="country"
+                                    required
+                                    value={country}
+                                    onChange={e => setCountry(e.target.value)}
+                                    disabled={df}
+                                >
                                     <option value="">Country</option>
                                     <option value="1">Kenya</option>
                                     <option value="2">United States</option>
@@ -159,7 +192,14 @@ export default function addFreelance() {
                             </div>
                             <div className="col-auto mb-2">
                                 <div className="form-check">
-                                    <input className="form-check-input" type="checkbox" value="" id="vpn"/>
+                                    <input
+                                        className="form-check-input"
+                                        type="checkbox"
+                                        id="vpn"
+                                        value={vpn}
+                                        onChange={e => setVpn(e.target.value)}
+                                        disabled={df}
+                                    />
                                     <label className="form-check-label" htmlFor="vpn">
                                         VPN needed
                                     </label>
@@ -173,7 +213,14 @@ export default function addFreelance() {
                         <div className="row">
                             <div className="col-auto mb-2">
                                 <div className="form-check">
-                                    <input className="form-check-input" type="checkbox" value="" id="verification"/>
+                                    <input
+                                        className="form-check-input"
+                                        type="checkbox"
+                                        id="verification"
+                                        value={verificaton}
+                                        onChange={e => setVerification(e.target.value)}
+                                        disabled={df}
+                                    />
                                     <label className="form-check-label" htmlFor="verification">
                                         Verification needed
                                     </label>
@@ -181,7 +228,14 @@ export default function addFreelance() {
                             </div>
                             <div className="col-auto mb-2">
                                 <div className="form-check">
-                                    <input className="form-check-input" type="checkbox" value="" id="verified"/>
+                                    <input
+                                        className="form-check-input"
+                                        type="checkbox"
+                                        id="verified"
+                                        value={verified}
+                                        onChange={e => setVerified(e.target.value)}
+                                        disabled={df}
+                                    />
                                     <label className="form-check-label" htmlFor="verified">
                                         Verified
                                     </label>
@@ -191,26 +245,56 @@ export default function addFreelance() {
 
                         <div className="mb-3">
                             <label htmlFor="formFileMultiple" className="form-label">
-                                <small>Select upto 4 images, then click upload</small>
+                                <small>Select an image, then click upload</small>
                             </label>
-                            <input className="form-control" type="file" id="formFileMultiple"
-                                   placeholder="one" multiple/>
+                            <input
+                                className="form-control form-control-sm"
+                                type="file"
+                                id="formFileMultiple"
+                                placeholder="one"
+                                multiple
+                                value={images}
+                                onChange={e => setImages(e.target.value)}
+                                disabled={df}
+                            />
                         </div>
 
                         <div className="col-auto mb-3">
-                            <textarea className="form-control" placeholder="Description" id="" rows="3"/>
+                            <textarea
+                                className="form-control"
+                                placeholder="Description"
+                                id=""
+                                rows="2"
+                                value={description}
+                                onChange={e => setDescription(e.target.value)}
+                                disabled={df}
+                            />
                         </div>
 
                         <div className="row">
                             <div className="col-sm-6 mb-2">
                                 <div className="input-group">
                                     <span className="input-group-text" id="basic-addon1">Price in USD </span>
-                                    <input type="number" className="form-control" placeholder="Eg. 100"/>
+                                    <input
+                                        type="number"
+                                        className="form-control"
+                                        placeholder="Eg. 100"
+                                        value={price}
+                                        onChange={e => setPrice(e.target.value)}
+                                        disabled={df}
+                                    />
                                 </div>
                             </div>
                             <div className="col-auto mb-2">
                                 <div className="form-check">
-                                    <input className="form-check-input" type="checkbox" value="" id="include-fees"/>
+                                    <input
+                                        className="form-check-input"
+                                        type="checkbox"
+                                        id="include-fees"
+                                        value={includeFees}
+                                        onChange={e => setIncludeFees(e.target.value)}
+                                        disabled={df}
+                                    />
                                     <label className="form-check-label" htmlFor="include-fees">
                                         Include 5% fee
                                     </label>
@@ -221,7 +305,14 @@ export default function addFreelance() {
                         <div className="row">
                             <div className="col-auto mb-2">
                                 <div className="form-check">
-                                    <input className="form-check-input" type="checkbox" value="" id="offers"/>
+                                    <input
+                                        className="form-check-input"
+                                        type="checkbox"
+                                        id="offers"
+                                        value={offers}
+                                        onChange={e => setOffers(e.target.value)}
+                                        disabled={df}
+                                    />
                                     <label className="form-check-label" htmlFor="offers">
                                         Accept Offers
                                     </label>
@@ -229,7 +320,14 @@ export default function addFreelance() {
                             </div>
                             <div className="col-auto mb-2">
                                 <div className="form-check">
-                                    <input className="form-check-input" type="checkbox" value="" id="hidePrice"/>
+                                    <input
+                                        className="form-check-input"
+                                        type="checkbox"
+                                        id="hidePrice"
+                                        value={hidePrice}
+                                        onChange={e => setHidePrice(e.target.value)}
+                                        disabled={df}
+                                    />
                                     <label className="form-check-label" htmlFor="hidePrice">
                                         Hide price
                                     </label>
@@ -239,14 +337,26 @@ export default function addFreelance() {
 
                         <div className="col-auto mb-3">
                             <div className="form-check">
-                                <input className="form-check-input" type="checkbox" value="" id="auction"/>
+                                <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    id="auction"
+                                    value={auction}
+                                    onChange={e => setAuction(e.target.value)}
+                                    disabled={df}
+                                />
                                 <label className="form-check-label" htmlFor="auction">
                                     Sell through an Auction
                                 </label>
                             </div>
                         </div>
 
-                        <input className="btn btn-success" type="submit" value="Add Freelance"/>
+                        <input
+                            className="btn btn-success"
+                            type="submit"
+                            value="Add Freelance"
+                            disabled={df}
+                        />
                     </div>
                 </div>
             </form>
