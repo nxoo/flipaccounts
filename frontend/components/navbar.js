@@ -182,7 +182,6 @@ export default function Navbar() {
               }
 
               .dropdown ul li a {
-                font-weight: 430;
               }
 
               .navbar-toggler:focus,
