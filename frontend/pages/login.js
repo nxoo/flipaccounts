@@ -63,6 +63,7 @@ export default function Login() {
                 setErrorType("warning")
                 setShowError(true)
             } else if (res.status === 200 && res.error !== '504') {
+                await router.push('/')
                 setErrorMessage("Login successful")
                 setErrorType("success")
                 setShowError(true)

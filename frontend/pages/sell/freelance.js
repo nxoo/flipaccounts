@@ -22,9 +22,6 @@ export default function Freelance() {
     const [hidePrice, setHidePrice] = useState('');
     const [offers, setOffers] = useState('');
     const [auction, setAuction] = useState('');
-    const [disabled, setDisabled] = useState('');
-
-    const [disableForms, setDisableForms] = useState(true);
     const [session, loading] = useSession();
 
     const df = !session;
@@ -36,28 +33,41 @@ export default function Freelance() {
     let options;
 
     if (category === '1') {
-        options = transcription.map(x => <option value={x} />)
+        options = transcription.map(x => <option key={x} value={x} />)
     } else if (category === '2') {
-        options = academicWriting.map(x => <option value={x} />)
+        options = academicWriting.map(x => <option key={x} value={x} />)
     } else if (category === '3') {
-        options = essayWriting.map(x => <option value={x} />)
+        options = essayWriting.map(x => <option key={x} value={x} />)
     } else {
         const companiesOptions = [...transcription, ...academicWriting, ...essayWriting];
         if (company.length > 1) {
-            options = companiesOptions.map(x => <option value={x} />)
+            options = companiesOptions.map(x => <option key={x} value={x} />)
         } else {
             options = null
         }
     }
 
+    const handleFreelance = async event => {
+        event.preventDefault()
+        const data = {
+            category, company, rating, outOf, gigs, earned, age, country, vpn, verificaton, verified,
+            images, description, price, includeFees, hidePrice, offers, auction
+        }
+        console.log(data)
+    }
+
+    const alert = (
+        <div className='alert alert-warning alert-dismissible fade show' role="alert">
+            You need to Login
+            <button type="button" className="btn-close" data-bs-dismiss="alert"
+                    aria-label="Close"/>
+        </div>
+    )
+
     return (
         <Layout>
-            <div className='alert alert-warning alert-dismissible fade show' role="alert">
-                You need to Login
-                <button type="button" className="btn-close" data-bs-dismiss="alert"
-                        aria-label="Close"/>
-            </div>
-            <form>
+            {session ? null : alert}
+            <form method="post" onSubmit={handleFreelance}>
                 <div className="row">
                     <div className="col-sm-6">
 

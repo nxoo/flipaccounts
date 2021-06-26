@@ -106,32 +106,33 @@ export default function Navbar() {
                             <li className="nav-item dropdown">
                                 <a className="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    {/*<i className="bi bi-person-fill" />*/} Profile
+                                    <i className="bi bi-person-fill" /> {session.user.username}
                                 </a>
                                 <ul className="dropdown-menu" aria-labelledby="profileDropdown">
                                     <li>
-                                        <Link href={`/u/${session.user.username}`}>
-                                            <a className="dropdown-item">
-                                                <i className="bi bi-person-circle"/> {session.user.username}</a>
-                                        </Link>
-                                    </li>
-                                    <li>
                                         <Link href="/u/wallet">
                                             <a className="dropdown-item">
-                                                <i className=" bi bi-wallet2"/> Wallet
+                                                <i className=" bi bi-wallet2"/> 0.00$
                                             </a>
                                         </Link>
                                     </li>
                                     <li>
                                         <Link href="/u/listings">
                                             <a className="dropdown-item">
-                                                <i className="bi bi-list"/> My Listings</a>
+                                                <i className="bi bi-list-ul"/> My listings</a>
+                                        </Link>
+                                    </li>
+
+                                    <li>
+                                        <Link href={`/u/${session.user.username}`}>
+                                            <a className="dropdown-item">
+                                                <i className="bi bi-gear"/> Settings</a>
                                         </Link>
                                     </li>
                                     <li>
                                         <Link href="#">
                                             <a onClick={handleLogout} className="dropdown-item" href="#">
-                                                <i className="bi bi-box-arrow-in-right"/> Log out</a>
+                                                <i className="bi bi-box-arrow-in-left"/> Log out</a>
                                         </Link>
                                     </li>
                                 </ul>
@@ -181,7 +182,7 @@ export default function Navbar() {
               }
 
               .dropdown ul li a {
-                font-weight: 500;
+                font-weight: 430;
               }
 
               .navbar-toggler:focus,
