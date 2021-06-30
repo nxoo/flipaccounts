@@ -1,6 +1,7 @@
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 import {useSession} from "next-auth/client";
 import Layout from "../../components/layout";
+import {addFreelance} from "../../lib/flip";
 
 
 export default function Freelance() {
@@ -10,19 +11,19 @@ export default function Freelance() {
     const [outOf, setOutOf] = useState('')
     const [gigs, setGigs] = useState('');
     const [earned, setEarned] = useState('');
-    const [age, setAge] = useState('');
+    const [approved, setApproved] = useState('');
     const [country, setCountry] = useState('');
-    const [vpn, setVpn] = useState('');
-    const [verificaton, setVerification] = useState('');
-    const [verified, setVerified] = useState('');
-    const [images, setImages] = useState('')
+    const [vpn, setVpn] = useState(false);
+    const [verification, setVerification] = useState(false);
+    const [verified, setVerified] = useState(false);
+    const [image, setImage] = useState('')
     const [description, setDescription] = useState('');
-    const [price, setPrice] = useState('');
-    const [includeFees, setIncludeFees] = useState('');
-    const [hidePrice, setHidePrice] = useState('');
-    const [offers, setOffers] = useState('');
-    const [auction, setAuction] = useState('');
-    const [session, loading] = useSession();
+    const [price, setPrice] = useState(false);
+    const [includeFees, setIncludeFees] = useState(false);
+    const [hidePrice, setHidePrice] = useState(false);
+    const [offers, setOffers] = useState(false);
+    const [auction, setAuction] = useState(false);
+    const [session,] = useSession();
 
     const df = !session;
 
@@ -49,11 +50,41 @@ export default function Freelance() {
 
     const handleFreelance = async event => {
         event.preventDefault()
+        const formData = new FormData();
+        await formData.append('File', image)
+        const accessToken = session.accessToken
         const data = {
-            category, company, rating, outOf, gigs, earned, age, country, vpn, verificaton, verified,
-            images, description, price, includeFees, hidePrice, offers, auction
+            category, 'company':1, rating, 'max_rating': outOf, gigs, earned, approved, country, vpn, verification, verified,
+            'image': formData, description, price, 'hide_price': hidePrice, offers, auction
         }
+        const res = await addFreelance(accessToken, data)
+        console.log(session.accessToken)
         console.log(data)
+        console.log(res)
+    }
+
+    const handleImageUpload = async event => {
+        event.preventDefault()
+        const formData = new FormData();
+        formData.append('File', image)
+    }
+
+
+    const handleIncludeFees = async event => {
+        const data = event.target.checked
+        let initialPrice = price
+        if (includeFees === false && data === true) {
+            initialPrice *= 1.05
+            await setPrice(initialPrice)
+            await setIncludeFees(data)
+        } else if (includeFees === true && data === false) {
+            initialPrice *= 100 / 105
+            await setPrice(initialPrice)
+            await setIncludeFees(data)
+        } else {
+            await setPrice(initialPrice)
+            await setIncludeFees(data)
+        }
     }
 
     const alert = (
@@ -165,15 +196,15 @@ export default function Freelance() {
                         </div>
 
                         <div className="col-sm-6 mb-2">
-                            <label htmlFor='age' className="form-label">
+                            <label htmlFor='approved' className="form-label">
                                 <small>Date account was approved</small></label>
                             <input
                                 type="date"
                                 className="form-control"
                                 id="age"
                                 placeholder="mm/dd/yyyy"
-                                value={age}
-                                onChange={e => setAge(e.target.value)}
+                                value={approved}
+                                onChange={e => setApproved(e.target.value)}
                                 disabled={df}
                             />
                         </div>
@@ -193,11 +224,11 @@ export default function Freelance() {
                                     disabled={df}
                                 >
                                     <option value="">Country</option>
-                                    <option value="1">Kenya</option>
-                                    <option value="2">United States</option>
-                                    <option value="3">United Kingdom</option>
-                                    <option value="4">Uganda</option>
-                                    <option value="5">South Africa</option>
+                                    <option value="KE">Kenya</option>
+                                    <option value="US">United States</option>
+                                    <option value="UK">United Kingdom</option>
+                                    <option value="UG">Uganda</option>
+                                    <option value="SA">South Africa</option>
                                 </select>
                             </div>
                             <div className="col-auto mb-2">
@@ -207,7 +238,7 @@ export default function Freelance() {
                                         type="checkbox"
                                         id="vpn"
                                         value={vpn}
-                                        onChange={e => setVpn(e.target.value)}
+                                        onChange={e => setVpn(e.target.checked)}
                                         disabled={df}
                                     />
                                     <label className="form-check-label" htmlFor="vpn">
@@ -227,8 +258,8 @@ export default function Freelance() {
                                         className="form-check-input"
                                         type="checkbox"
                                         id="verification"
-                                        value={verificaton}
-                                        onChange={e => setVerification(e.target.value)}
+                                        value={verification}
+                                        onChange={e => setVerification(e.target.checked)}
                                         disabled={df}
                                     />
                                     <label className="form-check-label" htmlFor="verification">
@@ -243,7 +274,7 @@ export default function Freelance() {
                                         type="checkbox"
                                         id="verified"
                                         value={verified}
-                                        onChange={e => setVerified(e.target.value)}
+                                        onChange={e => setVerified(e.target.checked)}
                                         disabled={df}
                                     />
                                     <label className="form-check-label" htmlFor="verified">
@@ -261,10 +292,9 @@ export default function Freelance() {
                                 className="form-control form-control-sm"
                                 type="file"
                                 id="formFileMultiple"
-                                placeholder="one"
-                                multiple
-                                value={images}
-                                onChange={e => setImages(e.target.value)}
+                                name="image"
+                                placeholder="Upload Image"
+                                onChange={e => setImage(e.target.files[0])}
                                 disabled={df}
                             />
                         </div>
@@ -302,8 +332,8 @@ export default function Freelance() {
                                         type="checkbox"
                                         id="include-fees"
                                         value={includeFees}
-                                        onChange={e => setIncludeFees(e.target.value)}
-                                        disabled={df}
+                                        onChange={handleIncludeFees}
+                                        disabled={!price}
                                     />
                                     <label className="form-check-label" htmlFor="include-fees">
                                         Include 5% fee
@@ -320,7 +350,7 @@ export default function Freelance() {
                                         type="checkbox"
                                         id="offers"
                                         value={offers}
-                                        onChange={e => setOffers(e.target.value)}
+                                        onChange={e => setOffers(e.target.checked)}
                                         disabled={df}
                                     />
                                     <label className="form-check-label" htmlFor="offers">
@@ -335,7 +365,7 @@ export default function Freelance() {
                                         type="checkbox"
                                         id="hidePrice"
                                         value={hidePrice}
-                                        onChange={e => setHidePrice(e.target.value)}
+                                        onChange={e => setHidePrice(e.target.checked)}
                                         disabled={df}
                                     />
                                     <label className="form-check-label" htmlFor="hidePrice">
@@ -352,7 +382,7 @@ export default function Freelance() {
                                     type="checkbox"
                                     id="auction"
                                     value={auction}
-                                    onChange={e => setAuction(e.target.value)}
+                                    onChange={e => {setAuction(e.target.checked); console.log(e.target.checked)}}
                                     disabled={df}
                                 />
                                 <label className="form-check-label" htmlFor="auction">
