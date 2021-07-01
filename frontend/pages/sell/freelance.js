@@ -28,25 +28,20 @@ export default function Freelance() {
     const df = !session;
 
 
-    const transcription = ['Verbit', 'TransribeMe', 'Rev', 'Verbit British', 'Werkit']
-    const essayWriting = ['EssayShark', 'EssayPro']
-    const academicWriting = ['iWriters', 'NerdyTurtlez', 'WritersLabs']
+    const transcription = ['Verbit', 'TransribeMe', 'Rev', 'Verbit British', 'Werkit', "Can't find company"]
+    const essayWriting = ['EssayShark', 'EssayPro', "Can't find company"]
+    const academicWriting = ['iWriters', 'NerdyTurtlez', 'WritersLabs', "Can't find company"]
     let options;
 
     if (category === '1') {
-        options = transcription.map(x => <option key={x} value={x} />)
+        options = transcription.map(x => <option key={x} value={x}>{x}</option>)
     } else if (category === '2') {
-        options = academicWriting.map(x => <option key={x} value={x} />)
+        options = academicWriting.map(x => <option key={x} value={x}>{x}</option>)
     } else if (category === '3') {
-        options = essayWriting.map(x => <option key={x} value={x} />)
+        options = essayWriting.map(x => <option key={x} value={x}>{x}</option>)
     } else {
-        const companiesOptions = [...transcription, ...academicWriting, ...essayWriting];
-        if (company.length > 1) {
-            options = companiesOptions.map(x => <option key={x} value={x} />)
-        } else {
-            options = null
-        }
-    }
+        options = <option value="">Company</option>
+    };
 
     const handleFreelance = async event => {
         event.preventDefault()
@@ -125,18 +120,16 @@ export default function Freelance() {
                                 </select>
                             </div>
                             <div className="col-auto mb-2">
-                                <input
-                                    className="form-control"
-                                    list="datalist"
-                                    placeholder="company"
+                                <select
+                                    className="form-select"
+                                    aria-label="Default select example"
                                     required
-                                    value={company}
+                                    value={category}
                                     onChange={e => setCompany(e.target.value)}
-                                    disabled={df}
-                                />
-                                <datalist id="datalist">
+                                    disabled={df || !category}
+                                >
                                     {options}
-                                </datalist>
+                                </select>
                             </div>
                         </div>
 
