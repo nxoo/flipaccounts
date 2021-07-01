@@ -12,7 +12,7 @@ export default function Layout({children}) {
             <Navbar/>
             <div className='alert alert-warning alert-dismissible fade show' role="alert">
                 <div className="col-sm-6 mx-auto">
-                Website not complete, some features might not work!
+                Site incomplete, some features might not work
                 </div>
             </div>
             <div className="container layout">
