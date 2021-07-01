@@ -5,11 +5,10 @@ import Layout from '../components/layout';
 export default function Sell() {
     return (
         <Layout>
-            <div>
-                <h4 className="mb-4">Add A New Listing</h4>
                 <div className="row">
+                    <div className="col-sm-6 mx-auto">
+                    <h4 className="mb-4">Add A New Listing</h4>
                     <small>Select Category</small>
-                    <div className="col-sm-6">
                         <div className="list-group">
                             <Link href="/sell/freelance">
                                 <a className="list-group-item list-group-item-action d-flex">
@@ -37,7 +36,6 @@ export default function Sell() {
                         </div>
                     </div>
                 </div>
-            </div>
         </Layout>
     )
 }

@@ -104,7 +104,7 @@ export default function Login() {
                 <title>Login</title>
             </Head>
             <div className="row">
-                <div className="col-sm-6">
+                <div className="col-sm-6 mx-auto">
                     <a href="#" onClick={() => signIn('google', {callbackUrl: '/'})}>
                         <div className="google-btn">
                             <div className="google-wrapper">

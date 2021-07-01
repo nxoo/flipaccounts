@@ -1,11 +1,20 @@
-import {useState} from 'react';
+import React, {useState, useMemo} from 'react'
 import {useSession} from "next-auth/client";
+import Select from "react-select";
+import countryList from 'react-select-country-list'
 import Layout from "../../components/layout";
 import {addFreelance} from "../../lib/flip";
 
 
+const categories = [
+    {value: '1', label: 'Transcription'},
+    {value: '2', label: 'Academic Writing'},
+    {value: '3', label: 'Essay Writing'}
+]
+
+
 export default function Freelance() {
-    const [category, setCategory] = useState('');
+    const [category, setCategory] = useState('1');
     const [company, setCompany] = useState('');
     const [rating, setRating] = useState('');
     const [outOf, setOutOf] = useState('')
@@ -24,6 +33,8 @@ export default function Freelance() {
     const [offers, setOffers] = useState(false);
     const [auction, setAuction] = useState(false);
     const [session,] = useSession();
+    const countries = useMemo(() => countryList().getData(), [])
+
 
     const df = !session;
 
@@ -35,14 +46,15 @@ export default function Freelance() {
     let options;
 
     if (category === '1') {
-        options = transcription.map((x,y) => <option key={y} value={y}>{x}</option>)
+        options = transcription.map((x, y) => <option key={y} value={y}>{x}</option>)
     } else if (category === '2') {
         options = academicWriting.map((x, y) => <option key={y} value={y}>{x}</option>)
     } else if (category === '3') {
         options = essayWriting.map((x, y) => <option key={y} value={y}>{x}</option>)
     } else {
         options = empty.map((x, y) => <option key={y} value="">{x}</option>)
-    };
+    }
+    ;
 
     const handleFreelance = async event => {
         event.preventDefault()
@@ -50,8 +62,23 @@ export default function Freelance() {
         await formData.append('File', image)
         const accessToken = session.accessToken
         const data = {
-            category, 'company':1, rating, 'max_rating': outOf, gigs, earned, approved, country, vpn, verification, verified,
-            'image': formData, description, price, 'hide_price': hidePrice, offers, auction
+            category,
+            'company': 1,
+            rating,
+            'max_rating': outOf,
+            gigs,
+            earned,
+            approved,
+            country,
+            vpn,
+            verification,
+            verified,
+            'image': formData,
+            description,
+            price,
+            'hide_price': hidePrice,
+            offers,
+            auction
         }
         const res = await addFreelance(accessToken, data)
         console.log(session.accessToken)
@@ -90,6 +117,10 @@ export default function Freelance() {
         }
     }
 
+    const changeHandler = value => {
+        setCountry(value)
+    }
+
     const alert = (
         <div className='alert alert-warning alert-dismissible fade show' role="alert">
             You need to Login
@@ -105,46 +136,27 @@ export default function Freelance() {
                 <div className="row">
                     <div className="col-sm-6">
 
-                        <div className="input-group">
-                            <div className="col-auto me-2 mb-2">
-                                <select
-                                    className="form-select"
-                                    aria-label="Default select example"
-                                    required
-                                    value={category}
-                                    onChange={e => setCategory(e.target.value)}
-                                    disabled={df}
-                                >
-                                    <option value="">Category</option>
-                                    <option value="1">Transcription</option>
-                                    <option value="2">Academic writing</option>
-                                    <option value="3">Essay writing</option>
-                                    <option value="4">Captioning</option>
-                                    <option value="5">Translation</option>
-                                    <option value="6">Remote Tasks</option>
-                                    <option value="7">Programming</option>
-                                    <option value="8">Designing</option>
-                                    <option value="9">Can't find category?</option>
-                                </select>
-                            </div>
-                            <div className="col-auto mb-2">
-                                <select
-                                    className="form-select"
-                                    aria-label="Default select example"
-                                    required
-                                    value={company}
-                                    onChange={e => setCompany(e.target.value)}
-                                    disabled={df || !category}
-                                >
-                                    {options}
-                                </select>
-                            </div>
+                        <div className="col-sm-6 mb-2">
+                            <Select
+                                options={categories}
+                                value={category}
+                                onChange={e => setCategory(value)}
+                                isDisabled={df}
+                            />
+                        </div>
+                        <div className="col-sm-8 mb-2">
+                            <Select
+                                options={categories}
+                                value={category}
+                                onChange={e => setCategory(value)}
+                                isDisabled={df || !category}
+                            />
                         </div>
 
                         <label htmlFor="gigs" className="form-label">
                             <small>Account rating Eg 4.2/6.0</small>
                         </label>
-                        <div className="col-6 mb-2">
+                        <div className="col-sm-7 mb-2">
                             <div className="input-group">
                                 <input
                                     type="number"
@@ -172,7 +184,7 @@ export default function Freelance() {
                         <label htmlFor="gigs" className="form-label">
                             <small>No. of Gigs done and total earnings in USD</small>
                         </label>
-                        <div className="col-7">
+                        <div className="col-sm-7">
                             <div className="input-group mb-2">
                                 <input
                                     type="number"
@@ -210,87 +222,73 @@ export default function Freelance() {
                             />
                         </div>
 
-                        <div className="row">
-                            <label className="form-check-label" htmlFor="country">
-                                <small>Country account was registered in</small>
-                            </label>
-                            <div className="col-auto mb-2">
-                                <select
-                                    className="form-select"
-                                    aria-label="Default select example"
-                                    id="country"
-                                    required
-                                    value={country}
-                                    onChange={e => setCountry(e.target.value)}
+                        <label className="form-check-label" htmlFor="country">
+                            <small>Country account was registered in</small>
+                        </label>
+                        <div className="col-sm-8 mb-3">
+                            <Select
+                                options={countries}
+                                value={country}
+                                onChange={changeHandler}
+                                isDisabled={df}
+                            />
+                        </div>
+                        <div className="col-auto mb-3">
+                            <div className="form-check">
+                                <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    id="vpn"
+                                    value={vpn}
+                                    onChange={e => setVpn(e.target.checked)}
                                     disabled={df}
-                                >
-                                    <option value="">Country</option>
-                                    <option value="KE">Kenya</option>
-                                    <option value="US">United States</option>
-                                    <option value="UK">United Kingdom</option>
-                                    <option value="UG">Uganda</option>
-                                    <option value="SA">South Africa</option>
-                                </select>
-                            </div>
-                            <div className="col-auto mb-2">
-                                <div className="form-check">
-                                    <input
-                                        className="form-check-input"
-                                        type="checkbox"
-                                        id="vpn"
-                                        value={vpn}
-                                        onChange={e => setVpn(e.target.checked)}
-                                        disabled={df}
-                                    />
-                                    <label className="form-check-label" htmlFor="vpn">
-                                        VPN needed
-                                    </label>
-                                </div>
+                                />
+                                <label className="form-check-label" htmlFor="vpn">
+                                    VPN needed
+                                </label>
                             </div>
                         </div>
                     </div>
 
                     <div className="col-sm-6">
 
-                        <div className="row">
-                            <div className="col-auto mb-2">
-                                <div className="form-check">
-                                    <input
-                                        className="form-check-input"
-                                        type="checkbox"
-                                        id="verification"
-                                        value={verification}
-                                        onChange={e => setVerification(e.target.checked)}
-                                        disabled={df}
-                                    />
-                                    <label className="form-check-label" htmlFor="verification">
-                                        Verification needed
-                                    </label>
-                                </div>
+                        <div className="col-auto mb-2">
+                            <div className="form-check">
+                                <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    id="verification"
+                                    value={verification}
+                                    onChange={e => setVerification(e.target.checked)}
+                                    disabled={df}
+                                />
+                                <label className="form-check-label" htmlFor="verification">
+                                    Verification needed
+                                </label>
                             </div>
-                            <div className="col-auto mb-2">
-                                <div className="form-check">
-                                    <input
-                                        className="form-check-input"
-                                        type="checkbox"
-                                        id="verified"
-                                        value={verified}
-                                        onChange={e => setVerified(e.target.checked)}
-                                        disabled={df}
-                                    />
-                                    <label className="form-check-label" htmlFor="verified">
-                                        Verified
-                                    </label>
-                                </div>
+                        </div>
+                        <div className="col-auto mb-2">
+                            <div className="form-check">
+                                <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    id="verified"
+                                    value={verified}
+                                    onChange={e => setVerified(e.target.checked)}
+                                    disabled={df}
+                                />
+                                <label className="form-check-label" htmlFor="verified">
+                                    Verified
+                                </label>
                             </div>
                         </div>
 
-                        <div className="mb-3">
+                        <div className="mb-2">
                             <label htmlFor="formFileMultiple" className="form-label">
                                 <small>Select an image, then click upload</small>
                             </label>
                             <input
-                                className="form-control form-control-sm"
+                                className="form-control"
                                 type="file"
                                 id="formFileMultiple"
                                 name="image"
@@ -300,79 +298,75 @@ export default function Freelance() {
                             />
                         </div>
 
-                        <div className="col-auto mb-3">
+                        <div className="col-auto mb-2">
                             <textarea
                                 className="form-control"
                                 placeholder="Description"
-                                id=""
-                                rows="2"
+                                id="description"
+                                rows="3"
                                 value={description}
                                 onChange={e => setDescription(e.target.value)}
                                 disabled={df}
                             />
                         </div>
 
-                        <div className="row">
-                            <div className="col-sm-6 mb-2">
-                                <div className="input-group">
-                                    <span className="input-group-text" id="basic-addon1">Price in USD </span>
-                                    <input
-                                        type="number"
-                                        className="form-control"
-                                        placeholder="Eg. 100"
-                                        value={price}
-                                        onChange={handlePrice}
-                                        disabled={df}
-                                    />
-                                </div>
+                        <div className="col-sm-6 mb-2">
+                            <div className="input-group">
+                                <span className="input-group-text" id="basic-addon1">Price in USD </span>
+                                <input
+                                    type="number"
+                                    className="form-control"
+                                    placeholder="Eg. 100"
+                                    value={price}
+                                    onChange={handlePrice}
+                                    disabled={df}
+                                />
                             </div>
-                            <div className="col-auto mb-2">
-                                <div className="form-check">
-                                    <input
-                                        className="form-check-input"
-                                        type="checkbox"
-                                        id="include-fees"
-                                        checked={includeFees}
-                                        onChange={handleIncludeFees}
-                                        disabled={df || !price}
-                                    />
-                                    <label className="form-check-label" htmlFor="include-fees">
-                                        Include 5% fee
-                                    </label>
-                                </div>
+                        </div>
+                        <div className="col-auto mb-2">
+                            <div className="form-check">
+                                <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    id="include-fees"
+                                    checked={includeFees}
+                                    onChange={handleIncludeFees}
+                                    disabled={df || !price}
+                                />
+                                <label className="form-check-label" htmlFor="include-fees">
+                                    Include 5% fee
+                                </label>
                             </div>
                         </div>
 
-                        <div className="row">
-                            <div className="col-auto mb-2">
-                                <div className="form-check">
-                                    <input
-                                        className="form-check-input"
-                                        type="checkbox"
-                                        id="offers"
-                                        value={offers}
-                                        onChange={e => setOffers(e.target.checked)}
-                                        disabled={df}
-                                    />
-                                    <label className="form-check-label" htmlFor="offers">
-                                        Accept Offers
-                                    </label>
-                                </div>
+                        <div className="col-auto mb-2">
+                            <div className="form-check">
+                                <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    id="offers"
+                                    value={offers}
+                                    onChange={e => setOffers(e.target.checked)}
+                                    disabled={df}
+                                />
+                                <label className="form-check-label" htmlFor="offers">
+                                    Accept Offers
+                                </label>
                             </div>
-                            <div className="col-auto mb-2">
-                                <div className="form-check">
-                                    <input
-                                        className="form-check-input"
-                                        type="checkbox"
-                                        id="hidePrice"
-                                        value={hidePrice}
-                                        onChange={e => setHidePrice(e.target.checked)}
-                                        disabled={df}
-                                    />
-                                    <label className="form-check-label" htmlFor="hidePrice">
-                                        Hide price
-                                    </label>
-                                </div>
+                        </div>
+                        <div className="col-auto mb-2">
+                            <div className="form-check">
+                                <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    id="hidePrice"
+                                    value={hidePrice}
+                                    onChange={e => setHidePrice(e.target.checked)}
+                                    disabled={df}
+                                />
+                                <label className="form-check-label" htmlFor="hidePrice">
+                                    Hide price
+                                </label>
                             </div>
                         </div>
 
@@ -383,7 +377,7 @@ export default function Freelance() {
                                     type="checkbox"
                                     id="auction"
                                     value={auction}
-                                    onChange={e => {setAuction(e.target.checked); console.log(e.target.checked)}}
+                                    onChange={e => setAuction(e.target.checked)}
                                     disabled={df}
                                 />
                                 <label className="form-check-label" htmlFor="auction">
@@ -401,8 +395,6 @@ export default function Freelance() {
                     </div>
                 </div>
             </form>
-            <style jsx>{`
-            `}</style>
         </Layout>
     )
 }
