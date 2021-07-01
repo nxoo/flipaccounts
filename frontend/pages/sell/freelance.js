@@ -7,9 +7,16 @@ import {addFreelance} from "../../lib/flip";
 
 
 const categories = [
-    {value: '1', label: 'Transcription'},
-    {value: '2', label: 'Academic Writing'},
-    {value: '3', label: 'Essay Writing'}
+    {value: 1, label: 'Transcription'},
+    {value: 2, label: 'Academic Writing'},
+    {value: 3, label: 'Essay Writing'}
+]
+
+const companies = [
+    {value: 1, label: "Verbit"},
+    {value: 2, label: "Verbit British"},
+    {value: 3, label: "Rev"},
+    {value: 2, label: "TranscribeMe"},
 ]
 
 
@@ -20,7 +27,7 @@ export default function Freelance() {
     const [outOf, setOutOf] = useState('')
     const [gigs, setGigs] = useState('');
     const [earned, setEarned] = useState('');
-    const [approved, setApproved] = useState('');
+    const [approved, setApproved] = useState('2021-07');
     const [country, setCountry] = useState('');
     const [vpn, setVpn] = useState(false);
     const [verification, setVerification] = useState(false);
@@ -146,9 +153,9 @@ export default function Freelance() {
                         </div>
                         <div className="col-sm-8 mb-2">
                             <Select
-                                options={categories}
-                                value={category}
-                                onChange={e => setCategory(value)}
+                                options={companies}
+                                value={company}
+                                onChange={e => setCategory(e.target.value)}
                                 isDisabled={df || !category}
                             />
                         </div>
@@ -225,7 +232,7 @@ export default function Freelance() {
                         <label className="form-check-label" htmlFor="country">
                             <small>Country account was registered in</small>
                         </label>
-                        <div className="col-sm-8 mb-3">
+                        <div className="col-sm-8 mb-2">
                             <Select
                                 options={countries}
                                 value={country}
@@ -233,7 +240,7 @@ export default function Freelance() {
                                 isDisabled={df}
                             />
                         </div>
-                        <div className="col-auto mb-3">
+                        <div className="col-auto mb-2">
                             <div className="form-check">
                                 <input
                                     className="form-check-input"
@@ -389,7 +396,7 @@ export default function Freelance() {
                         <input
                             className="btn btn-success"
                             type="submit"
-                            value="Add Freelance"
+                            value="Submit Freelance"
                             disabled={df}
                         />
                     </div>
