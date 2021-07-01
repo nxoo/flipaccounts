@@ -31,16 +31,17 @@ export default function Freelance() {
     const transcription = ['Verbit', 'TransribeMe', 'Rev', 'Verbit British', 'Werkit', "Can't find company"]
     const essayWriting = ['EssayShark', 'EssayPro', "Can't find company"]
     const academicWriting = ['iWriters', 'NerdyTurtlez', 'WritersLabs', "Can't find company"]
+    const empty = ['Company', '...']
     let options;
 
     if (category === '1') {
-        options = transcription.map(x => <option key={x} value={x}>{x}</option>)
+        options = transcription.map((x,y) => <option key={y} value={y}>{x}</option>)
     } else if (category === '2') {
-        options = academicWriting.map(x => <option key={x} value={x}>{x}</option>)
+        options = academicWriting.map((x, y) => <option key={y} value={y}>{x}</option>)
     } else if (category === '3') {
-        options = essayWriting.map(x => <option key={x} value={x}>{x}</option>)
+        options = essayWriting.map((x, y) => <option key={y} value={y}>{x}</option>)
     } else {
-        options = <option value="">Company</option>
+        options = empty.map((x, y) => <option key={y} value="">{x}</option>)
     };
 
     const handleFreelance = async event => {
@@ -64,6 +65,13 @@ export default function Freelance() {
         formData.append('File', image)
     }
 
+    const handlePrice = async event => {
+        const data = event.target.value
+        await setPrice(data)
+        if (!data) {
+            await setIncludeFees(false)
+        }
+    }
 
     const handleIncludeFees = async event => {
         const data = event.target.checked
@@ -124,7 +132,7 @@ export default function Freelance() {
                                     className="form-select"
                                     aria-label="Default select example"
                                     required
-                                    value={category}
+                                    value={company}
                                     onChange={e => setCompany(e.target.value)}
                                     disabled={df || !category}
                                 >
@@ -190,12 +198,12 @@ export default function Freelance() {
 
                         <div className="col-sm-6 mb-2">
                             <label htmlFor='approved' className="form-label">
-                                <small>Date account was approved</small></label>
+                                <small>Month account was approved</small></label>
                             <input
-                                type="date"
+                                type="month"
                                 className="form-control"
                                 id="age"
-                                placeholder="mm/dd/yyyy"
+                                placeholder="mm/yyyy"
                                 value={approved}
                                 onChange={e => setApproved(e.target.value)}
                                 disabled={df}
@@ -313,7 +321,7 @@ export default function Freelance() {
                                         className="form-control"
                                         placeholder="Eg. 100"
                                         value={price}
-                                        onChange={e => setPrice(e.target.value)}
+                                        onChange={handlePrice}
                                         disabled={df}
                                     />
                                 </div>
@@ -324,9 +332,9 @@ export default function Freelance() {
                                         className="form-check-input"
                                         type="checkbox"
                                         id="include-fees"
-                                        value={includeFees}
+                                        checked={includeFees}
                                         onChange={handleIncludeFees}
-                                        disabled={!price}
+                                        disabled={df || !price}
                                     />
                                     <label className="form-check-label" htmlFor="include-fees">
                                         Include 5% fee
