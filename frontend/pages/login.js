@@ -4,19 +4,8 @@ import Link from "next/link";
 import {useState, useEffect} from 'react';
 import {useRouter} from 'next/router';
 import {signIn, useSession} from 'next-auth/client';
-import swal from '@sweetalert/with-react';
 import Layout from "../components/layout";
-import Error from "next/error";
 
-function Alert2() {
-    return (
-        swal(
-            <div>
-                <h1>Login success!</h1>
-            </div>
-        )
-    )
-}
 
 function Alert({message, errorType, setShowError}) {
     return (
@@ -121,7 +110,7 @@ export default function Login() {
                         </div>
                     </a>
                     <div className="separator">OR</div>
-                    {showError && errorMessage !== "" ? //<Alert2 />
+                    {showError && errorMessage !== "" ?
                         <Alert message={errorMessage} errorType={errorType} setShowError={setShowError}/>
                         : null}
                     <h5>Log in with Email</h5>

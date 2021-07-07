@@ -1,29 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import {useCallback, useState} from "react";
-import {useEffect} from "react";
 import Layout from "../components/layout";
 
 
 export default function Home() {
-    const [count, setCount] = useState(0);
-    const names = ['freelance', 'social media', 'gaming', 'verification services']
-
-    /*
-    const slider = useCallback(() => {
-        setCount(count => count + 1)
-    }, [])
-
-    useEffect(() => {
-        const intervalID = setInterval(slider, 3000);
-        return () => clearInterval(intervalID);
-    }, [slider])
-
-    if (count === 4) {
-        setCount(0)
-    }
-     */
-
     return (
         <Layout>
             <div className='alert alert-warning alert-dismissible fade show' role="alert">

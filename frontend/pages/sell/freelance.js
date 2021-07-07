@@ -1,7 +1,6 @@
-import React, {useState, useMemo, useCallback} from 'react'
+import React, {useState, useMemo} from 'react'
 import {useSession} from "next-auth/client";
 import Select from "react-select";
-import DataListInput from "react-datalist-input";
 import countryList from 'react-select-country-list'
 import Layout from "../../components/layout";
 import {addFreelance} from "../../lib/flip";
