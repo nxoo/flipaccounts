@@ -142,7 +142,7 @@ export default function Login() {
                                 />
                             </div>
                         </div>
-                        <button type="submit" className="btn btn-primary mb-4">Login</button>
+                        <button type="submit" className="btn btn-primary mb-2">Login</button>
                     </form>
                     <p>Don't have an account? <Link href="/signup"><a>Sign up</a></Link><br/>
                         <Link href="/forgot"><a>Forgot Password?</a></Link></p>

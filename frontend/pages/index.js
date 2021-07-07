@@ -8,7 +8,7 @@ export default function Home() {
         <Layout>
             <div className='alert alert-warning alert-dismissible fade show' role="alert">
                 <div className="col-sm-6 mx-auto">
-                    Beta Version! Some features may not work properly.
+                    Beta Version! Some features might not work properly.
                 </div>
             </div>
             <p>
