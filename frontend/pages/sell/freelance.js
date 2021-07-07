@@ -1,27 +1,51 @@
-import React, {useState, useMemo} from 'react'
+import React, {useState, useMemo, useCallback} from 'react'
 import {useSession} from "next-auth/client";
 import Select from "react-select";
+import DataListInput from "react-datalist-input";
 import countryList from 'react-select-country-list'
 import Layout from "../../components/layout";
 import {addFreelance} from "../../lib/flip";
 
 
 const categories = [
+    {value: '', label: 'Category'},
     {value: 1, label: 'Transcription'},
     {value: 2, label: 'Academic Writing'},
-    {value: 3, label: 'Essay Writing'}
+    {value: 3, label: 'Essay Writing'},
+    {value: 'c', label: "Can't find category"}
 ]
 
-const companies = [
+const transcription = [
+    {value: '', label: "Company"},
     {value: 1, label: "Verbit"},
     {value: 2, label: "Verbit British"},
     {value: 3, label: "Rev"},
-    {value: 2, label: "TranscribeMe"},
+    {value: 4, label: "TranscribeMe"},
+    {value: 'c', label: "Can't find company"}
 ]
 
+const aWriting = [
+    {value: '', label: "Company"},
+    {value: 1, label: 'iWriters'},
+    {value: 2, label: 'NerdyTurtlez'},
+    {value: 3, label: 'WritersLabs'},
+    {value: 'c', label: "Can't find company"}
+]
+
+const eWriting = [
+    {value: '', label: "Company"},
+    {value: 1, label: 'Essay Shark'},
+    {value: 2, label: 'Essay Pro'},
+    {value: 'c', label: "Can't find company"}
+]
+
+let empty = [
+    {value: '', label: "Company"},
+    {value: 'c', label: "Can't find company"}
+]
 
 export default function Freelance() {
-    const [category, setCategory] = useState('1');
+    const [category, setCategory] = useState('');
     const [company, setCompany] = useState('');
     const [rating, setRating] = useState('');
     const [outOf, setOutOf] = useState('')
@@ -39,29 +63,35 @@ export default function Freelance() {
     const [hidePrice, setHidePrice] = useState(false);
     const [offers, setOffers] = useState(false);
     const [auction, setAuction] = useState(false);
+    const [newCategory, setNewCategory] = useState(false)
+    const [newCompany, setNewCompany] = useState('')
+
     const [session,] = useSession();
     const countries = useMemo(() => countryList().getData(), [])
-
-
     const df = !session;
-
-
-    const transcription = ['Verbit', 'TransribeMe', 'Rev', 'Verbit British', 'Werkit', "Can't find company"]
-    const essayWriting = ['EssayShark', 'EssayPro', "Can't find company"]
-    const academicWriting = ['iWriters', 'NerdyTurtlez', 'WritersLabs', "Can't find company"]
-    const empty = ['Company', '...']
     let options;
 
     if (category === '1') {
-        options = transcription.map((x, y) => <option key={y} value={y}>{x}</option>)
+        options = transcription.map((x, y) => (
+            <option key={y} value={x.value}>{x.label}</option>
+        ))
     } else if (category === '2') {
-        options = academicWriting.map((x, y) => <option key={y} value={y}>{x}</option>)
+        options = aWriting.map((x, y) => (
+            <option key={y} value={x.value}>{x.label}</option>
+        ))
     } else if (category === '3') {
-        options = essayWriting.map((x, y) => <option key={y} value={y}>{x}</option>)
+        options = eWriting.map((x, y) => (
+            <option key={y} value={x.value}>{x.label}</option>
+        ))
+    } else if (category === '4') {
+        options = transcription.map((x, y) => (
+            <option key={y} value={x.value}>{x.label}</option>
+        ))
+    } else if (category === '') {
+        options = (<option value="">Company</option>)
     } else {
-        options = empty.map((x, y) => <option key={y} value="">{x}</option>)
+        options = empty.map((x, y) => <option key={y} value={x.value}>{x.label}</option>)
     }
-    ;
 
     const handleFreelance = async event => {
         event.preventDefault()
@@ -76,7 +106,7 @@ export default function Freelance() {
             gigs,
             earned,
             approved,
-            country,
+            'country': country.value,
             vpn,
             verification,
             verified,
@@ -88,7 +118,6 @@ export default function Freelance() {
             auction
         }
         const res = await addFreelance(accessToken, data)
-        console.log(session.accessToken)
         console.log(data)
         console.log(res)
     }
@@ -104,6 +133,28 @@ export default function Freelance() {
         await setPrice(data)
         if (!data) {
             await setIncludeFees(false)
+        }
+    }
+
+    const handleCategory = async event => {
+        const data = event.target.value
+        await setCategory(data)
+        await setNewCategory(false)
+        await setCompany('')
+        await setNewCompany(false)
+        if (data === 'c') {
+            setCategory(data)
+            setNewCategory(true)
+        }
+    }
+
+    const handleCompany = async event => {
+        const data = event.target.value
+        await setCompany(data)
+        await setNewCompany(false)
+        if (data === 'c') {
+            await setCompany(data)
+            await setNewCompany(true)
         }
     }
 
@@ -128,6 +179,7 @@ export default function Freelance() {
         setCountry(value)
     }
 
+
     const alert = (
         <div className='alert alert-warning alert-dismissible fade show' role="alert">
             You need to Login
@@ -143,23 +195,45 @@ export default function Freelance() {
                 <div className="row">
                     <div className="col-sm-6">
 
-                        <div className="col-sm-6 mb-2">
-                            <Select
-                                options={categories}
-                                value={category}
-                                onChange={e => setCategory(value)}
-                                isDisabled={df}
+                        <div className="col-sm-7 mb-2">
+                            <select
+                                className="form-select"
+                                aria-label="Default select example"
+                                onChange={handleCategory}
+                                disabled={df}
+                                required>
+                                {categories.map((x, y) => (
+                                    <option key={y} value={x.value}>{x.label}</option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className="col-sm-7 mb-2" style={{display:newCategory?'inherit':'none'}}>
+                            <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Type Category name here"
+                                onChange={e => setNewCategory(e.target.value)}
                             />
                         </div>
-                        <div className="col-sm-8 mb-2">
-                            <Select
-                                options={companies}
+                        <div className="col-sm-7 mb-2">
+                            <select
+                                placeholder="Company"
+                                className="form-select"
                                 value={company}
-                                onChange={e => setCategory(e.target.value)}
-                                isDisabled={df || !category}
+                                onChange={handleCompany}
+                                disabled={!category || df}
+                                required>
+                                {options}
+                            </select>
+                        </div>
+                        <div className="col-sm-7 mb-2" style={{display:newCompany?'inherit':'none'}}>
+                            <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Type Company name here"
+                                onChange={e => setNewCompany(e.target.value)}
                             />
                         </div>
-
                         <label htmlFor="gigs" className="form-label">
                             <small>Account rating Eg 4.2/6.0</small>
                         </label>
@@ -215,7 +289,7 @@ export default function Freelance() {
                             </div>
                         </div>
 
-                        <div className="col-sm-6 mb-2">
+                        <div className="col-sm-7 mb-2">
                             <label htmlFor='approved' className="form-label">
                                 <small>Month account was approved</small></label>
                             <input
@@ -232,11 +306,13 @@ export default function Freelance() {
                         <label className="form-check-label" htmlFor="country">
                             <small>Country account was registered in</small>
                         </label>
-                        <div className="col-sm-8 mb-2">
+                        <div className="col-sm-7 mb-2">
                             <Select
                                 options={countries}
                                 value={country}
                                 onChange={changeHandler}
+                                isSearchable={true}
+                                isClearable={true}
                                 isDisabled={df}
                             />
                         </div>
@@ -300,7 +376,7 @@ export default function Freelance() {
                                 id="formFileMultiple"
                                 name="image"
                                 placeholder="Upload Image"
-                                onChange={e => setImage(e.target.files[0])}
+                                onChange={handleImageUpload}
                                 disabled={df}
                             />
                         </div>
@@ -361,6 +437,7 @@ export default function Freelance() {
                                 </label>
                             </div>
                         </div>
+                        {/*
                         <div className="col-auto mb-2">
                             <div className="form-check">
                                 <input
@@ -392,11 +469,26 @@ export default function Freelance() {
                                 </label>
                             </div>
                         </div>
+                        */}
+                        <label htmlFor="stockOptions"><small>How many accounts are you selling?</small></label>
+                        <div className="col-sm-7 mb-3">
+                            <select
+                                name="stock"
+                                id="stockOptions"
+                                className="form-select"
+                                disabled={df}
+                                required
+                            >
+                                {[1,2,3,4,5,6,7,8,9, '10+'].map(x => (
+                                    <option key={x} value={x}>{x}</option>
+                                ))}
+                            </select>
+                        </div>
 
                         <input
                             className="btn btn-success"
                             type="submit"
-                            value="Submit Freelance"
+                            value="Submit"
                             disabled={df}
                         />
                     </div>

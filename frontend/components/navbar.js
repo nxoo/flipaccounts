@@ -70,7 +70,9 @@ export default function Navbar() {
                         </li>
                         <li className="nav-item dropdown">
                             <a className="nav-link dropdown-toggle" href="#" id="moreDropdown" role="button"
-                               data-bs-toggle="dropdown" aria-expanded="false">More</a>
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                <i className="bi bi-three-dots-vertical"></i> More
+                            </a>
                             <ul className="dropdown-menu" aria-labelledby="moreDropdown">
                                 <li><Link href="/how-to-buy"><a className="dropdown-item">How to buy</a></Link></li>
                                 <li><Link href="/how-to-sell"><a className="dropdown-item">
@@ -92,14 +94,14 @@ export default function Navbar() {
                                 </li>
                                 <li className="nav-item">
                                     <Link href="/u/escrow">
-                                        <a className="nav-link">Escrow</a>
+                                        <a className="nav-link"><i className="bi bi-lock-fill"></i> Escrow</a>
                                     </Link>
                                 </li>
                             </>
                         ) : null}
                         <li className="nav-item">
                             <Link href="/sell">
-                                <a className="nav-link"><i className="bi bi-bag-x-fill"/> Sell</a>
+                                <a className="nav-link"><i className="bi bi-bag-plus-fill"/> Sell</a>
                             </Link>
                         </li>
                         {session && !loading ?
@@ -119,7 +121,7 @@ export default function Navbar() {
                                     <li>
                                         <Link href="/u/listings">
                                             <a className="dropdown-item">
-                                                <i className="bi bi-list-ul"/> My listings</a>
+                                                <i className="bi bi-list"/> My listings</a>
                                         </Link>
                                     </li>
 
@@ -200,6 +202,8 @@ export default function Navbar() {
               @media (max-width: 990px) {
                 #inbox-pc {
                   display: none;
+                }
+                .nav-item .nav-link {
                 }
               }
             `}</style>
