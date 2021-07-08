@@ -6,6 +6,7 @@ from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelatio
 from django.contrib.contenttypes.models import ContentType
 from django_countries.fields import CountryField
 from djmoney.models.fields import MoneyField
+from partial_date import PartialDateField
 
 
 class Profile(AbstractUser):
@@ -151,7 +152,7 @@ class Freelance(models.Model):
     max_rating = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     gigs = models.IntegerField(default=0, blank=False)
     earned = MoneyField(max_digits=14, decimal_places=2, default_currency='USD', default=0)
-    approved = models.DateField(blank=False)
+    approved = PartialDateField(blank=False)
     country = CountryField()
     vpn = models.BooleanField()
     verification = models.BooleanField()
@@ -162,6 +163,7 @@ class Freelance(models.Model):
     hide_price = models.BooleanField(blank=True)
     offers = models.BooleanField()
     auction = models.BooleanField(blank=True)
+    stock = models.IntegerField(default=1, blank=False)
     pub_date = models.DateTimeField(blank=False, default=timezone.now)
     on_escrow = models.BooleanField(default=False)
     sold = models.BooleanField(default=False)

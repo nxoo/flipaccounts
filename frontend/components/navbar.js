@@ -57,8 +57,8 @@ export default function Navbar() {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/verification">
-                                        <a className="dropdown-item">Verification Services</a>
+                                    <Link href="/services">
+                                        <a className="dropdown-item">Extra Services</a>
                                     </Link>
                                 </li>
                             </ul>

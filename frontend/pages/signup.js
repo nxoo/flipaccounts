@@ -166,9 +166,9 @@ export default function Signup() {
                                 />
                             </div>
                         </div>
-                        <button type="submit" className="btn btn-primary mb-4">Sign up</button>
+                        <button type="submit" className="btn btn-primary mb-2">Sign up</button>
                     </form>
-                    <span>Already have an account? <Link href="/login"><a>Login</a></Link></span>
+                    <p>Already have an account? <Link href="/login"><a>Login</a></Link></p>
                 </div>
             </div>
             <style jsx>{`

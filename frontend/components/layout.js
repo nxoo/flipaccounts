@@ -7,13 +7,13 @@ export default function Layout({children}) {
         <>
             <Head>
                 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-                <title>Flipaccounts</title>
+                <title>FlipAccounts</title>
             </Head>
             <Navbar/>
             <div className="container layout">
                 {children}
                 <footer className="pt-5 my-5 text-muted border-top">
-                    Flipaccounts · © 2021
+                    FlipAccounts · © 2021
                 </footer>
             </div>
             <style jsx global>{`

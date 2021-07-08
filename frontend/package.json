@@ -17,9 +17,7 @@
     "next-auth": "^3.27.2",
     "node-jose-tools": "^1.6.28",
     "react": "17.0.1",
-    "react-datalist-input": "^2.2.1",
     "react-dom": "17.0.1",
-    "react-plain-datalist-input": "^2.2.0",
     "react-select": "^4.3.1",
     "react-select-country-list": "^2.2.3",
     "sweetalert": "^2.1.2"

@@ -12,7 +12,7 @@ export default function Home() {
                 </div>
             </div>
             <p>
-                <span id="index-title">Buy & Sell Freelance Accounts ...</span><br/>
+                <span id="index-title">Buy & Sell Freelance Accounts, ...</span><br/>
                 <span id="index-title2">Transact safely using our escrow service</span>
             </p>
 
@@ -24,7 +24,7 @@ export default function Home() {
                             <option value="1">Freelance</option>
                             <option value="2">Social Media</option>
                             <option value="3">Gaming</option>
-                            <option value="4">Verification</option>
+                            <option value="4">Extra Services</option>
                         </select>
                     </div>
 
@@ -41,6 +41,20 @@ export default function Home() {
             <div className="advert">
                 <small><i className="bi-arrow-up-right-square-fill"/> Promoted</small>
                 <div className="row">
+                    <div className="col-sm-4">
+                        <Link href={`/l/${2}`}><a style={{textDecoration: "none", color: "inherit"}}>
+                            <div className="p-4 bg-light">
+                                <span className="h5">Verbit</span><br/>
+                                <span className="text-muted">
+                                        <small>
+                                            Rating: 4.2/6.0<br/>
+                                            Age/Gigs/Earned - 1 month/7/$25<br/>
+                                            <strong>$65</strong>, 4 offers
+                                        </small>
+                                    </span>
+                            </div>
+                        </a></Link>
+                    </div>
                     <div className="col-sm-4">
                         <Link href={`/l/${1}`}><a style={{textDecoration: "none", color: "inherit"}}>
                             <div className="p-4 bg-light">
@@ -65,21 +79,6 @@ export default function Home() {
                                             </span>
                                     </div>
                                 </div>
-                            </div>
-                        </a></Link>
-                    </div>
-                    <div className="col-sm-4">
-                        <Link href={`/l/${2}`}><a style={{textDecoration: "none", color: "inherit"}}>
-                            <div className="p-4 bg-light">
-                                <span className="h5">Verbit British</span>
-                                <span className="text-muted"><small> - Transcription</small></span> <br/>
-                                <span className="text-muted">
-                                        <small>
-                                            Rating: 3.9/6.0<br/>
-                                            Age/Gigs/Earned - 3 months/6/$400<br/>
-                                            <strong>$120</strong>, 13 bids
-                                        </small>
-                                    </span>
                             </div>
                         </a></Link>
                     </div>
@@ -119,10 +118,6 @@ export default function Home() {
                 #index-title {
                   font-size: 32px;
                   font-weight: bold;
-                }
-
-                #index-title2 {
-                  font-weight: ;
                 }
 
                 .advert {

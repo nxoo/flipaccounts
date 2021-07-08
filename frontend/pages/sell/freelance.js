@@ -1,7 +1,7 @@
 import React, {useState, useMemo} from 'react'
 import {useSession} from "next-auth/client";
 import Select from "react-select";
-import countryList from 'react-select-country-list'
+import countryList from 'react-select-country-list';
 import Layout from "../../components/layout";
 import {addFreelance} from "../../lib/flip";
 
@@ -62,6 +62,7 @@ export default function Freelance() {
     const [hidePrice, setHidePrice] = useState(false);
     const [offers, setOffers] = useState(false);
     const [auction, setAuction] = useState(false);
+    const [stock, setStock] = useState(1)
     const [newCategory, setNewCategory] = useState(false)
     const [newCompany, setNewCompany] = useState('')
 
@@ -112,9 +113,8 @@ export default function Freelance() {
             'image': formData,
             description,
             price,
-            'hide_price': hidePrice,
             offers,
-            auction
+            stock,
         }
         const res = await addFreelance(accessToken, data)
         console.log(data)
@@ -181,9 +181,11 @@ export default function Freelance() {
 
     const alert = (
         <div className='alert alert-warning alert-dismissible fade show' role="alert">
-            You need to Login
-            <button type="button" className="btn-close" data-bs-dismiss="alert"
-                    aria-label="Close"/>
+            <div className="col-sm-6 mx-auto">
+                You need to Login
+                <button type="button" className="btn-close" data-bs-dismiss="alert"
+                        aria-label="Close"/>
+            </div>
         </div>
     )
 
@@ -206,7 +208,7 @@ export default function Freelance() {
                                 ))}
                             </select>
                         </div>
-                        <div className="col-sm-7 mb-2" style={{display:newCategory?'inherit':'none'}}>
+                        <div className="col-sm-7 mb-2" style={{display: newCategory ? 'inherit' : 'none'}}>
                             <input
                                 type="text"
                                 className="form-control"
@@ -225,7 +227,7 @@ export default function Freelance() {
                                 {options}
                             </select>
                         </div>
-                        <div className="col-sm-7 mb-2" style={{display:newCompany?'inherit':'none'}}>
+                        <div className="col-sm-7 mb-2" style={{display: newCompany ? 'inherit' : 'none'}}>
                             <input
                                 type="text"
                                 className="form-control"
@@ -475,10 +477,12 @@ export default function Freelance() {
                                 name="stock"
                                 id="stockOptions"
                                 className="form-select"
+                                value={stock}
+                                onChange={e => setStock(e.target.value)}
                                 disabled={df}
                                 required
                             >
-                                {[1,2,3,4,5,6,7,8,9, '10+'].map(x => (
+                                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(x => (
                                     <option key={x} value={x}>{x}</option>
                                 ))}
                             </select>
