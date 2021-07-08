@@ -3,6 +3,7 @@ import Head from "next/head";
 import {useSession} from "next-auth/client";
 import Select from "react-select";
 import countryList from 'react-select-country-list';
+import ImageUploading from "react-images-uploading";
 import Layout from "../../components/layout";
 import {addFreelance} from "../../lib/flip";
 
@@ -66,6 +67,8 @@ export default function Freelance() {
     const [stock, setStock] = useState(1)
     const [newCategory, setNewCategory] = useState(false)
     const [newCompany, setNewCompany] = useState('')
+    const [images, setImages] = React.useState([]);
+    const maxNumber = 3;
 
     const [session,] = useSession();
     const countries = useMemo(() => countryList().getData(), [])
@@ -100,27 +103,20 @@ export default function Freelance() {
         await formData.append('File', image)
         const accessToken = session.accessToken
         const data = {
-            category,
-            'company': 1,
-            rating,
-            'max_rating': outOf,
-            gigs,
-            earned,
-            approved,
-            'country': country.value,
-            vpn,
-            verification,
-            verified,
-            'image': formData,
-            description,
-            price,
-            offers,
-            stock,
+            category, 'company': 1, rating, 'max_rating': outOf, gigs, earned, approved, 'country': country.value,
+            vpn, verification, verified, 'image': images[0], 'image2': images[1], 'image3': images[2], description,
+            price, offers, stock,
         }
         const res = await addFreelance(accessToken, data)
         console.log(data)
         console.log(res)
     }
+
+    const onChange = async (imageList, addUpdateIndex) => {
+        // data for submit
+        console.log(imageList, addUpdateIndex);
+        await setImages(imageList);
+    };
 
     const handleImageUpload = async event => {
         event.preventDefault()
@@ -179,7 +175,6 @@ export default function Freelance() {
         setCountry(value)
     }
 
-
     const alert = (
         <div className='alert alert-warning alert-dismissible fade show' role="alert">
             <div className="col-sm-6 mx-auto">
@@ -198,128 +193,142 @@ export default function Freelance() {
             {session ? null : alert}
             <form method="post" onSubmit={handleFreelance}>
                 <div className="row">
-                    <div className="col-sm-6">
+                    <div className="col-sm-7 mx-auto">
 
-                        <div className="col-sm-7 mb-2">
-                            <select
-                                className="form-select"
-                                aria-label="Default select example"
-                                onChange={handleCategory}
-                                disabled={df}
-                                required>
-                                {categories.map((x, y) => (
-                                    <option key={y} value={x.value}>{x.label}</option>
-                                ))}
-                            </select>
-                        </div>
-                        <div className="col-sm-7 mb-2" style={{display: newCategory ? 'inherit' : 'none'}}>
-                            <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Type Category name here"
-                                onChange={e => setNewCategory(e.target.value)}
-                            />
-                        </div>
-                        <div className="col-sm-7 mb-2">
-                            <select
-                                placeholder="Company"
-                                className="form-select"
-                                value={company}
-                                onChange={handleCompany}
-                                disabled={!category || df}
-                                required>
-                                {options}
-                            </select>
-                        </div>
-                        <div className="col-sm-7 mb-2" style={{display: newCompany ? 'inherit' : 'none'}}>
-                            <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Type Company name here"
-                                onChange={e => setNewCompany(e.target.value)}
-                            />
-                        </div>
-                        <label htmlFor="gigs" className="form-label">
-                            <small>Account rating Eg 4.2/6.0</small>
-                        </label>
-                        <div className="col-sm-7 mb-2">
-                            <div className="input-group">
-                                <input
-                                    type="number"
-                                    step="any"
-                                    className="form-control"
-                                    placeholder="Rating"
-                                    required
-                                    value={rating}
-                                    onChange={e => setRating(e.target.value)}
+                        <div className="row">
+                            <div className="col-auto mb-2">
+                                <select
+                                    className="form-select"
+                                    aria-label="Default select example"
+                                    onChange={handleCategory}
                                     disabled={df}
+                                    required>
+                                    {categories.map((x, y) => (
+                                        <option key={y} value={x.value}>{x.label}</option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className="col-auto mb-2" style={{display: newCategory ? 'inherit' : 'none'}}>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Type Category name here"
+                                    onChange={e => setNewCategory(e.target.value)}
                                 />
+                            </div>
+                            <div className="col-auto mb-2">
+                                <select
+                                    placeholder="Company"
+                                    className="form-select"
+                                    value={company}
+                                    onChange={handleCompany}
+                                    disabled={!category || df}
+                                    required>
+                                    {options}
+                                </select>
+                            </div>
+                            <div className="col-auto mb-2" style={{display: newCompany ? 'inherit' : 'none'}}>
                                 <input
-                                    type="number"
-                                    step="any"
+                                    type="text"
                                     className="form-control"
-                                    placeholder="Out of"
-                                    required
-                                    value={outOf}
-                                    onChange={e => setOutOf(e.target.value)}
-                                    disabled={df}
+                                    placeholder="Type Company name here"
+                                    onChange={e => setNewCompany(e.target.value)}
                                 />
                             </div>
                         </div>
+                        <div className="row">
+                            <div className="col-sm-6">
+                                <label htmlFor="gigs" className="form-label">
+                                    <small>Account rating Eg 4.2/6.0</small>
+                                </label>
+                                <div className="col-auto mb-2">
+                                    <div className="input-group">
+                                        <input
+                                            type="number"
+                                            step="any"
+                                            className="form-control"
+                                            placeholder="Rating"
+                                            required
+                                            value={rating}
+                                            onChange={e => setRating(e.target.value)}
+                                            disabled={df}
+                                        />
+                                        <input
+                                            type="number"
+                                            step="any"
+                                            className="form-control"
+                                            placeholder="Out of"
+                                            required
+                                            value={outOf}
+                                            onChange={e => setOutOf(e.target.value)}
+                                            disabled={df}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
 
-                        <label htmlFor="gigs" className="form-label">
-                            <small>No. of Gigs done and total earnings in USD</small>
-                        </label>
-                        <div className="col-sm-7">
-                            <div className="input-group mb-2">
-                                <input
-                                    type="number"
-                                    step="any"
-                                    className="form-control"
-                                    placeholder="Gigs"
-                                    id="gigs"
-                                    value={gigs}
-                                    onChange={e => setGigs(e.target.value)}
-                                    disabled={df}
-                                />
-                                <input
-                                    type="number"
-                                    step="any"
-                                    className="form-control"
-                                    placeholder="Earned"
-                                    value={earned}
-                                    onChange={e => setEarned(e.target.value)}
-                                    disabled={df}
-                                />
+                            <div className="col-sm-6">
+                                <label htmlFor="gigs" className="form-label">
+                                    <small>No. of Gigs done and total earnings in USD</small>
+                                </label>
+                                <div className="col-auto">
+                                    <div className="input-group mb-2">
+                                        <input
+                                            type="number"
+                                            step="any"
+                                            className="form-control"
+                                            placeholder="Gigs"
+                                            id="gigs"
+                                            value={gigs}
+                                            onChange={e => setGigs(e.target.value)}
+                                            disabled={df}
+                                        />
+                                        <input
+                                            type="number"
+                                            step="any"
+                                            className="form-control"
+                                            placeholder="Earned"
+                                            value={earned}
+                                            onChange={e => setEarned(e.target.value)}
+                                            disabled={df}
+                                        />
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                        <div className="col-sm-7 mb-2">
-                            <label htmlFor='approved' className="form-label">
-                                <small>Month account was approved</small></label>
-                            <input
-                                type="month"
-                                className="form-control"
-                                id="age"
-                                placeholder="mm/yyyy"
-                                value={approved}
-                                onChange={e => setApproved(e.target.value)}
-                                disabled={df}
-                            />
-                        </div>
+                        <div className="row mb-2">
+                            <div className="col-sm-6">
+                                <div className="col-auto">
+                                    <label htmlFor='approved' className="form-label">
+                                        <small>Month account was approved</small></label>
+                                    <input
+                                        type="month"
+                                        className="form-control"
+                                        id="age"
+                                        placeholder="mm/yyyy"
+                                        value={approved}
+                                        onChange={e => setApproved(e.target.value)}
+                                        disabled={df}
+                                    />
+                                </div>
+                            </div>
 
-                        <label className="form-check-label" htmlFor="country">
-                            <small>Country account was registered in</small>
-                        </label>
-                        <div className="col-sm-7 mb-2">
-                            <Select
-                                options={countries}
-                                value={country}
-                                onChange={changeHandler}
-                                isSearchable={true}
-                                isClearable={true}
-                                isDisabled={df}
-                            />
+                            <div className="col-sm-6">
+                                <div className="col-auto">
+                                <label className="form-label" htmlFor="country">
+                                    <small>Country account was registered in</small>
+                                </label>
+                                    <Select
+                                        options={countries}
+                                        value={country}
+                                        onChange={changeHandler}
+                                        isSearchable={true}
+                                        isClearable={true}
+                                        isDisabled={df}
+                                    />
+                                </div>
+                            </div>
                         </div>
                         <div className="col-auto mb-2">
                             <div className="form-check">
@@ -329,61 +338,88 @@ export default function Freelance() {
                                     id="vpn"
                                     value={vpn}
                                     onChange={e => setVpn(e.target.checked)}
-                                    disabled={df}
+                                    disabled={df || !country}
                                 />
                                 <label className="form-check-label" htmlFor="vpn">
                                     VPN needed
                                 </label>
                             </div>
                         </div>
-                    </div>
 
-                    <div className="col-sm-6">
-
-                        <div className="col-auto mb-2">
-                            <div className="form-check">
-                                <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    id="verification"
-                                    value={verification}
-                                    onChange={e => setVerification(e.target.checked)}
-                                    disabled={df}
-                                />
-                                <label className="form-check-label" htmlFor="verification">
-                                    Verification needed
-                                </label>
+                        <div className="row">
+                            <div className="col-auto mb-2">
+                                <div className="form-check">
+                                    <input
+                                        className="form-check-input"
+                                        type="checkbox"
+                                        id="verification"
+                                        value={verification}
+                                        onChange={e => setVerification(e.target.checked)}
+                                        disabled={df}
+                                    />
+                                    <label className="form-check-label" htmlFor="verification">
+                                        Verification needed
+                                    </label>
+                                </div>
+                            </div>
+                            <div className="col-auto mb-2">
+                                <div className="form-check">
+                                    <input
+                                        className="form-check-input"
+                                        type="checkbox"
+                                        id="verified"
+                                        value={verified}
+                                        onChange={e => setVerified(e.target.checked)}
+                                        disabled={df || !verification}
+                                    />
+                                    <label className="form-check-label" htmlFor="verified">
+                                        Verified
+                                    </label>
+                                </div>
                             </div>
                         </div>
-                        <div className="col-auto mb-2">
-                            <div className="form-check">
-                                <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    id="verified"
-                                    value={verified}
-                                    onChange={e => setVerified(e.target.checked)}
-                                    disabled={df}
-                                />
-                                <label className="form-check-label" htmlFor="verified">
-                                    Verified
-                                </label>
-                            </div>
-                        </div>
-
                         <div className="mb-2">
                             <label htmlFor="formFileMultiple" className="form-label">
-                                <small>Select an image, then click upload</small>
+                                <small>Upload a maximum of 3 images</small>
                             </label>
-                            <input
-                                className="form-control"
-                                type="file"
-                                id="formFileMultiple"
-                                name="image"
-                                placeholder="Upload Image"
-                                onChange={handleImageUpload}
-                                disabled={df}
-                            />
+                            <ImageUploading
+                                multiple
+                                value={images}
+                                onChange={onChange}
+                                maxNumber={maxNumber}
+                                dataURLKey="data_url"
+                            >
+                                {({imageList, onImageUpload, onImageRemove, isDragging, dragProps, errors}) => (
+                                    <div className="upload__image-wrapper">
+                                        <div className="mb-2">
+                                            <button
+                                                type="button"
+                                                value=""
+                                                style={isDragging ? {color: "red"} : undefined}
+                                                onClick={onImageUpload}
+                                                {...dragProps}
+                                            >Upload Image
+                                            </button>
+                                        </div>
+                                        <div className="row">
+                                            {imageList.map((image, index) => (
+                                                <div key={index} className="image-item col-auto">
+                                                    <img src={image["data_url"]} alt="" width="100"/>
+                                                    <div className="image-item__btn-wrapper">
+                                                        <small>
+                                                            <button
+                                                                className="btn btn-link"
+                                                                type="button"
+                                                                onClick={() => onImageRemove(index)}>remove
+                                                            </button>
+                                                        </small>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+                            </ImageUploading>
                         </div>
 
                         <div className="col-auto mb-2">
@@ -411,6 +447,7 @@ export default function Freelance() {
                                 />
                             </div>
                         </div>
+                        <div className="row">
                         <div className="col-auto mb-2">
                             <div className="form-check">
                                 <input
@@ -442,41 +479,9 @@ export default function Freelance() {
                                 </label>
                             </div>
                         </div>
-                        {/*
-                        <div className="col-auto mb-2">
-                            <div className="form-check">
-                                <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    id="hidePrice"
-                                    value={hidePrice}
-                                    onChange={e => setHidePrice(e.target.checked)}
-                                    disabled={df}
-                                />
-                                <label className="form-check-label" htmlFor="hidePrice">
-                                    Hide price
-                                </label>
-                            </div>
                         </div>
-
-                        <div className="col-auto mb-3">
-                            <div className="form-check">
-                                <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    id="auction"
-                                    value={auction}
-                                    onChange={e => setAuction(e.target.checked)}
-                                    disabled={df}
-                                />
-                                <label className="form-check-label" htmlFor="auction">
-                                    Sell through an Auction
-                                </label>
-                            </div>
-                        </div>
-                        */}
                         <label htmlFor="stockOptions"><small>How many accounts are you selling?</small></label>
-                        <div className="col-sm-7 mb-3">
+                        <div className="col-4 mb-3">
                             <select
                                 name="stock"
                                 id="stockOptions"
@@ -491,7 +496,6 @@ export default function Freelance() {
                                 ))}
                             </select>
                         </div>
-
                         <input
                             className="btn btn-success"
                             type="submit"
