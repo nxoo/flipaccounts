@@ -1,4 +1,5 @@
 import React, {useState, useMemo} from 'react'
+import Head from "next/head";
 import {useSession} from "next-auth/client";
 import Select from "react-select";
 import countryList from 'react-select-country-list';
@@ -191,6 +192,9 @@ export default function Freelance() {
 
     return (
         <Layout>
+            <Head>
+                <title>Add Freelance</title>
+            </Head>
             {session ? null : alert}
             <form method="post" onSubmit={handleFreelance}>
                 <div className="row">

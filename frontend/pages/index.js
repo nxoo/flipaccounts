@@ -12,7 +12,7 @@ export default function Home() {
                 </div>
             </div>
             <p>
-                <span id="index-title">Buy & Sell Freelance Accounts, ...</span><br/>
+                <span id="index-title">Buy & Sell Freelance Accounts ...</span><br/>
                 <span id="index-title2">Transact safely using our escrow service</span>
             </p>
 
@@ -23,7 +23,6 @@ export default function Home() {
                             <option value="">Category</option>
                             <option value="1">Freelance</option>
                             <option value="2">Social Media</option>
-                            <option value="3">Gaming</option>
                             <option value="4">Extra Services</option>
                         </select>
                     </div>

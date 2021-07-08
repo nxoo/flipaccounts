@@ -1,10 +1,14 @@
 import Link from 'next/link';
+import Head from "next/head";
 import Layout from '../components/layout';
 
 
 export default function Sell() {
     return (
         <Layout>
+            <Head>
+                <title>Sell</title>
+            </Head>
                 <div className="row">
                     <div className="col-sm-6 mx-auto">
                     <h4 className="mb-4">Add A New Listing</h4>
@@ -12,25 +16,20 @@ export default function Sell() {
                         <div className="list-group">
                             <Link href="/sell/freelance">
                                 <a className="list-group-item list-group-item-action d-flex">
-                                    Freelance Account <span className="btn btn-secondary btn-sm ms-auto">
+                                    Freelance<span className="btn btn-secondary btn-sm ms-auto">
                                         Freelance</span>
                                 </a>
                             </Link>
                             <Link href="/sell/social-media">
                                 <a className="list-group-item list-group-item-action d-flex">
-                                    Social media Account <span className="btn btn-secondary btn-sm ms-auto">
-                                        Social media</span>
+                                    Social Media<span className="btn btn-secondary btn-sm ms-auto">
+                                        Social Media</span>
                                 </a>
                             </Link>
-                            <Link href="/sell/gaming">
+                            <Link href="/sell/extra-services">
                                 <a className="list-group-item list-group-item-action d-flex">
-                                    Gaming Account <span className="btn btn-secondary btn-sm ms-auto">Gaming</span>
-                                </a>
-                            </Link>
-                            <Link href="/sell/verification">
-                                <a className="list-group-item list-group-item-action d-flex">
-                                    Verification services
-                                <span className="btn btn-secondary btn-sm ms-auto">Verification</span>
+                                    Extra Services
+                                <span className="btn btn-secondary btn-sm ms-auto">Extra Services</span>
                                 </a>
                             </Link>
                         </div>

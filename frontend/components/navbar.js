@@ -52,11 +52,6 @@ export default function Navbar() {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/gaming">
-                                        <a className="dropdown-item">Gaming</a>
-                                    </Link>
-                                </li>
-                                <li>
                                     <Link href="/services">
                                         <a className="dropdown-item">Extra Services</a>
                                     </Link>
