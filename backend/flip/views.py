@@ -1,4 +1,5 @@
 from rest_framework import viewsets
+from rest_framework.parsers import MultiPartParser
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 from dj_rest_auth.registration.views import SocialLoginView
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
@@ -65,6 +66,7 @@ class OfferViewSet(viewsets.ModelViewSet):
 
 class FreelanceViewSet(viewsets.ModelViewSet):
     queryset = models.Freelance.objects.all()
+    parser_classes = [MultiPartParser]
     serializer_class = serializers.FreelanceSerializer
 
     def perform_create(self, serializer):

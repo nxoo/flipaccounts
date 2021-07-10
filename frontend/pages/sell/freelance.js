@@ -5,7 +5,7 @@ import Select from "react-select";
 import countryList from 'react-select-country-list';
 import ImageUploading from "react-images-uploading";
 import Layout from "../../components/layout";
-import {addFreelance} from "../../lib/flip";
+import {addFreelance, getFreelanceCompanies} from "../../lib/flip";
 
 
 const categories = [
@@ -57,19 +57,19 @@ export default function Freelance() {
     const [vpn, setVpn] = useState(false);
     const [verification, setVerification] = useState(false);
     const [verified, setVerified] = useState(false);
-    const [image, setImage] = useState('')
+    const [images, setImages] = useState([]);
+    const [image, setImage] = useState(null)
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState(false);
     const [includeFees, setIncludeFees] = useState(false);
-    const [hidePrice, setHidePrice] = useState(false);
-    const [offers, setOffers] = useState(false);
-    const [auction, setAuction] = useState(false);
+    const [offers, setOffers] = useState(true);
     const [stock, setStock] = useState(1)
-    const [newCategory, setNewCategory] = useState(false)
+    const [newCategory, setNewCategory] = useState('')
     const [newCompany, setNewCompany] = useState('')
-    const [images, setImages] = React.useState([]);
+    const [showNewCategory, setShowNewCategory] = useState(false)
+    const [showNewCompany, setShowNewCompany] = useState(false)
+    const [companies, setCompanies] = useState('')
     const maxNumber = 3;
-
     const [session,] = useSession();
     const countries = useMemo(() => countryList().getData(), [])
     const df = !session;
@@ -99,29 +99,32 @@ export default function Freelance() {
 
     const handleFreelance = async event => {
         event.preventDefault()
-        const formData = new FormData();
-        await formData.append('File', image)
+        let img = new FormData();
+        img.append("image", image)
         const accessToken = session.accessToken
         const data = {
             category, 'company': 1, rating, 'max_rating': outOf, gigs, earned, approved, 'country': country.value,
-            vpn, verification, verified, 'image': images[0], 'image2': images[1], 'image3': images[2], description,
-            price, offers, stock,
+            vpn, verification, verified, 'image': images[0], description, price, offers, stock,
         }
-        const res = await addFreelance(accessToken, data)
+        if (!newCompany && !newCategory) {
+            const res = await addFreelance(accessToken, data)
+            console.log(res)
+        } else if (newCompany) {
+            return
+        }
         console.log(data)
-        console.log(res)
     }
 
     const onChange = async (imageList, addUpdateIndex) => {
         // data for submit
-        console.log(imageList, addUpdateIndex);
+        // console.log(imageList, addUpdateIndex);
         await setImages(imageList);
     };
 
     const handleImageUpload = async event => {
         event.preventDefault()
-        const formData = new FormData();
-        formData.append('File', image)
+        await setImage(event.target.files[0])
+        console.log(event.target.files[0])
     }
 
     const handlePrice = async event => {
@@ -129,28 +132,39 @@ export default function Freelance() {
         await setPrice(data)
         if (!data) {
             await setIncludeFees(false)
+            await setOffers(true)
         }
     }
 
     const handleCategory = async event => {
         const data = event.target.value
-        await setCategory(data)
-        await setNewCategory(false)
-        await setCompany('')
-        await setNewCompany(false)
         if (data === 'c') {
-            setCategory(data)
-            setNewCategory(true)
+            await setCategory(data)
+            await setNewCategory('')
+            await setShowNewCategory(true)
+            await setCompany('')
+            await setNewCompany('')
+            await setShowNewCompany(false)
+        } else {
+            await setCategory(data)
+            await setNewCategory('')
+            await setShowNewCategory(false)
+            await setCompany('')
+            await setNewCompany('')
+            await setShowNewCompany(false)
         }
     }
 
     const handleCompany = async event => {
         const data = event.target.value
-        await setCompany(data)
-        await setNewCompany(false)
         if (data === 'c') {
             await setCompany(data)
-            await setNewCompany(true)
+            await setNewCompany('')
+            await setShowNewCompany(true)
+        } else {
+            await setCompany(data)
+            await setNewCompany('')
+            await setShowNewCompany(false)
         }
     }
 
@@ -179,8 +193,6 @@ export default function Freelance() {
         <div className='alert alert-warning alert-dismissible fade show' role="alert">
             <div className="col-sm-6 mx-auto">
                 You need to Login
-                <button type="button" className="btn-close" data-bs-dismiss="alert"
-                        aria-label="Close"/>
             </div>
         </div>
     )
@@ -208,11 +220,12 @@ export default function Freelance() {
                                     ))}
                                 </select>
                             </div>
-                            <div className="col-auto mb-2" style={{display: newCategory ? 'inherit' : 'none'}}>
+                            <div className="col-auto mb-2" style={{display: showNewCategory ? 'inherit' : 'none'}}>
                                 <input
                                     type="text"
                                     className="form-control"
                                     placeholder="Type Category name here"
+                                    value={newCategory}
                                     onChange={e => setNewCategory(e.target.value)}
                                 />
                             </div>
@@ -227,11 +240,12 @@ export default function Freelance() {
                                     {options}
                                 </select>
                             </div>
-                            <div className="col-auto mb-2" style={{display: newCompany ? 'inherit' : 'none'}}>
+                            <div className="col-auto mb-2" style={{display: showNewCompany ? 'inherit' : 'none'}}>
                                 <input
                                     type="text"
                                     className="form-control"
                                     placeholder="Type Company name here"
+                                    value={newCompany}
                                     onChange={e => setNewCompany(e.target.value)}
                                 />
                             </div>
@@ -239,7 +253,7 @@ export default function Freelance() {
                         <div className="row">
                             <div className="col-sm-6">
                                 <label htmlFor="gigs" className="form-label">
-                                    <small>Account rating Eg 4.2/6.0</small>
+                                    <small>Account rating</small>
                                 </label>
                                 <div className="col-auto mb-2">
                                     <div className="input-group">
@@ -269,7 +283,7 @@ export default function Freelance() {
 
                             <div className="col-sm-6">
                                 <label htmlFor="gigs" className="form-label">
-                                    <small>No. of Gigs done and total earnings in USD</small>
+                                    <small>No. of gigs done and total earnings (USD)</small>
                                 </label>
                                 <div className="col-auto">
                                     <div className="input-group mb-2">
@@ -297,9 +311,9 @@ export default function Freelance() {
                             </div>
                         </div>
 
-                        <div className="row mb-2">
+                        <div className="row">
                             <div className="col-sm-6">
-                                <div className="col-auto">
+                                <div className="col-auto mb-2">
                                     <label htmlFor='approved' className="form-label">
                                         <small>Month account was approved</small></label>
                                     <input
@@ -315,10 +329,10 @@ export default function Freelance() {
                             </div>
 
                             <div className="col-sm-6">
-                                <div className="col-auto">
-                                <label className="form-label" htmlFor="country">
-                                    <small>Country account was registered in</small>
-                                </label>
+                                <div className="col-auto mb-2">
+                                    <label className="form-label" htmlFor="country">
+                                        <small>Country account was registered in</small>
+                                    </label>
                                     <Select
                                         options={countries}
                                         value={country}
@@ -380,7 +394,7 @@ export default function Freelance() {
                         </div>
                         <div className="mb-2">
                             <label htmlFor="formFileMultiple" className="form-label">
-                                <small>Upload a maximum of 3 images</small>
+                                <small>You can only upload 3 images</small>
                             </label>
                             <ImageUploading
                                 multiple
@@ -398,6 +412,7 @@ export default function Freelance() {
                                                 style={isDragging ? {color: "red"} : undefined}
                                                 onClick={onImageUpload}
                                                 {...dragProps}
+                                                disabled={df}
                                             >Upload Image
                                             </button>
                                         </div>
@@ -436,11 +451,12 @@ export default function Freelance() {
 
                         <div className="col-sm-6 mb-2">
                             <div className="input-group">
-                                <span className="input-group-text" id="basic-addon1">Price in USD </span>
+                                <span className="input-group-text" id="basic-addon1">Price (USD)</span>
                                 <input
+                                    id='price'
                                     type="number"
                                     className="form-control"
-                                    placeholder="Eg. 100"
+                                    placeholder="Optional"
                                     value={price}
                                     onChange={handlePrice}
                                     disabled={df}
@@ -448,53 +464,47 @@ export default function Freelance() {
                             </div>
                         </div>
                         <div className="row">
-                        <div className="col-auto mb-2">
-                            <div className="form-check">
-                                <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    id="include-fees"
-                                    checked={includeFees}
-                                    onChange={handleIncludeFees}
-                                    disabled={df || !price}
-                                />
-                                <label className="form-check-label" htmlFor="include-fees">
-                                    Include 5% fee
-                                </label>
+                            <div className="col-auto mb-2">
+                                <div className="form-check">
+                                    <input
+                                        className="form-check-input"
+                                        type="checkbox"
+                                        id="include-fees"
+                                        checked={includeFees}
+                                        onChange={handleIncludeFees}
+                                        disabled={df || !price}
+                                    />
+                                    <label className="form-check-label" htmlFor="include-fees">
+                                        Include 5% fee
+                                    </label>
+                                </div>
                             </div>
-                        </div>
 
-                        <div className="col-auto mb-2">
-                            <div className="form-check">
-                                <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    id="offers"
-                                    value={offers}
-                                    onChange={e => setOffers(e.target.checked)}
-                                    disabled={df}
-                                />
-                                <label className="form-check-label" htmlFor="offers">
-                                    Accept Offers
-                                </label>
+                            <div className="col-auto mb-2">
+                                <div className="form-check">
+                                    <input
+                                        className="form-check-input"
+                                        type="checkbox"
+                                        id="offers"
+                                        checked={offers}
+                                        onChange={e => setOffers(e.target.checked)}
+                                        disabled={df || !price}
+                                    />
+                                    <label className="form-check-label" htmlFor="offers">
+                                        Accept Offers
+                                    </label>
+                                </div>
                             </div>
-                        </div>
                         </div>
                         <label htmlFor="stockOptions"><small>How many accounts are you selling?</small></label>
-                        <div className="col-4 mb-3">
-                            <select
-                                name="stock"
-                                id="stockOptions"
-                                className="form-select"
+                        <div className="col-2 mb-3">
+                            <input
+                                type="number"
+                                className="form-control"
                                 value={stock}
                                 onChange={e => setStock(e.target.value)}
                                 disabled={df}
-                                required
-                            >
-                                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(x => (
-                                    <option key={x} value={x}>{x}</option>
-                                ))}
-                            </select>
+                            />
                         </div>
                         <input
                             className="btn btn-success"

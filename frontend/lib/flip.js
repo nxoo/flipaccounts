@@ -48,8 +48,42 @@ export async function addFreelance(accessToken, data) {
             url: `${process.env.NEXT_PUBLIC_HOST}/api/freelance/`,
             data: data,
             headers: {
-                'Authorization': `Bearer ${accessToken}`
+                'Authorization': `Bearer ${accessToken}`,
+                'content-type': 'multipart/form-data'
             }
+        })
+        return await res
+    } catch (error) {
+        return error.response
+    }
+}
+
+export async function getFreelanceCompanies() {
+    await axios({
+        method: "get",
+        url: `${process.env.NEXT_PUBLIC_HOST}/api/fcompany/`,
+    })
+}
+
+export async function newCompany(data) {
+    try {
+        const res = await axios({
+            method: "post",
+            url: `${process.env.NEXT_PUBLIC_HOST}/api/fcompany/`,
+            data: data,
+        })
+        return await res
+    } catch (error) {
+        return error.response
+    }
+}
+
+export async function newCategory(data) {
+    try {
+        const res = await axios({
+            method: 'post',
+            url: `${process.env.NEXT_PUBLIC_HOST}/api/fcategory/`,
+            data: data,
         })
         return await res
     } catch (error) {

@@ -1,17 +1,13 @@
 import Link from "next/link";
 import {useSession, signOut} from 'next-auth/client';
 
-String.prototype.capitalize = function () {
-    return this.charAt(0).toUpperCase() + this.slice(1);
-}
 
 export default function Navbar() {
     const [session, loading] = useSession()
 
     const handleLogout = async (event) => {
         event.preventDefault()
-        const res = await signOut({callbackUrl: '/'})
-        console.log(res)
+        await signOut({callbackUrl: '/'})
     }
 
     return (
@@ -21,7 +17,7 @@ export default function Navbar() {
                     <a className="navbar-brand" id="navbar-brand">FlipAccounts</a>
                 </Link>
                 {session && !loading ?
-                    <Link href="/u/inbox">
+                    <Link href="/inbox">
                         <a className="navbar-brand" id="inbox-mobile">
                             <i className="bi bi-envelope-fill"/> <sup className="sups">(0)</sup>
                         </a>
@@ -52,7 +48,7 @@ export default function Navbar() {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/services">
+                                    <Link href="/extra-services">
                                         <a className="dropdown-item">Extra Services</a>
                                     </Link>
                                 </li>
@@ -66,7 +62,7 @@ export default function Navbar() {
                         <li className="nav-item dropdown">
                             <a className="nav-link dropdown-toggle" href="#" id="moreDropdown" role="button"
                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <i className="bi bi-three-dots-vertical"></i> More
+                                <i className="bi bi-three-dots-vertical" /> More
                             </a>
                             <ul className="dropdown-menu" aria-labelledby="moreDropdown">
                                 <li><Link href="/how-to-buy"><a className="dropdown-item">How to buy</a></Link></li>
@@ -81,15 +77,15 @@ export default function Navbar() {
                     <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                         {session && !loading ? (<>
                                 <li className="nav-item" id="inbox-pc">
-                                    <Link href="/u/inbox">
+                                    <Link href="/inbox">
                                         <a className="nav-link">
                                             <i className="bi bi-envelope-fill"/> <sup className="sups">(0)</sup>
                                         </a>
                                     </Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link href="/u/escrow">
-                                        <a className="nav-link"><i className="bi bi-lock-fill"></i> Escrow</a>
+                                    <Link href="/escrow">
+                                        <a className="nav-link"><i className="bi bi-lock-fill" /> Escrow</a>
                                     </Link>
                                 </li>
                             </>
@@ -107,23 +103,19 @@ export default function Navbar() {
                                 </a>
                                 <ul className="dropdown-menu" aria-labelledby="profileDropdown">
                                     <li>
-                                        <Link href="/u/wallet">
-                                            <a className="dropdown-item">
-                                                <i className=" bi bi-wallet2"/> 0.00$
-                                            </a>
+                                        <Link href="/settings">
+                                            <a className="dropdown-item"><i className="bi bi-gear"/> Settings</a>
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link href="/u/listings">
-                                            <a className="dropdown-item">
-                                                <i className="bi bi-list"/> My listings</a>
+                                        <Link href="/wallet">
+                                            <a className="dropdown-item"><i className=" bi bi-wallet2"/> Wallet</a>
                                         </Link>
                                     </li>
 
                                     <li>
-                                        <Link href={`/u/${session.user.username}`}>
-                                            <a className="dropdown-item">
-                                                <i className="bi bi-gear"/> Settings</a>
+                                        <Link href="/my-listings">
+                                            <a className="dropdown-item"><i className="bi bi-list"/> My listings</a>
                                         </Link>
                                     </li>
                                     <li>
@@ -178,9 +170,6 @@ export default function Navbar() {
                 color: #cccccc;
               }
 
-              .dropdown ul li a {
-              }
-
               .navbar-toggler:focus,
               .navbar-toggler:active,
               .navbar-toggler-icon:focus {
@@ -197,8 +186,6 @@ export default function Navbar() {
               @media (max-width: 990px) {
                 #inbox-pc {
                   display: none;
-                }
-                .nav-item .nav-link {
                 }
               }
             `}</style>
