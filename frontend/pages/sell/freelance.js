@@ -116,7 +116,7 @@ export default function Freelance() {
             setCompanies([{id:'',name:'Company'}, ...c, {id:'c',name:"Can't find company"}])
         } else if (data === '2') {
             let c = rCompanies.filter(x => x.category===2)
-            setCompanies([{id:'',name:'Company'}, ...c], {id:'c',name:"Can't find company"})
+            setCompanies([{id:'',name:'Company'}, ...c, {id:'c',name:"Can't find company"}])
         } else if (data === '3') {
             let c = rCompanies.filter(x => x.category===3)
             setCompanies([{id:'',name:'Company'}, ...c, {id:'c',name:"Can't find company"}])
