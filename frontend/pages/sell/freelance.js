@@ -5,14 +5,14 @@ import axios from "axios";
 import {useSession} from "next-auth/client";
 import Select from "react-select";
 import countryList from 'react-select-country-list';
-//import ImageUploading from "react-images-uploading";
 import Layout from "../../components/layout";
 import {addFreelance} from "../../lib/flip";
 
 
+const apiUrl = process.env.NEXT_PUBLIC_HOST;
 const getFreelanceCategories = () => {
     const fetcher = url => axios.get(url).then(res => res.data)
-    const { data, error } = useSWR(`${process.env.NEXT_PUBLIC_HOST}/api/fcategory/`, fetcher)
+    const { data, error } = useSWR(`${apiUrl}/api/fcategory/`, fetcher)
     return {
         rCategories: data,
         isLoading: !error && !data,
@@ -22,18 +22,13 @@ const getFreelanceCategories = () => {
 
 const getFreelanceCompanies = () => {
     const fetcher = url => axios.get(url).then(res => res.data)
-    const { data, error } = useSWR(`${process.env.NEXT_PUBLIC_HOST}/api/fcompany/`, fetcher)
+    const { data, error } = useSWR(`${apiUrl}/api/fcompany/`, fetcher)
     return {
         rCompanies: data,
         isLoading2: !error && !data,
         isError2: error
     }
 }
-
-let empty = [
-    {value: '', label: "Company"},
-    {value: 'c', label: "Can't find company"}
-]
 
 export default function Freelance() {
     const [category, setCategory] = useState('');
@@ -62,7 +57,6 @@ export default function Freelance() {
     const [session,] = useSession();
     const countries = useMemo(() => countryList().getData(), [])
     const df = !session;
-    let options;
     const { rCategories, isLoading, isError } = getFreelanceCategories();
     const { rCompanies, isLoading2, isError2 } = getFreelanceCompanies();
     console.log(rCategories)

@@ -4,15 +4,9 @@ import Layout from "../components/layout";
 
 
 const url = process.env.NEXTAUTH_URL;
-
 export default function Home() {
     return (
         <Layout>
-            <div className='alert alert-warning alert-dismissible fade show' role="alert">
-                <div className="col-sm-6 mx-auto">
-                    Beta Version! Some features might not work properly.
-                </div>
-            </div>
             <p>
                 <span id="index-title">Buy & Sell Freelance Accounts ...</span><br/>
                 <span id="index-title2">Transact safely using our escrow service</span>
