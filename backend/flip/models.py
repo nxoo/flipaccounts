@@ -124,6 +124,23 @@ class Offer(models.Model):
         return "Offer: %s" % self.content_object
 
 
+def name_file(instance, filename):
+    return '/'.join(['images', str(instance.content_object.category), filename])
+
+
+class Image(models.Model):
+    image = models.ImageField(upload_to=name_file, blank=True, null=True)
+    content_type = models.ForeignKey(
+        ContentType, default=None, null=True, on_delete=models.SET_NULL, related_name='image_item', limit_choices_to={
+            'model__in': ('freelance', 'socialmedia')
+        })
+    object_id = models.PositiveIntegerField(default=None, null=True)
+    content_object = GenericForeignKey('content_type', 'object_id')
+
+    def __str__(self):
+        return self.content_object.company.__str__()
+
+
 class FreelanceCategory(models.Model):
     name = models.CharField(max_length=100, blank=True)
 
@@ -139,10 +156,6 @@ class FreelanceCompany(models.Model):
         return self.name
 
 
-def name_file(instance, filename):
-    return '/'.join(['images', str(instance.category), filename])
-
-
 class Freelance(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=False,
                               related_name="freelance_owner")
@@ -153,17 +166,14 @@ class Freelance(models.Model):
     gigs = models.IntegerField(default=0, blank=False)
     earned = MoneyField(max_digits=14, decimal_places=2, default_currency='USD', default=0)
     approved = PartialDateField(blank=False)
-    country = CountryField()
-    vpn = models.BooleanField()
-    verification = models.BooleanField()
-    verified = models.BooleanField()
-    image = models.ImageField(upload_to=name_file, blank=True, null=True)
-    image2 = models.ImageField(upload_to=name_file, blank=True, null=True)
-    image3 = models.ImageField(upload_to=name_file, blank=True, null=True)
+    country = CountryField(blank=False)
+    vpn = models.BooleanField(blank=False)
+    verification = models.BooleanField(blank=False)
+    verified = models.BooleanField(blank=True, null=True)
     description = models.TextField(max_length=280, blank=True)
     price = MoneyField(max_digits=14, decimal_places=2, default_currency='USD', null=True, blank=True)
     hide_price = models.BooleanField(null=True, blank=True)
-    offers = models.BooleanField(null=True, blank=True)
+    offers = models.BooleanField(blank=False)
     auction = models.BooleanField(null=True, blank=True)
     stock = models.IntegerField(default=1, blank=False)
     pub_date = models.DateTimeField(blank=False, default=timezone.now)
@@ -171,6 +181,7 @@ class Freelance(models.Model):
     sold = models.BooleanField(default=False)
     offer_item = GenericRelation(Offer, related_query_name='freelance')
     escrow_item = GenericRelation(Escrow, related_query_name='freelance')
+    image_item = GenericRelation(Image, related_query_name='freelance')
 
     def __str__(self):
         return self.company.name
@@ -182,15 +193,15 @@ class SocialMedia(models.Model):
         twitter = '2', 'twitter'
         tiktok = '3', 'tiktok'
         youtube = '4', 'youtube'
-        facebook_group = '5', 'facebook group'
-        facebook_page = '6', 'facebook page'
+        snapchat = '5', 'snapchat'
+        telegram_channel = '6', 'telegram channel'
         telegram_group = '7', 'telegram group'
-        telegram_channel = '8', 'telegram channel'
-        whatsapp_group = '9', 'whatsapp group'
-        snapchat = '10', 'snapchat'
-        triller = '11', 'triller'
-        reddit = '12', 'reddit account'
-        subreddit = '13', 'sub reddit'
+        whatsapp_group = '8', 'whatsapp group'
+        facebook_group = '9', 'facebook group'
+        facebook_page = '10', 'facebook page'
+        reddit = '11', 'reddit account'
+        subreddit = '12', 'sub reddit'
+        triller = '13', 'triller'
 
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=False,
                               related_name="socialmedia_owner")
@@ -198,23 +209,24 @@ class SocialMedia(models.Model):
     category = models.CharField(max_length=100)
     username = models.CharField(max_length=100, blank=False)
     audience = models.IntegerField(default=0, blank=False)
-    price = MoneyField(max_digits=14, decimal_places=2, default_currency='USD', blank=False)
-    hide_price = models.BooleanField()
-    offers = models.BooleanField()
-    auction = models.BooleanField()
-    description = models.TextField(max_length=240, blank=True)
-    no_of_posts = models.IntegerField(default=0, blank=False)
-    country = CountryField()
-    date_of_reg = models.DateField(blank=True, null=True)
-    original_email = models.BooleanField()
-    audience_report = models.BooleanField()
-    verified = models.BooleanField()
+    price = MoneyField(max_digits=14, decimal_places=2, default_currency='USD', blank=True)
+    hide_price = models.BooleanField(blank=True, null=True)
+    offers = models.BooleanField(blank=False)
+    auction = models.BooleanField(blank=True, null=True)
+    description = models.TextField(max_length=240, blank=True, null=True)
+    no_of_posts = models.IntegerField(default=0, blank=True, null=True)
+    country = CountryField(null=True, blank=True)
+    approved = PartialDateField(blank=True)
+    original_email = models.BooleanField(blank=False)
+    audience_report = models.BooleanField(blank=True, null=True)
+    verified = models.BooleanField(blank=True)
     pub_date = models.DateTimeField(default=timezone.now)
-    ownership_verified = models.BooleanField()
-    on_escrow = models.BooleanField()
-    sold = models.BooleanField()
+    ownership_verified = models.BooleanField(default=False)
+    on_escrow = models.BooleanField(default=False)
+    sold = models.BooleanField(default=False)
     offer_item = GenericRelation(Offer, related_query_name='socialmedia')
     escrow_item = GenericRelation(Escrow, related_query_name='socialmedia')
+    image_item = GenericRelation(Image, related_query_name='socialmedia')
 
     def __str__(self):
         return self.company

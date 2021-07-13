@@ -49,7 +49,7 @@ export async function addFreelance(accessToken, data) {
             data: data,
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
-                'content-type': 'multipart/form-data'
+                //'Content-Type': 'multipart/form-data'
             }
         })
         return await res
@@ -62,6 +62,13 @@ export async function getFreelanceCompanies() {
     await axios({
         method: "get",
         url: `${process.env.NEXT_PUBLIC_HOST}/api/fcompany/`,
+    })
+}
+
+export async function getFreelanceCategories() {
+    await axios({
+        method: "get",
+        url: `${process.env.NEXT_PUBLIC_HOST}/api/fcategories/`,
     })
 }
 

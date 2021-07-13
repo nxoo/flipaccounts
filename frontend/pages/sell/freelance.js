@@ -1,44 +1,34 @@
 import React, {useState, useMemo} from 'react'
 import Head from "next/head";
+import useSWR from "swr";
+import axios from "axios";
 import {useSession} from "next-auth/client";
 import Select from "react-select";
 import countryList from 'react-select-country-list';
-import ImageUploading from "react-images-uploading";
+//import ImageUploading from "react-images-uploading";
 import Layout from "../../components/layout";
-import {addFreelance, getFreelanceCompanies} from "../../lib/flip";
+import {addFreelance} from "../../lib/flip";
 
 
-const categories = [
-    {value: '', label: 'Category'},
-    {value: 1, label: 'Transcription'},
-    {value: 2, label: 'Academic Writing'},
-    {value: 3, label: 'Essay Writing'},
-    {value: 'c', label: "Can't find category"}
-]
+const getFreelanceCategories = () => {
+    const fetcher = url => axios.get(url).then(res => res.data)
+    const { data, error } = useSWR(`${process.env.NEXT_PUBLIC_HOST}/api/fcategory/`, fetcher)
+    return {
+        rCategories: data,
+        isLoading: !error && !data,
+        isError: error
+    }
+}
 
-const transcription = [
-    {value: '', label: "Company"},
-    {value: 1, label: "Verbit"},
-    {value: 2, label: "Verbit British"},
-    {value: 3, label: "Rev"},
-    {value: 4, label: "TranscribeMe"},
-    {value: 'c', label: "Can't find company"}
-]
-
-const aWriting = [
-    {value: '', label: "Company"},
-    {value: 1, label: 'iWriters'},
-    {value: 2, label: 'NerdyTurtlez'},
-    {value: 3, label: 'WritersLabs'},
-    {value: 'c', label: "Can't find company"}
-]
-
-const eWriting = [
-    {value: '', label: "Company"},
-    {value: 1, label: 'Essay Shark'},
-    {value: 2, label: 'Essay Pro'},
-    {value: 'c', label: "Can't find company"}
-]
+const getFreelanceCompanies = () => {
+    const fetcher = url => axios.get(url).then(res => res.data)
+    const { data, error } = useSWR(`${process.env.NEXT_PUBLIC_HOST}/api/fcompany/`, fetcher)
+    return {
+        rCompanies: data,
+        isLoading2: !error && !data,
+        isError2: error
+    }
+}
 
 let empty = [
     {value: '', label: "Company"},
@@ -57,8 +47,6 @@ export default function Freelance() {
     const [vpn, setVpn] = useState(false);
     const [verification, setVerification] = useState(false);
     const [verified, setVerified] = useState(false);
-    const [images, setImages] = useState([]);
-    const [image, setImage] = useState(null)
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState(false);
     const [includeFees, setIncludeFees] = useState(false);
@@ -68,43 +56,24 @@ export default function Freelance() {
     const [newCompany, setNewCompany] = useState('')
     const [showNewCategory, setShowNewCategory] = useState(false)
     const [showNewCompany, setShowNewCompany] = useState(false)
-    const [companies, setCompanies] = useState('')
-    const maxNumber = 3;
+    const [companies, setCompanies] = useState([{id:'',name:'Company'}])
+    const [categories, setCategories] = useState([])
+    const [error,setError] = useState('');
     const [session,] = useSession();
     const countries = useMemo(() => countryList().getData(), [])
     const df = !session;
     let options;
-
-    if (category === '1') {
-        options = transcription.map((x, y) => (
-            <option key={y} value={x.value}>{x.label}</option>
-        ))
-    } else if (category === '2') {
-        options = aWriting.map((x, y) => (
-            <option key={y} value={x.value}>{x.label}</option>
-        ))
-    } else if (category === '3') {
-        options = eWriting.map((x, y) => (
-            <option key={y} value={x.value}>{x.label}</option>
-        ))
-    } else if (category === '4') {
-        options = transcription.map((x, y) => (
-            <option key={y} value={x.value}>{x.label}</option>
-        ))
-    } else if (category === '') {
-        options = (<option value="">Company</option>)
-    } else {
-        options = empty.map((x, y) => <option key={y} value={x.value}>{x.label}</option>)
-    }
+    const { rCategories, isLoading, isError } = getFreelanceCategories();
+    const { rCompanies, isLoading2, isError2 } = getFreelanceCompanies();
+    console.log(rCategories)
+    console.log(rCompanies)
 
     const handleFreelance = async event => {
         event.preventDefault()
-        let img = new FormData();
-        img.append("image", image)
         const accessToken = session.accessToken
         const data = {
             category, 'company': 1, rating, 'max_rating': outOf, gigs, earned, approved, 'country': country.value,
-            vpn, verification, verified, 'image': images[0], description, price, offers, stock,
+            vpn, verification, verified, description, price, offers, stock,
         }
         if (!newCompany && !newCategory) {
             const res = await addFreelance(accessToken, data)
@@ -115,73 +84,74 @@ export default function Freelance() {
         console.log(data)
     }
 
-    const onChange = async (imageList, addUpdateIndex) => {
-        // data for submit
-        // console.log(imageList, addUpdateIndex);
-        await setImages(imageList);
-    };
-
-    const handleImageUpload = async event => {
-        event.preventDefault()
-        await setImage(event.target.files[0])
-        console.log(event.target.files[0])
-    }
-
-    const handlePrice = async event => {
+    const handlePrice = event => {
         const data = event.target.value
-        await setPrice(data)
+        setPrice(data)
         if (!data) {
-            await setIncludeFees(false)
-            await setOffers(true)
+            setIncludeFees(false)
+            setOffers(true)
         }
     }
 
-    const handleCategory = async event => {
+    const handleCategory = event => {
         const data = event.target.value
         if (data === 'c') {
-            await setCategory(data)
-            await setNewCategory('')
-            await setShowNewCategory(true)
-            await setCompany('')
-            await setNewCompany('')
-            await setShowNewCompany(false)
+            setCategory(data)
+            setNewCategory('')
+            setShowNewCategory(true)
+            setCompany('')
+            setNewCompany('')
+            setShowNewCompany(false)
         } else {
-            await setCategory(data)
-            await setNewCategory('')
-            await setShowNewCategory(false)
-            await setCompany('')
-            await setNewCompany('')
-            await setShowNewCompany(false)
+            setCategory(data)
+            setNewCategory('')
+            setShowNewCategory(false)
+            setCompany('')
+            setNewCompany('')
+            setShowNewCompany(false)
+        }
+
+        if (data === '1') {
+            let c = rCompanies.filter(x => x.category===1)
+            setCompanies([{id:'',name:'Company'}, ...c, {id:'c',name:"Can't find company"}])
+        } else if (data === '2') {
+            let c = rCompanies.filter(x => x.category===2)
+            setCompanies([{id:'',name:'Company'}, ...c], {id:'c',name:"Can't find company"})
+        } else if (data === '3') {
+            let c = rCompanies.filter(x => x.category===3)
+            setCompanies([{id:'',name:'Company'}, ...c, {id:'c',name:"Can't find company"}])
+        } else {
+            setCompanies([{id:'',name:'Company'}, {id:'c',name:"Can't find company"}])
         }
     }
 
-    const handleCompany = async event => {
+    const handleCompany = event => {
         const data = event.target.value
         if (data === 'c') {
-            await setCompany(data)
-            await setNewCompany('')
-            await setShowNewCompany(true)
+            setCompany(data)
+            setNewCompany('')
+            setShowNewCompany(true)
         } else {
-            await setCompany(data)
-            await setNewCompany('')
-            await setShowNewCompany(false)
+            setCompany(data)
+            setNewCompany('')
+            setShowNewCompany(false)
         }
     }
 
-    const handleIncludeFees = async event => {
+    const handleIncludeFees = event => {
         const data = event.target.checked
         let initialPrice = price
         if (includeFees === false && data === true) {
             initialPrice *= 1.05
-            await setPrice(initialPrice)
-            await setIncludeFees(data)
+            setPrice(initialPrice)
+            setIncludeFees(data)
         } else if (includeFees === true && data === false) {
             initialPrice *= 100 / 105
-            await setPrice(initialPrice)
-            await setIncludeFees(data)
+            setPrice(initialPrice)
+            setIncludeFees(data)
         } else {
-            await setPrice(initialPrice)
-            await setIncludeFees(data)
+            setPrice(initialPrice)
+            setIncludeFees(data)
         }
     }
 
@@ -196,7 +166,7 @@ export default function Freelance() {
             </div>
         </div>
     )
-
+    if (isLoading || isLoading2) return null
     return (
         <Layout>
             <Head>
@@ -205,19 +175,19 @@ export default function Freelance() {
             {session ? null : alert}
             <form method="post" onSubmit={handleFreelance}>
                 <div className="row">
-                    <div className="col-sm-7 mx-auto">
+                    <div className="col-sm-6 mx-auto">
 
                         <div className="row">
                             <div className="col-auto mb-2">
                                 <select
                                     className="form-select"
                                     aria-label="Default select example"
+                                    value={category}
                                     onChange={handleCategory}
                                     disabled={df}
                                     required>
-                                    {categories.map((x, y) => (
-                                        <option key={y} value={x.value}>{x.label}</option>
-                                    ))}
+                                    {[{id:'',name:'Category'},...rCategories, {id:'c',name:"Can't find category"}].map(
+                                        (x, y) => (<option key={y} value={x.id}>{x.name}</option>))}
                                 </select>
                             </div>
                             <div className="col-auto mb-2" style={{display: showNewCategory ? 'inherit' : 'none'}}>
@@ -237,7 +207,9 @@ export default function Freelance() {
                                     onChange={handleCompany}
                                     disabled={!category || df}
                                     required>
-                                    {options}
+                                    {companies.map((x, y) => (
+                                        <option key={y} value={x.id}>{x.name}</option>
+                                    ))}
                                 </select>
                             </div>
                             <div className="col-auto mb-2" style={{display: showNewCompany ? 'inherit' : 'none'}}>
@@ -391,50 +363,6 @@ export default function Freelance() {
                                     </label>
                                 </div>
                             </div>
-                        </div>
-                        <div className="mb-2">
-                            <label htmlFor="formFileMultiple" className="form-label">
-                                <small>You can only upload 3 images</small>
-                            </label>
-                            <ImageUploading
-                                multiple
-                                value={images}
-                                onChange={onChange}
-                                maxNumber={maxNumber}
-                                dataURLKey="data_url"
-                            >
-                                {({imageList, onImageUpload, onImageRemove, isDragging, dragProps, errors}) => (
-                                    <div className="upload__image-wrapper">
-                                        <div className="mb-2">
-                                            <button
-                                                type="button"
-                                                value=""
-                                                style={isDragging ? {color: "red"} : undefined}
-                                                onClick={onImageUpload}
-                                                {...dragProps}
-                                                disabled={df}
-                                            >Upload Image
-                                            </button>
-                                        </div>
-                                        <div className="row">
-                                            {imageList.map((image, index) => (
-                                                <div key={index} className="image-item col-auto">
-                                                    <img src={image["data_url"]} alt="" width="100"/>
-                                                    <div className="image-item__btn-wrapper">
-                                                        <small>
-                                                            <button
-                                                                className="btn btn-link"
-                                                                type="button"
-                                                                onClick={() => onImageRemove(index)}>remove
-                                                            </button>
-                                                        </small>
-                                                    </div>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                )}
-                            </ImageUploading>
                         </div>
 
                         <div className="col-auto mb-2">

@@ -53,11 +53,12 @@ class MySocialMedia(ModelAdminTotals):
 
 @admin.register(models.FreelanceCompany)
 class MyFreelanceCompany(ModelAdminTotals):
-    list_display = ['id', 'category', 'name']
-    list_filter = ['category']
-    list_totals = [('id', Count)]
+    list_display = ['id', 'name', 'category']
+    list_filter = ['category', 'name']
+    list_totals = [('name', Count)]
 
 
 admin.site.register(models.Chat)
 admin.site.register(models.Offer)
+admin.site.register(models.Image)
 admin.site.register(models.FreelanceCategory)

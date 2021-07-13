@@ -64,9 +64,14 @@ class OfferViewSet(viewsets.ModelViewSet):
         serializer.save(sender=self.request.user)
 
 
+class ImageViewSet(viewsets.ModelViewSet):
+    queryset = models.Image.objects.all()
+    serializer_class = serializers.ImageSerializer
+
+
 class FreelanceViewSet(viewsets.ModelViewSet):
     queryset = models.Freelance.objects.all()
-    parser_classes = [MultiPartParser]
+    # parser_classes = [MultiPartParser]
     serializer_class = serializers.FreelanceSerializer
 
     def perform_create(self, serializer):
