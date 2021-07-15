@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
@@ -5,7 +6,7 @@ from django.conf import settings
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
 from django_countries.fields import CountryField
-from djmoney.models.fields import MoneyField
+from djmoney.models.fields import MoneyField, Money
 from partial_date import PartialDateField
 
 
@@ -142,15 +143,15 @@ class Image(models.Model):
 
 
 class FreelanceCategory(models.Model):
-    name = models.CharField(max_length=100, blank=True)
+    name = models.CharField(max_length=100, blank=False)
 
     def __str__(self):
         return self.name
 
 
 class FreelanceCompany(models.Model):
-    category = models.ForeignKey(FreelanceCategory, on_delete=models.CASCADE, blank=True)
-    name = models.CharField(max_length=100, blank=True)
+    category = models.ForeignKey(FreelanceCategory, on_delete=models.CASCADE, blank=False)
+    name = models.CharField(max_length=100, blank=False)
 
     def __str__(self):
         return self.name
@@ -171,10 +172,11 @@ class Freelance(models.Model):
     verification = models.BooleanField(blank=False)
     verified = models.BooleanField(blank=True, null=True)
     description = models.TextField(max_length=280, blank=True)
-    price = MoneyField(max_digits=14, decimal_places=2, default_currency='USD', null=True, blank=True)
-    hide_price = models.BooleanField(null=True, blank=True)
+    price = MoneyField(max_digits=14, decimal_places=2, default_currency='USD',
+            default=Decimal(2), null=True, blank=True)
+    hide_price = models.BooleanField(null=True, blank=True, default=False)
     offers = models.BooleanField(blank=False)
-    auction = models.BooleanField(null=True, blank=True)
+    auction = models.BooleanField(null=True, blank=True, default=False)
     stock = models.IntegerField(default=1, blank=False)
     pub_date = models.DateTimeField(blank=False, default=timezone.now)
     on_escrow = models.BooleanField(default=False)
