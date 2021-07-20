@@ -28,7 +28,6 @@ export default function Layout({children}) {
                 box-shadow: none;
               }
 
-
               @media (min-width: 992px) {
                 .layout {
                   padding-top: 30px;

@@ -3,7 +3,6 @@ import Link from "next/link";
 import Layout from "../components/layout";
 
 
-const url = process.env.NEXTAUTH_URL;
 export default function Home() {
     return (
         <Layout>
@@ -37,46 +36,49 @@ export default function Home() {
                 <small><i className="bi-arrow-up-right-square-fill"/> Promoted</small>
                 <div className="row">
                     <div className="col-sm-4">
-                        <Link href='/freelance/2'><a style={{textDecoration: "none", color: "inherit"}}>
-                            <div className="p-4 bg-light">
-                                <span className="h5">Verbit</span><br/>
-                                <span className="text-muted">
+                        <Link href='/freelance/1'>
+                            <a style={{textDecoration: "none", color: "inherit"}}>
+                                <div className="p-4 bg-light">
+                                    <span className="h5">Verbit</span><br/>
+                                    <span className="text-muted">
                                         <small>
                                             Rating: 4.2/6.0<br/>
                                             Age/Gigs/Earned - 1 month/7/$25<br/>
                                             <strong>$65</strong>, 4 offers
                                         </small>
                                     </span>
-                            </div>
-                        </a></Link>
+                                </div>
+                            </a>
+                        </Link>
                     </div>
                     <div className="col-sm-4">
-                        <Link href='/social-media/1'><a style={{textDecoration: "none", color: "inherit"}}>
-                            <div className="p-4 bg-light">
-                                <div className="row">
-                                    <div className="col-auto">
-                                        <Image
-                                            src="/images/profile.jpg"
-                                            background-color='red'
-                                            alt="profile picture"
-                                            width={70}
-                                            height={70}
-                                            className="rounded-circle float-start"
-                                        />
-                                    </div>
-                                    <div className="col-auto">
-                                        <h5><small><i className="bi bi-instagram"/></small> Instagram</h5>
-                                        <span className="text-muted">
+                        <Link href='/social-media/2'>
+                            <a style={{textDecoration: "none", color: "inherit"}}>
+                                <div className="p-4 bg-light">
+                                    <div className="row">
+                                        <div className="col-auto">
+                                            <Image
+                                                src="/images/profile.jpg"
+                                                alt="profile picture"
+                                                width={70}
+                                                height={70}
+                                                className="rounded-circle float-start"
+                                            />
+                                        </div>
+                                        <div className="col-auto">
+                                            <h5><small><i className="bi bi-instagram"/></small> Instagram</h5>
+                                            <span className="text-muted">
                                                 <small>
                                                     Followers: 15k<br/>
                                                     Category: Memes<br/>
                                                     <strong>$50</strong>, 3 offers
                                                 </small>
                                             </span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </a></Link>
+                            </a>
+                        </Link>
                     </div>
                 </div>
             </div>
