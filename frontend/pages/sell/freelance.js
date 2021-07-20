@@ -47,6 +47,7 @@ export default function Freelance({apiCategories, apiCompanies}) {
     const [categories, setCategories] = useState((apiCategories || []));
     const [companies, setCompanies] = useState([{id: "", name: "Company"}]);
     const [error, setError] = useState('You need to login');
+    const [errorType, setErrorType] = useState('warning')
     const [hideError, setHideError] = useState(true)
     const [session] = useSession();
     const countries = useMemo(() => countryList().getData(), []);
@@ -61,7 +62,30 @@ export default function Freelance({apiCategories, apiCompanies}) {
                 vpn, verification, verified, description, price, offers, stock,
             };
             const res = await addFreelance(accessToken, data);
-            console.log(res);
+            console.log('res', res)
+            if (res) {
+                if (res.status === 201) {
+                    setError("Freelance listing submited successfully")
+                    setErrorType('success')
+                    setHideError(false)
+                    window.scrollTo(0, 0)
+                } else if (res.status === 400) {
+                    setError(Object.values(res.data)[0])
+                    setErrorType('warning')
+                    setHideError(false)
+                    window.scrollTo(0, 0)
+                } else {
+                    setError(Object.values(res.data)[0])
+                    setErrorType('warning')
+                    setHideError(false)
+                    window.scrollTo(0, 0)
+                }
+            } else {
+                setError("Server is offline")
+                setErrorType('warning')
+                setHideError(false)
+                window.scrollTo(0, 0)
+            }
         } else if (newCompany && !newCategory) {
             const data = {name: newCompany, category: category};
             const data2 = {
@@ -149,7 +173,7 @@ export default function Freelance({apiCategories, apiCompanies}) {
     };
 
     const alert = (
-        <div className="alert alert-warning alert-dismissible fade show" role="alert">
+        <div className={`alert alert-${errorType} alert-dismissible fade show`} role="alert">
             <div className="col-sm-6 mx-auto">{error}</div>
         </div>
     );
@@ -401,10 +425,7 @@ export default function Freelance({apiCategories, apiCompanies}) {
 
                         <div className="col-sm-6 mb-2">
                             <div className="input-group">
-                                <span
-                                    className="input-group-text"
-                                    id="basic-addon1"
-                                >
+                                <span className="input-group-text" id="basic-addon1">
                                     Price (USD)
                                 </span>
                                 <input
@@ -415,7 +436,6 @@ export default function Freelance({apiCategories, apiCompanies}) {
                                     value={price}
                                     onChange={handlePrice}
                                     disabled={df}
-                                    required
                                 />
                             </div>
                         </div>

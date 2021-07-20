@@ -1,21 +1,13 @@
 import Head from 'next/head';
 import Image from "next/image";
 import Link from "next/link";
-import {useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useRouter} from 'next/router';
 import {signIn, useSession} from 'next-auth/client';
 import Layout from "../components/layout";
 
 
-function Alert({message, errorType, setShowError}) {
-    return (
-        <div className={`alert alert-${errorType} alert-dismissible fade show`} role="alert">
-            {message}
-            <button onClick={() => setShowError(false)} type="button" className="btn-close" data-bs-dismiss="alert"
-                    aria-label="Close"/>
-        </div>
-    )
-}
+const delay = ms => new Promise(res => setTimeout(res, ms));
 
 export default function Login() {
     const [email, setEmail] = useState('')
@@ -52,12 +44,14 @@ export default function Login() {
                 setErrorType("warning")
                 setShowError(true)
             } else if (res.status === 200 && res.error !== '504') {
-                await router.push('/')
                 setErrorMessage("Login successful")
                 setErrorType("success")
                 setShowError(true)
                 setEmail('')
                 setPassword('')
+                window.scrollTo(0, 0)
+                await delay(2000)
+                await router.push('/')
             } else if (res.error === "504") {
                 setErrorMessage("Server is offline, Try again later")
                 setErrorType("warning")
@@ -87,13 +81,19 @@ export default function Login() {
         }
     }
 
+    const alert = (
+        <div className={`alert alert-${errorType} alert-dismissible fade show`} role="alert">
+            <div className="col-auto mx-auto">{errorMessage}</div>
+        </div>
+    );
+
     return (
         <Layout>
             <Head>
                 <title>Login</title>
             </Head>
             <div className="row">
-                <div className="col-sm-6 mx-auto">
+                <div className="col-sm-5 mx-auto">
                     <a href="#" onClick={() => signIn('google', {callbackUrl: '/'})}>
                         <div className="google-btn">
                             <div className="google-wrapper">
@@ -110,9 +110,10 @@ export default function Login() {
                         </div>
                     </a>
                     <div className="separator">OR</div>
-                    {showError && errorMessage !== "" ?
+                    {showError && errorMessage !== "" ? alert : null}
+                        {/*
                         <Alert message={errorMessage} errorType={errorType} setShowError={setShowError}/>
-                        : null}
+                        : null} */}
                     <h5>Log in with Email</h5>
                     <form onSubmit={handleLogin} method="post">
                         <div>

@@ -1,22 +1,11 @@
 import Head from 'next/head'
 import Image from "next/image";
 import Link from "next/link";
-import {useState, useEffect} from 'react'
+import React, {useState, useEffect} from 'react'
 import {useRouter} from 'next/router'
 import {signIn, useSession} from 'next-auth/client'
 import Layout from "../components/layout";
 import {signUp} from "../lib/flip";
-
-
-function Alert({message, messageBold, errorType, setShowError}) {
-    return (
-        <div className={`alert alert-${errorType} alert-dismissible fade show`} role="alert">
-            {message}<strong>{messageBold}</strong>
-            <button onClick={() => setShowError(false)} type="button" className="btn-close" data-bs-dismiss="alert"
-                    aria-label="Close"/>
-        </div>
-    )
-}
 
 
 export default function Signup() {
@@ -37,10 +26,6 @@ export default function Signup() {
                 setError("Sign up with Google failed. Try again later")
                 setErrorType("warning")
                 setShowError(true)
-            } else {
-                setError(error)
-                setErrorType("warning")
-                setShowError(true)
             }
         }
     })
@@ -56,36 +41,41 @@ export default function Signup() {
         } else if (password1.length < 8 || password2.length < 8) {
             setShowError(true)
             setErrorType("warning")
-            setError("Password can't be less 8 characters")
+            setError("Password can't be less than 8 characters")
             setErrorBold('')
+            window.scrollTo(0, 0)
         } else {
             const res = await signUp(data)
             if (res) {
                 console.log(res)
                 if (res.status === 201) {
-                    setShowError(true)
                     setErrorType("success")
-                    setError(`Sign up successful. Confirm your email address by clicking on the link sent to `)
+                    setShowError(true)
+                    setError('Sign up successful.Confirm email by clicking on the link sent to')
                     setErrorBold(res.data.user.email)
                     setEmail('')
                     setPassword1('')
                     setPassword2('')
+                    window.scrollTo(0, 0)
                 } else if (res.status === 400) {
                     setShowError(true)
                     setErrorType("warning")
                     setError(Object.values(res.data)[0])
                     setErrorBold('')
+                    window.scrollTo(0, 0)
                 } else {
                     setShowError(true)
                     setErrorType("warning")
                     setError("Sign up failed. Try again later")
                     setErrorBold('')
+                    window.scrollTo(0, 0)
                 }
             } else {
                 setShowError(true)
                 setErrorType("warning")
                 setError("Server is offline. Try again later")
                 setErrorBold('')
+                window.scrollTo(0, 0)
             }
         }
     }
@@ -96,13 +86,19 @@ export default function Signup() {
     // If no session exists, display access denied message
     //if (!session) { return  <Layout><AccessDenied/></Layout> }
 
+    const alert = (
+        <div className={`alert alert-${errorType} alert-dismissible fade show`} role="alert">
+            <div className="col-auto mx-auto">{error} <strong>{errorBold}</strong></div>
+        </div>
+    );
+
     return (
         <Layout>
             <Head>
                 <title>Sign up</title>
             </Head>
             <div className="row">
-                <div className="col-sm-6 mx-auto">
+                <div className="col-sm-5 mx-auto">
                     <a href="#" onClick={() => signIn('google', {callbackUrl: '/'})}>
                         <div className="google-btn">
                             <div className="google-wrapper">
@@ -120,10 +116,10 @@ export default function Signup() {
                     </a>
                     <div className="separator">OR</div>
                     <h5>Sign up with Email</h5>
-                    {showError ?
-                        <Alert message={error} messageBold={errorBold} errorType={errorType}
+                    {showError ? alert : null}
+                    {/*<Alert message={error} messageBold={errorBold} errorType={errorType}
                                setShowError={setShowError}/>
-                        : null}
+                        : null} */}
                     <form onSubmit={handleSignup} method="post">
                         <div>
                             <div className="mb-2">
@@ -194,6 +190,7 @@ export default function Signup() {
               .separator:not(:empty)::after {
                 margin-left: .25em;
               }
+
               .google-btn {
                 width: 220px;
                 height: 42px;
