@@ -7,7 +7,7 @@ export default function Home() {
     return (
         <Layout>
             <p>
-                <span id="index-title">Buy & Sell Freelance Accounts ...</span><br/>
+                <span id="index-title" className="fw-bold">Buy & Sell Freelance Accounts ...</span><br/>
                 <span id="index-title2">Transact safely using our escrow service</span>
             </p>
 

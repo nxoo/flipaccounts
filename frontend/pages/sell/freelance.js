@@ -3,7 +3,6 @@ import Head from "next/head";
 import Error from "next/error";
 import axios from "axios";
 import {useSession} from "next-auth/client";
-import Select from "react-select";
 import countryList from "react-select-country-list";
 import Layout from "../../components/layout";
 import {addFreelance, addCompany, addCategory} from "../../lib/flip";
@@ -58,14 +57,15 @@ export default function Freelance({apiCategories, apiCompanies}) {
         const accessToken = session.accessToken;
         if (!newCompany && !newCategory) {
             const data = {
-                category, company, rating, max_rating: outOf, gigs, earned, approved, country: country.value,
-                vpn, verification, verified, description, price, offers, stock,
+                category, company, rating:rating||null, max_rating: outOf||null, gigs, earned, approved, country,
+                vpn, verification, verified, description, price:price||0, offers, stock,
             };
             const res = await addFreelance(accessToken, data);
-            console.log('res', res)
+            console.log(data)
+            console.log(res)
             if (res) {
                 if (res.status === 201) {
-                    setError("Freelance listing submited successfully")
+                    setError("Freelance Account listed Success")
                     setErrorType('success')
                     setHideError(false)
                     window.scrollTo(0, 0)
@@ -89,7 +89,7 @@ export default function Freelance({apiCategories, apiCompanies}) {
         } else if (newCompany && !newCategory) {
             const data = {name: newCompany, category: category};
             const data2 = {
-                category, rating, max_rating: outOf, gigs, earned, approved, country: country.value,
+                category, rating, max_rating: outOf, gigs, earned, approved, country,
                 vpn, verification, verified, description, price, offers, stock,
             };
             const res = await addCompany(accessToken, data, data2);
@@ -98,7 +98,7 @@ export default function Freelance({apiCategories, apiCompanies}) {
             const data = {name: newCategory};
             const data2 = {name: newCompany};
             const data3 = {
-                rating, max_rating: outOf, gigs, earned, approved, country: country.value,
+                rating, max_rating: outOf, gigs, earned, approved, country,
                 vpn, verification, verified, description, price, offers, stock,
             };
             const res = await addCategory(accessToken, data, data2, data3);
@@ -110,6 +110,7 @@ export default function Freelance({apiCategories, apiCompanies}) {
         const data = event.target.value;
         setPrice(data);
         setPriceNoFee(data);
+        setIncludeFees(false);
         if (!data) {
             setIncludeFees(false);
             setOffers(true);
@@ -169,6 +170,7 @@ export default function Freelance({apiCategories, apiCompanies}) {
     };
 
     const changeHandler = (value) => {
+        console.log(value)
         setCountry(value);
     };
 
@@ -187,9 +189,9 @@ export default function Freelance({apiCategories, apiCompanies}) {
             {(!session || !hideError) ? alert : null}
             <form method="post" onSubmit={handleFreelance}>
                 <div className="row">
-                    <div className="col-sm-6 mx-auto">
+                    <div className="col-sm-7 mx-auto">
                         <div className="row">
-                            <div className="col-auto mb-2">
+                            <div className="col-sm-auto mb-2">
                                 <select
                                     className="form-select"
                                     aria-label="Default select example"
@@ -200,15 +202,13 @@ export default function Freelance({apiCategories, apiCompanies}) {
                                 >
                                     <option value="">Category</option>
                                     {categories.map((x, y) => (
-                                        <option key={y} value={x.id}>
-                                            {x.name}
-                                        </option>
+                                        <option key={y} value={x.id}>{x.name}</option>
                                     ))}
                                     <option value="c">Can't find category</option>
                                 </select>
                             </div>
                             <div
-                                className="col-auto mb-2"
+                                className="col-sm-auto mb-2"
                                 style={{display: showNewCategory ? "inherit" : "none"}}
                             >
                                 <input
@@ -221,7 +221,7 @@ export default function Freelance({apiCategories, apiCompanies}) {
                                     required={showNewCategory}
                                 />
                             </div>
-                            <div className="col-auto mb-2">
+                            <div className="col-sm-auto mb-2">
                                 <select
                                     placeholder="Company"
                                     className="form-select"
@@ -232,19 +232,12 @@ export default function Freelance({apiCategories, apiCompanies}) {
                                 >
                                     <option value="">Company</option>
                                     {companies.map((x, y) => (
-                                        <option key={y} value={x.id}>
-                                            {x.name}
-                                        </option>
+                                        <option key={y} value={x.id}>{x.name}</option>
                                     ))}
                                     <option value="c">Can't find company</option>
                                 </select>
                             </div>
-                            <div
-                                className="col-auto mb-2"
-                                style={{
-                                    display: showNewCompany ? "inherit" : "none"
-                                }}
-                            >
+                            <div className="col-sm-auto mb-2" style={{display: showNewCompany ? "inherit" : "none"}}>
                                 <input
                                     type="text"
                                     className="form-control"
@@ -259,7 +252,7 @@ export default function Freelance({apiCategories, apiCompanies}) {
                         <div className="row">
                             <div className="col-sm-6">
                                 <label htmlFor="gigs" className="form-label">
-                                    <small>Account rating</small>
+                                    <small>Account rating. Leave blank if not applicable</small>
                                 </label>
                                 <div className="col-auto mb-2">
                                     <div className="input-group">
@@ -268,7 +261,6 @@ export default function Freelance({apiCategories, apiCompanies}) {
                                             step="any"
                                             className="form-control"
                                             placeholder="Rating"
-                                            required
                                             value={rating}
                                             onChange={(e) => setRating(e.target.value)}
                                             disabled={df}
@@ -278,7 +270,6 @@ export default function Freelance({apiCategories, apiCompanies}) {
                                             step="any"
                                             className="form-control"
                                             placeholder="Out of"
-                                            required
                                             value={outOf}
                                             onChange={(e) => setOutOf(e.target.value)}
                                             disabled={df}
@@ -350,11 +341,12 @@ export default function Freelance({apiCategories, apiCompanies}) {
                                         className="form-select"
                                         name="countries"
                                         id="countries"
-                                        onChange={e => setCountry(e.target.value)}
                                         value={country}
+                                        onChange={e => setCountry(e.target.value)}
+                                        disabled={df}
                                         required
                                     >
-                                        <option selected value="">Country</option>
+                                        <option value="">Country</option>
                                         {countries.map((x, y) => (
                                             <option key={y} value={x.value}>{x.label}</option>
                                         ))}
@@ -369,7 +361,7 @@ export default function Freelance({apiCategories, apiCompanies}) {
                                     type="checkbox"
                                     id="vpn"
                                     value={vpn}
-                                    onChange={(e) => setVpn(e.target.checked)}
+                                    onChange={e => setVpn(e.target.checked)}
                                     disabled={df}
                                 />
                                 <label className="form-check-label" htmlFor="vpn">
@@ -386,7 +378,7 @@ export default function Freelance({apiCategories, apiCompanies}) {
                                         type="checkbox"
                                         id="verification"
                                         value={verification}
-                                        onChange={(e) => setVerification(e.target.checked)}
+                                        onChange={e => setVerification(e.target.checked)}
                                         disabled={df}
                                     />
                                     <label className="form-check-label" htmlFor="verification">
@@ -401,7 +393,7 @@ export default function Freelance({apiCategories, apiCompanies}) {
                                         type="checkbox"
                                         id="verified"
                                         value={verified}
-                                        onChange={(e) => setVerified(e.target.checked)}
+                                        onChange={e => setVerified(e.target.checked)}
                                         disabled={df}
                                     />
                                     <label className="form-check-label" htmlFor="verified">
@@ -411,28 +403,26 @@ export default function Freelance({apiCategories, apiCompanies}) {
                             </div>
                         </div>
 
-                        <div className="col-auto mb-2">
+                        <div className="col-sm-9 mb-2">
                             <textarea
                                 className="form-control"
                                 placeholder="Description"
                                 id="description"
                                 rows="3"
                                 value={description}
-                                onChange={(e) => setDescription(e.target.value)}
+                                onChange={e => setDescription(e.target.value)}
                                 disabled={df}
                             />
                         </div>
 
                         <div className="col-sm-6 mb-2">
                             <div className="input-group">
-                                <span className="input-group-text" id="basic-addon1">
-                                    Price (USD)
-                                </span>
+                                <span className="input-group-text" id="basic-addon1">Price in USD</span>
                                 <input
                                     id="price"
                                     type="number"
                                     className="form-control"
-                                    placeholder="Eg. 100"
+                                    placeholder="optional"
                                     value={price}
                                     onChange={handlePrice}
                                     disabled={df}
@@ -462,7 +452,7 @@ export default function Freelance({apiCategories, apiCompanies}) {
                                     type="checkbox"
                                     id="offers"
                                     checked={offers}
-                                    onChange={(e) => setOffers(e.target.checked)}
+                                    onChange={e => setOffers(e.target.checked)}
                                     disabled={df || !price}
                                 />
                                 <label className="form-check-label" htmlFor="offers">
@@ -473,12 +463,12 @@ export default function Freelance({apiCategories, apiCompanies}) {
                         <label htmlFor="stockOptions">
                             <small>How many accounts are you selling?</small>
                         </label>
-                        <div className="col-3 mb-3">
+                        <div className="col-4 mb-3">
                             <input
                                 type="number"
                                 className="form-control"
                                 value={stock}
-                                onChange={(e) => setStock(e.target.value)}
+                                onChange={e => setStock(e.target.value)}
                                 disabled={df}
                             />
                         </div>

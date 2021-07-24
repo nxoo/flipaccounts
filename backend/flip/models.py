@@ -162,8 +162,10 @@ class Freelance(models.Model):
                               related_name="freelance_owner")
     category = models.ForeignKey(FreelanceCategory, on_delete=models.CASCADE, blank=False)
     company = models.ForeignKey(FreelanceCompany, on_delete=models.CASCADE, blank=False)
-    rating = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-    max_rating = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    rating = models.DecimalField(max_digits=10, decimal_places=2, default=0,
+            null=True, blank=True)
+    max_rating = models.DecimalField(max_digits=10, decimal_places=2,
+            default=0, null=True, blank=True)
     gigs = models.IntegerField(default=0, blank=False)
     earned = MoneyField(max_digits=14, decimal_places=2, default_currency='USD', default=0)
     approved = PartialDateField(blank=False)
@@ -173,7 +175,7 @@ class Freelance(models.Model):
     verified = models.BooleanField(blank=True, null=True)
     description = models.TextField(max_length=280, blank=True)
     price = MoneyField(max_digits=14, decimal_places=2, default_currency='USD',
-            default=Decimal(2), null=True, blank=True)
+            default=0, null=True, blank=True)
     hide_price = models.BooleanField(null=True, blank=True, default=False)
     offers = models.BooleanField(blank=False)
     auction = models.BooleanField(null=True, blank=True, default=False)

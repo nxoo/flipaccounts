@@ -27,6 +27,9 @@ export default function Layout({children}) {
                 outline: none;
                 box-shadow: none;
               }
+              .btn:focus {
+                box-shadow: none;
+              }
 
               @media (min-width: 992px) {
                 .layout {

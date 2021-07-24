@@ -11,7 +11,7 @@ export default function Sell() {
             </Head>
                 <div className="row">
                     <div className="col-sm-5 mx-auto">
-                    <h3 className="mb-4">+ Add A New Listing</h3>
+                    <h3 className="mb-4 fw-bold">+ Add A New Listing</h3>
                     <small>Select Category</small>
                         <div className="list-group">
                             <Link href="/sell/freelance">
