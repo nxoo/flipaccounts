@@ -29,9 +29,7 @@ export default function Home() {
 
                 </form>
             </div>
-
-            <p id="ready-to-sell">Ready to sell? <Link href="/sell"><a id="">Sell Now</a></Link></p>
-
+            {/*<p id="ready-to-sell">Ready to sell? <Link href="/sell"><a id="">Sell Now</a></Link></p>*/}
             <div className="advert">
                 <small><i className="bi-arrow-up-right-square-fill"/> Promoted</small>
                 <div className="row">
