@@ -37,14 +37,18 @@ export default function Home() {
                         <Link href='/freelance/1'>
                             <a style={{textDecoration: "none", color: "inherit"}}>
                                 <div className="p-4 bg-light">
-                                    <span className="h5">Verbit</span><br/>
-                                    <span className="text-muted">
+                                    <div className="row">
+                                        <div className="col-auto mx-sm-auto">
+                                            <span className="h5">Verbit</span><br/>
+                                            <span className="text-muted">
                                         <small>
                                             Rating: 4.2/6.0<br/>
                                             Age/Gigs/Earned - 1 month/7/$25<br/>
                                             <strong>$65</strong>, 4 offers
                                         </small>
                                     </span>
+                                        </div>
+                                    </div>
                                 </div>
                             </a>
                         </Link>
@@ -54,24 +58,15 @@ export default function Home() {
                             <a style={{textDecoration: "none", color: "inherit"}}>
                                 <div className="p-4 bg-light">
                                     <div className="row">
-                                        <div className="col-auto">
-                                            <Image
-                                                src="/images/profile.jpg"
-                                                alt="profile picture"
-                                                width={70}
-                                                height={70}
-                                                className="rounded-circle float-start"
-                                            />
-                                        </div>
-                                        <div className="col-auto">
-                                            <h5><small><i className="bi bi-instagram"/></small> Instagram</h5>
+                                        <div className="col-auto mx-sm-auto">
+                                            <span className="h5"><i className="bi bi-instagram"/> Instagram</span><br/>
                                             <span className="text-muted">
-                                                <small>
-                                                    Followers: 15k<br/>
-                                                    Category: Memes<br/>
-                                                    <strong>$50</strong>, 3 offers
-                                                </small>
-                                            </span>
+                                            <small>
+                                                Followers: 15k<br/>
+                                                Category: Memes<br/>
+                                                <strong>$50</strong>, 3 offers
+                                            </small>
+                                        </span>
                                         </div>
                                     </div>
                                 </div>

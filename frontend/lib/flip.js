@@ -120,3 +120,4 @@ export async function addCategory(accessToken, data, data2, data3) {
         return error.response
     }
 }
+
