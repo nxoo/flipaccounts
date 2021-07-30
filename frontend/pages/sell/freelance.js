@@ -1,12 +1,14 @@
 import React, {useState, useMemo, useEffect} from "react";
 import Head from "next/head";
 import Error from "next/error";
+import useSWR from "swr";
 import axios from "axios";
 import {useSession} from "next-auth/client";
 import countryList from "react-select-country-list";
 import Layout from "../../components/layout";
 import {addFreelance, addCompany, addCategory} from "../../lib/flip";
 
+/*
 export async function getServerSideProps() {
     try {
         const {data: apiCategories} = await axios.get(process.env.NEXT_PUBLIC_HOST + "/api/fcategory/");
@@ -20,8 +22,32 @@ export async function getServerSideProps() {
         }
     }
 }
+ */
 
-export default function Freelance({apiCategories, apiCompanies}) {
+const fetcher = url => axios.get(url).then(res => res.data)
+
+function getApiCategories() {
+    const { data, error } = useSWR(process.env.NEXT_PUBLIC_HOST + '/api/fcategory/')
+    return {
+        apiCategories: data,
+        isLoading: !error && data,
+        isError: error
+    }
+}
+
+function getApiCompanies() {
+    const { data, error } = useSWR(process.env.NEXT_PUBLIC_HOST + '/api/fcompany/')
+    return {
+        apiCompanies: data,
+        isLoading: !error && data,
+        isError: error
+    }
+}
+
+
+export default function Freelance() {
+    const { apiCategories } = getApiCategories()
+    const { apiCompanies } = getApiCompanies()
     const [category, setCategory] = useState("");
     const [company, setCompany] = useState("");
     const [rating, setRating] = useState("");
@@ -201,7 +227,7 @@ export default function Freelance({apiCategories, apiCompanies}) {
                                     required
                                 >
                                     <option value="">Category</option>
-                                    {categories.map((x, y) => (
+                                    {(apiCategories||[]).map((x, y) => (
                                         <option key={y} value={x.id}>{x.name}</option>
                                     ))}
                                     <option value="c">Can't find category</option>
