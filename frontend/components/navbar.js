@@ -79,7 +79,7 @@ export default function Navbar() {
                     <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                         {session && !loading ? (
                             <>
-                                <li className="nav-item">
+                                <li className="nav-item" id="inbox-pc">
                                     <Link href="/inbox">
                                         <a className="nav-link">
                                             {/*<i className="bi bi-envelope-fill"/>{' '}*/}
