@@ -19,7 +19,9 @@ export default function Navbar() {
                 {session && !loading ?
                     <Link href="/inbox">
                         <a className="navbar-brand" id="inbox-mobile">
-                            <i className="bi bi-envelope-fill"/> <sup>(<span className="sups">0</span>)</sup>
+                            <i className="bi bi-envelope-fill"/>{' '}
+                            <small><sup className="badge bg-secondary">0</sup></small>
+                            {/*<i className="bi bi-envelope-fill"/> <sup>(<span className="sups">0</span>)</sup>*/}
                         </a>
                     </Link>
                     : null
@@ -75,12 +77,14 @@ export default function Navbar() {
                         </li>
                     </ul>
                     <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-                        {session && !loading ? (<>
-                                <li className="nav-item" id="inbox-pc">
+                        {session && !loading ? (
+                            <>
+                                <li className="nav-item">
                                     <Link href="/inbox">
                                         <a className="nav-link">
-                                            <i className="bi bi-envelope-fill"/>{' '}
-                                            <sup>(<span className="sups">0</span>)</sup>
+                                            {/*<i className="bi bi-envelope-fill"/>{' '}*/}
+                                            <i className="bi bi-envelope-fill" />{' '}
+                                            <small><sup className="badge bg-secondary">0</sup></small>
                                         </a>
                                     </Link>
                                 </li>
@@ -195,6 +199,10 @@ export default function Navbar() {
               .navbar-toggler-icon:focus {
                 outline: none;
                 box-shadow: none;
+              }
+              
+              .badge {
+                font-size: x-small;
               }
 
               @media (min-width: 992px) {
