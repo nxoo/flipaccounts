@@ -1,3 +1,5 @@
-export default function F() {
-    return <div></div>
+export default function Freelance() {
+    return (
+        <div></div>
+    )
 }

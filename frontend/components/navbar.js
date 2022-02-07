@@ -44,16 +44,6 @@ export default function Navbar() {
                                         <a className="dropdown-item">Freelance</a>
                                     </Link>
                                 </li>
-                                <li>
-                                    <Link href="/social-media">
-                                        <a className="dropdown-item">Social Media</a>
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href="/extra-services">
-                                        <a className="dropdown-item">Extra Services</a>
-                                    </Link>
-                                </li>
                             </ul>
                         </li>
                         <li className="nav-item">

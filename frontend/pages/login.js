@@ -50,8 +50,8 @@ export default function Login() {
                 setEmail('')
                 setPassword('')
                 window.scrollTo(0, 0)
-                // await delay(1000)
-                // await router.push('/')
+                await delay(1500)
+                await router.push('/')
             } else if (res.error === "504") {
                 setErrorMessage("Server is offline, Try again later")
                 setErrorType("warning")

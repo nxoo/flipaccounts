@@ -45,7 +45,7 @@ function getApiCompanies() {
 }
 
 
-export default function Freelance() {
+export default function FreelanceForm() {
     const { apiCategories } = getApiCategories()
     const { apiCompanies } = getApiCompanies()
     const [category, setCategory] = useState("");
@@ -54,7 +54,7 @@ export default function Freelance() {
     const [outOf, setOutOf] = useState("");
     const [gigs, setGigs] = useState("");
     const [earned, setEarned] = useState("");
-    const [approved, setApproved] = useState("2021-07");
+    const [approved, setApproved] = useState("");
     const [country, setCountry] = useState("");
     const [vpn, setVpn] = useState(false);
     const [verification, setVerification] = useState(false);
@@ -120,6 +120,29 @@ export default function Freelance() {
             };
             const res = await addCompany(accessToken, data, data2);
             console.log(res);
+            if (res) {
+                if (res.status === 201) {
+                    setError("Freelance Account listed Success")
+                    setErrorType('success')
+                    setHideError(false)
+                    window.scrollTo(0, 0)
+                } else if (res.status === 400) {
+                    setError(Object.values(res.data)[0])
+                    setErrorType('warning')
+                    setHideError(false)
+                    window.scrollTo(0, 0)
+                } else {
+                    setError(Object.values(res.data)[0])
+                    setErrorType('warning')
+                    setHideError(false)
+                    window.scrollTo(0, 0)
+                }
+            } else {
+                setError("Server is offline")
+                setErrorType('warning')
+                setHideError(false)
+                window.scrollTo(0, 0)
+            }
         } else if (newCategory && newCompany) {
             const data = {name: newCategory};
             const data2 = {name: newCompany};
@@ -128,6 +151,29 @@ export default function Freelance() {
                 vpn, verification, verified, description, price, offers, stock,
             };
             const res = await addCategory(accessToken, data, data2, data3);
+            if (res) {
+                if (res.status === 201) {
+                    setError("Freelance Account listed Success")
+                    setErrorType('success')
+                    setHideError(false)
+                    window.scrollTo(0, 0)
+                } else if (res.status === 400) {
+                    setError(Object.values(res.data)[0])
+                    setErrorType('warning')
+                    setHideError(false)
+                    window.scrollTo(0, 0)
+                } else {
+                    setError(Object.values(res.data)[0])
+                    setErrorType('warning')
+                    setHideError(false)
+                    window.scrollTo(0, 0)
+                }
+            } else {
+                setError("Server is offline")
+                setErrorType('warning')
+                setHideError(false)
+                window.scrollTo(0, 0)
+            }
             console.log(res);
         }
     };
