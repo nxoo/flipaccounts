@@ -33,7 +33,7 @@ export default function Navbar() {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li className="nav-item dropdown">
+                        {/*}<li className="nav-item dropdown">
                             <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                data-bs-toggle="dropdown" aria-expanded="false">
                                 <small><i className="bi bi-grid-fill"/></small> Browse
@@ -64,7 +64,7 @@ export default function Navbar() {
                                 <li><Link href="/contact-support"><a className="dropdown-item">
                                     Contact Support</a></Link></li>
                             </ul>
-                        </li>
+                        </li>*/}
                     </ul>
                     <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                         {session && !loading ? (
@@ -85,23 +85,11 @@ export default function Navbar() {
                                 </li>
                             </>
                         ) : null}
-                        <li className="nav-item dropdown">
-                            <a className="nav-link dropdown-toggle" href="#" id="moreDropdown" role="button"
-                               data-bs-toggle="dropdown" aria-expanded="false">
-                                <i className="bi bi-bag-plus-fill" /> Sell
-                            </a>
-                            <ul className="dropdown-menu" aria-labelledby="moreDropdown">
-                                <li>
-                                    <Link href="/sell/freelance"><a className="dropdown-item">Freelance</a></Link>
-                                </li>
-                            </ul>
-                        </li>
-
-                        {/*<li className="nav-item">
-                            <Link href="/sell">
+                        <li className="nav-item">
+                            <Link href="/sell/freelance">
                                 <a className="nav-link"><i className="bi bi-bag-plus-fill"/> Sell</a>
                             </Link>
-                        </li>*/}
+                        </li>
                         {session && !loading ?
                             <li className="nav-item dropdown">
                                 <a className="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"

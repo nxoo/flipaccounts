@@ -34,8 +34,6 @@ export default function Home() {
                 <small><i className="bi-arrow-up-right-square-fill"/> Promoted</small>
                 <div className="row">
                     <div className="col-sm-4">
-                        <Link href='/freelance/1'>
-                            <a style={{textDecoration: "none", color: "inherit"}}>
                                 <div className="p-4 bg-light">
                                     <div className="row">
                                         <div className="col-auto mx-sm-auto">
@@ -50,10 +48,8 @@ export default function Home() {
                                         </div>
                                     </div>
                                 </div>
-                            </a>
-                        </Link>
                     </div>
-                    <div className="col-sm-4">
+                    {/*}<div className="col-sm-4">
                         <Link href='/social-media/2'>
                             <a style={{textDecoration: "none", color: "inherit"}}>
                                 <div className="p-4 bg-light">
@@ -72,7 +68,7 @@ export default function Home() {
                                 </div>
                             </a>
                         </Link>
-                    </div>
+                    </div>*/}
                 </div>
             </div>
             <style jsx>{`
